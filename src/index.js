@@ -72,7 +72,7 @@ window.addEventListener("DOMContentLoaded", e => {
 
 
 
-    let PlayerInstance = new Player(ctx, dt, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, tcell, GRAVITY, TILESIZE)
+    let PlayerInstance = new Player(ctx, dt, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, tcell, GRAVITY, TILESIZE, COLOR)
     const GameInstance = new Game(ctx, MAPSIZE, COLORS, tcell, TILESIZE, COLOR, spritesheet, spriteCoordinates)
 
 

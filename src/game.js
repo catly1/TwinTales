@@ -10,6 +10,9 @@ class Game {
         this.spriteCoordinates = spriteCoordinates
     }
 
+    update(player){
+
+    }
 
     render(ctx, player, width, height, dt){
         ctx.clearRect(0, 0, width, height);
