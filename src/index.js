@@ -11,7 +11,7 @@ spritesheet.src = "../images/spritesheet.png"
 
 
 
-const MAPSIZE = { tw: 64, th: 48 },
+const MAPSIZE = { tw: 32, th: 24 },
     TILESIZE = 21,
     UNIT = TILESIZE,
     GRAVITY = 9.8 * 6, 
@@ -144,7 +144,7 @@ window.addEventListener("DOMContentLoaded", e => {
 
     // Grab level data from json.
 
-    Util.get("test.json", function (req) {
+    Util.get("test-smol.json", function (req) {
         setup(JSON.parse(req.responseText));
         frame();
     });   

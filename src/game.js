@@ -31,6 +31,7 @@ class Game {
                 cell = this.tcell(x, y);
                 if (cell) {
                     let sprite = this.spriteCoordinates[(cell-1).toString()]
+                    debugger
                     ctx.drawImage(
                         this.spritesheet,
                         sprite.x,

@@ -107,7 +107,6 @@ export default class Player{
     }
 
     renderPlayer(ctx, player, dt) {
-        debugger
         ctx.fillStyle = this.COLOR.YELLOW;
         ctx.fillRect(player.x + (player.dx * dt), player.y + (player.dy * dt), this.TILESIZE, this.TILESIZE);
 
