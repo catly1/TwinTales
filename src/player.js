@@ -1,7 +1,7 @@
 const Util = require("./util");
 
 export default class Player{
-    constructor(ctx, dt, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, tcell, GRAVITY){
+    constructor(ctx, dt, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, tcell, GRAVITY, TILESIZE){
         this.ctx = ctx;
         this.dt = dt;
         this.UNIT = UNIT;
@@ -14,6 +14,7 @@ export default class Player{
         this.pixelToTile = pixelToTile;
         this.tcell = tcell;
         this.GRAVITY = GRAVITY;
+        this.TILESIZE = TILESIZE
     }
 
     update( player, dt){
@@ -55,8 +56,8 @@ export default class Player{
 
         let tx = this.pixelToTile(player.x),
             ty = this.pixelToTile(player.y),
-            nx = player.x % this.TILE,
-            ny = player.y % this.TILE,
+            nx = player.x % this.TILESIZE,
+            ny = player.y % this.TILESIZE,
             cell = this.tcell(tx, ty),
             cellright = this.tcell(tx + 1, ty),
             celldown = this.tcell(tx, ty + 1),

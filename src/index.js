@@ -5,7 +5,6 @@ import Player from './player.js'
 const spritesheet = new Image()
 spritesheet.src = "../images/spritesheet.png"
 
-debugger
 // Constants and functions
 
 
@@ -73,7 +72,7 @@ window.addEventListener("DOMContentLoaded", e => {
 
 
 
-    let PlayerInstance = new Player(ctx, dt, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, tcell, GRAVITY)
+    let PlayerInstance = new Player(ctx, dt, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, tcell, GRAVITY, TILESIZE)
     const GameInstance = new Game(ctx, MAPSIZE, COLORS, tcell, TILESIZE, COLOR, spritesheet, spriteCoordinates)
 
 
@@ -82,15 +81,14 @@ window.addEventListener("DOMContentLoaded", e => {
 
     const setup = map => {
         let data = map.layers[0].data,
-            objects = map.layers[1].objects,
-            n, obj, entity;
-        for(n = 0; n < objects.length; n++) {
-            obj = objects[n];
-            entity = setupEntity(obj);
-            switch (obj.type) {
-            case "player": player = entity; break;
+            objects = map.layers[1].objects
+
+        objects.forEach(object => {
+            let entity = setupEntity(object);
+            switch (object.type){
+                case "player": player = entity; break;
             }
-        }
+        })
 
         cells = data
     }
