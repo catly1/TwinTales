@@ -37,10 +37,18 @@ let now, last = Util.timestamp(),
 window.addEventListener("DOMContentLoaded", e => {
     const onKey = (ev, key, down) => {
         switch (key) {
-            case KEY.A: player.left = down; return false;
+            case KEY.A: 
+                twin1.left = down; 
+                twin2.left = down; 
+                return false;
             case KEY.D: 
-                player.right = down; return false;
-            case KEY.SPACE: player.jump = down; return false;
+                twin1.right = down;
+                twin2.right = down; 
+                return false;
+            case KEY.SPACE: 
+                twin1.jump = down; 
+                twin2.jump = down;
+                return false;
         }
     }
   
@@ -64,12 +72,13 @@ window.addEventListener("DOMContentLoaded", e => {
     } 
 
 
-    let player= {},
+    let twin1 = {},
+        twin2 = {},
         cells = []
 
     const tileToPixel = t => (t * TILESIZE),
         pixelToTile = p => (Math.floor(p / TILESIZE)),
-        cell = (x, y) => (tcell(p2t(x), p2t(y))),
+        cell = (x, y) => (tcell(pixeltoTile(x), pixelToTile(y))),
         tcell = (tx, ty) => (cells[tx + (ty * MAPSIZE.tw)]);
 
 
@@ -102,7 +111,12 @@ window.addEventListener("DOMContentLoaded", e => {
         objects.forEach(object => {
             let entity = setupEntity(object);
             switch (object.type){
-                case "player": player = entity; break;
+                case "twin1": 
+                    twin1 = entity; 
+                    break;
+                case "twin2" : 
+                    twin2 = entity; 
+                    break;
             }
         })
 
@@ -123,8 +137,9 @@ window.addEventListener("DOMContentLoaded", e => {
         entity.accel = entity.maxdx / (obj.properties.accel || ACCELERATION);
         entity.friction = entity.maxdx / (obj.properties.friction || FRICTION);
         entity.monster = obj.type == "monster";
-        entity.player = obj.type == "player";
+        entity.twin1 = obj.type == "twin1";
         entity.treasure = obj.type == "treasure";
+        entity.twin2 = obj.type == "twin2"
         entity.left = obj.properties.left;
         entity.right = obj.properties.right;
         entity.start = { x: obj.x, y: obj.y }
@@ -138,9 +153,9 @@ window.addEventListener("DOMContentLoaded", e => {
         dt = dt + Math.min(1, (now - last) / 1000);
         while (dt > step) {
             dt = dt - step;
-            GameInstance.update(player, step);
+            GameInstance.update(twin1, twin2, step);
         }
-        GameInstance.render(ctx, player, width, height, dt);
+        GameInstance.render(ctx, twin1, twin2, width, height, dt);
         last = now;
         requestAnimationFrame(frame, canvas);
     }

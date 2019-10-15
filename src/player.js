@@ -106,20 +106,6 @@ export default class Player{
 
     }
 
-    renderPlayer(ctx, player, dt) {
-        ctx.fillStyle = this.COLOR.YELLOW;
-        ctx.fillRect(player.x + (player.dx * dt), player.y + (player.dy * dt), this.TILESIZE, this.TILESIZE);
 
-        var n, max;
-
-        ctx.fillStyle = this.COLOR.GOLD;
-        for (n = 0, max = player.collected; n < max; n++)
-            ctx.fillRect(this.tileToPixel(2 + n), this.tileToPixel(2), this.TILESIZE / 2, this.TILESIZE / 2);
-
-        ctx.fillStyle = this.COLOR.SLATE;
-        for (n = 0, max = player.killed; n < max; n++)
-            ctx.fillRect(this.tileToPixel(2 + n), this.tileToPixel(3), this.TILESIZE / 2, this.TILESIZE / 2);
-
-    }
 
 }

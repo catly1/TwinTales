@@ -21,7 +21,7 @@
                 {
                  "height":21,
                  "id":1,
-                 "name":"player",
+                 "name":"twin1",
                  "properties":[
                         {
                          "name":"preferences",
@@ -29,11 +29,28 @@
                          "value":""
                         }],
                  "rotation":0,
-                 "type":"player",
+                 "type":"twin1",
                  "visible":true,
                  "width":21,
                  "x":21.5,
                  "y":205
+                }, 
+                {
+                 "height":21,
+                 "id":3,
+                 "name":"twin2",
+                 "properties":[
+                        {
+                         "name":"preferences",
+                         "type":"string",
+                         "value":""
+                        }],
+                 "rotation":0,
+                 "type":"twin2",
+                 "visible":true,
+                 "width":21,
+                 "x":275.5,
+                 "y":203.5
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -42,7 +59,7 @@
          "y":0
         }],
  "nextlayerid":3,
- "nextobjectid":3,
+ "nextobjectid":4,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.5",

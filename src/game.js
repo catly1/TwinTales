@@ -1,4 +1,5 @@
-import Player from './player.js'
+import Twin1 from './twin1.js'
+import Twin2 from './twin2.js'
 
 class Game {
     constructor(ctx, MAPSIZE, COLORS, tcell, TILESIZE, COLOR, spritesheet, spriteCoordinates, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, GRAVITY) {
@@ -10,18 +11,21 @@ class Game {
         this.COLOR = COLOR;
         this.spritesheet = spritesheet;
         this.spriteCoordinates = spriteCoordinates
-        this.playerInstance = new Player(ctx, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, tcell, GRAVITY, TILESIZE, COLOR)
+        this.twin1 = new Twin1(ctx, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, tcell, GRAVITY, TILESIZE, COLOR)
+        this.twin2 = new Twin2(ctx, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, tcell, GRAVITY, TILESIZE, COLOR)
     }
 
-    update(player, step){
-        this.playerInstance.update(player, step)
+    update(twin1, twin2, step){
+        this.twin1.update(twin1, step)
+        this.twin2.update(twin2, step)
     }
 
-    render(ctx, player, width, height, dt){
+    render(ctx, twin1, twin2, width, height, dt){
         ctx.clearRect(0, 0, width, height);
         // Now draw!
         this.renderMap(ctx);
-        this.playerInstance.renderPlayer(ctx, player, dt);
+        this.twin1.renderPlayer(ctx, twin1, dt);
+        this.twin2.renderPlayer(ctx, twin2, dt)
         ctx.fillStyle = "gray";
         ctx.globalCompositeOperation = 'destination-over'
         ctx.fillRect(0, 0, width, height);
