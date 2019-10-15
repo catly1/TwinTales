@@ -35,7 +35,8 @@ window.addEventListener("DOMContentLoaded", e => {
     const onKey = (ev, key, down) => {
         switch (key) {
             case KEY.LEFT: player.left = down; return false;
-            case KEY.RIGHT: player.right = down; return false;
+            case KEY.RIGHT: 
+                player.right = down; return false;
             case KEY.SPACE: player.jump = down; return false;
         }
     }
@@ -92,7 +93,7 @@ window.addEventListener("DOMContentLoaded", e => {
         entity.y = obj.y;
         entity.dx = 0;
         entity.dy = 0;
-        entity.GRAVITY = UNIT * (obj.properties.gravity || GRAVITY);
+        entity.gravity = UNIT * (obj.properties.gravity || GRAVITY);
         entity.maxdx = UNIT * (obj.properties.maxdx || MAXDX);
         entity.maxdy = UNIT * (obj.properties.maxdy || MAXDY);
         entity.impulse = UNIT * (obj.properties.impulse || IMPULSE);

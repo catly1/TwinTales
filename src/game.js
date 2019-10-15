@@ -45,7 +45,6 @@ class Game {
         for (n = 0, max = player.killed; n < max; n++)
             ctx.fillRect(t2p(2 + n), t2p(3), this.TILESIZE / 2, this.TILESIZE / 2);
 
-        debugger
     }
 }
 

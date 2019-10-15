@@ -19,30 +19,33 @@ export default class Player{
     update( player, dt){
         let wasleft = player.dx < 0,
             wasright = player.dx > 0,
-            falling = player.falling;
+            falling = player.falling,
+            friction = player.friction * (falling ? 0.5 : 1),
+            accel = player.accel * (falling ? 0.5 : 1);
 
         player.ddx = 0;
-        player.ddy = this.GRAVITY;
-
+        player.ddy = player.gravity;
+        debugger
         if (player.left)
-            player.ddx = player.ddx - this.ACCELERATION;     // player wants to go left
+            player.ddx = player.ddx - accel;     // player wants to go left
         else if (wasleft)
-            player.ddx = player.ddx + this.ACCELERATION;  // player was going left, but not any more
+            player.ddx = player.ddx + friction;  // player was going left, but not any more
 
-        if (player.right)
-            player.ddx = player.ddx + this.ACCELERATION;     // player wants to go right
+        if (player.right) { // player wants to go right
+            player.ddx = player.ddx + accel;    
+        }
         else if (wasright)
-            player.ddx = player.ddx - this.FRICTION;  // player was going right, but not any more
+            player.ddx = player.ddx - friction;  // player was going right, but not any more
 
         if (player.jump && !player.jumping && !falling) {
-            player.ddy = player.ddy - this.IMPULSE;     // apply an instantaneous (large) vertical impulse
+            player.ddy = player.ddy - player.impulse;     // apply an instantaneous (large) vertical impulse
             player.jumping = true;
         }
 
-        player.y = Math.floor(player.y + (dt * player.dy));
-        player.x = Math.floor(player.x + (dt * player.dx));
-        player.dx = Util.bound(player.dx + (dt * player.ddx), -this.MAXDX, this.MAXDX);
-        player.dy = Util.bound(player.dy + (dt * player.ddy), -this.MAXDY, this.MAXDY);
+        player.y = player.y + (dt * player.dy)
+        player.x = player.x + (dt * player.dx)
+        player.dx = Util.bound(player.dx + (dt * player.ddx), -player.maxdx, player.maxdx);
+        player.dy = Util.bound(player.dy + (dt * player.ddy), -player.maxdy, player.maxdy);
 
         if ((wasleft && (player.dx > 0)) ||
             (wasright && (player.dx < 0))) {
