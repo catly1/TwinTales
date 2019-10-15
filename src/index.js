@@ -23,7 +23,7 @@ const MAPSIZE = { tw: 64, th: 48 },
     IMPULSE = 1500,   
     COLOR = { BLACK: '#000000', YELLOW: '#ECD078', BRICK: '#D95B43', PINK: '#C02942', PURPLE: '#542437', GREY: '#333', SLATE: '#53777A', GOLD: 'gold' },
     COLORS = [COLOR.YELLOW, COLOR.BRICK, COLOR.PINK, COLOR.PURPLE, COLOR.GREY],
-    KEY = { SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40 };
+    KEY = { SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, W: 87, A: 65, S: 83, D: 68};
 
 
 
@@ -38,8 +38,8 @@ let now, last = Util.timestamp(),
 window.addEventListener("DOMContentLoaded", e => {
     const onKey = (ev, key, down) => {
         switch (key) {
-            case KEY.LEFT: player.left = down; return false;
-            case KEY.RIGHT: 
+            case KEY.A: player.left = down; return false;
+            case KEY.D: 
                 player.right = down; return false;
             case KEY.SPACE: player.jump = down; return false;
         }
