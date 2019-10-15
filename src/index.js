@@ -2,14 +2,18 @@ import Game from './game.js';
 const GameView = require("./game_view")
 const Util = require("./util");
 import Player from './player.js'
+const spritesheet = new Image()
+spritesheet.src = "../images/spritesheet.png"
 
-
-
-
+debugger
 // Constants and functions
 
+
+
+
+
 const MAPSIZE = { tw: 64, th: 48 },
-    TILESIZE = 32,
+    TILESIZE = 21,
     UNIT = TILESIZE,
     GRAVITY = 9.8 * 6, 
     MAXDX = 15,      
@@ -51,6 +55,12 @@ window.addEventListener("DOMContentLoaded", e => {
         fps = 60,
         step = 1 / fps
 
+    const spriteCoordinates = {
+        "154": {x: 48, y: 117},
+        "121": {x: 71, y: 94}
+    } 
+
+
     let player= {},
         cells = []
 
@@ -64,7 +74,7 @@ window.addEventListener("DOMContentLoaded", e => {
 
 
     let PlayerInstance = new Player(ctx, dt, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, tcell, GRAVITY)
-    const GameInstance = new Game(ctx, MAPSIZE, COLORS, tcell, TILESIZE, COLOR)
+    const GameInstance = new Game(ctx, MAPSIZE, COLORS, tcell, TILESIZE, COLOR, spritesheet, spriteCoordinates)
 
 
 
@@ -74,7 +84,6 @@ window.addEventListener("DOMContentLoaded", e => {
         let data = map.layers[0].data,
             objects = map.layers[1].objects,
             n, obj, entity;
-
         for(n = 0; n < objects.length; n++) {
             obj = objects[n];
             entity = setupEntity(obj);
@@ -126,7 +135,6 @@ window.addEventListener("DOMContentLoaded", e => {
     Util.get("test.json", function (req) {
         setup(JSON.parse(req.responseText));
         frame();
-
     });   
 
 

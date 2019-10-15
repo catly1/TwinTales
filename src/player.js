@@ -25,7 +25,6 @@ export default class Player{
 
         player.ddx = 0;
         player.ddy = player.gravity;
-        debugger
         if (player.left)
             player.ddx = player.ddx - accel;     // player wants to go left
         else if (wasleft)

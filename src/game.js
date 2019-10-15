@@ -1,18 +1,20 @@
 class Game {
-    constructor(ctx, MAPSIZE, COLORS, tcell, TILESIZE, COLOR) {
+    constructor(ctx, MAPSIZE, COLORS, tcell, TILESIZE, COLOR, spritesheet, spriteCoordinates) {
         this.ctx = ctx;
         this.MAPSIZE = MAPSIZE;
         this.COLORS = COLORS;
         this.tcell = tcell;
         this.TILESIZE = TILESIZE;
         this.COLOR = COLOR;
+        this.spritesheet = spritesheet;
+        this.spriteCoordinates = spriteCoordinates
     }
 
 
     render(ctx, player, width, height, dt){
         ctx.clearRect(0, 0, width, height);
         this.renderMap(ctx);
-        this.renderPlayer(ctx, player, dt)
+        this.renderPlayer(ctx, player, dt);
     }
 
 
@@ -22,8 +24,22 @@ class Game {
             for (x = 0; x < this.MAPSIZE.tw; x++) {
                 cell = this.tcell(x, y);
                 if (cell) {
-                    ctx.fillStyle = this.COLORS[cell - 1];
-                    ctx.fillRect(x * this.TILESIZE, y * this.TILESIZE, this.TILESIZE, this.TILESIZE);
+                    debugger
+                    let sprite = this.spriteCoordinates[(cell-1).toString()]
+                    ctx.drawImage(
+                        this.spritesheet,
+                        sprite.x,
+                        sprite.y,
+                        this.TILESIZE,
+                        this.TILESIZE,
+                        x * this.TILESIZE,
+                        y * this.TILESIZE,
+                        this.TILESIZE,
+                        this.TILESIZE
+                    )
+
+                    // ctx.fillStyle = this.COLORS[cell - 1];
+                    // ctx.fillRect(x * this.TILESIZE, y * this.TILESIZE, this.TILESIZE, this.TILESIZE);
                 }
             }
         }
