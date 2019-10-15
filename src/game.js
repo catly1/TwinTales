@@ -19,8 +19,12 @@ class Game {
 
     render(ctx, player, width, height, dt){
         ctx.clearRect(0, 0, width, height);
+        // Now draw!
         this.renderMap(ctx);
         this.playerInstance.renderPlayer(ctx, player, dt);
+        ctx.fillStyle = "gray";
+        ctx.globalCompositeOperation = 'destination-over'
+        ctx.fillRect(0, 0, width, height);
     }
 
 
@@ -31,16 +35,15 @@ class Game {
                 cell = this.tcell(x, y);
                 if (cell) {
                     let sprite = this.spriteCoordinates[(cell-1).toString()]
-                    debugger
                     ctx.drawImage(
                         this.spritesheet,
                         sprite.x,
                         sprite.y,
-                        this.TILESIZE,
-                        this.TILESIZE,
+                        this.TILESIZE / 3,
+                        this.TILESIZE / 3,
                         x * this.TILESIZE,
                         y * this.TILESIZE,
-                        this.TILESIZE,
+                        this.TILESIZE * 1.03,
                         this.TILESIZE
                     )
 

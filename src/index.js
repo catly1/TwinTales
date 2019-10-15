@@ -11,12 +11,12 @@ spritesheet.src = "../images/spritesheet.png"
 
 
 
-const MAPSIZE = { tw: 32, th: 24 },
-    TILESIZE = 21,
+const MAPSIZE = { tw: 16, th: 12 },
+    TILESIZE = 63,
     UNIT = TILESIZE,
     GRAVITY = 9.8 * 6, 
-    MAXDX = 15,      
-    MAXDY = 60,      
+    MAXDX = 7,      
+    MAXDY = 20,      
     ACCELERATION = 1 / 2,    
     FRICTION = 1 / 6,   
     IMPULSE = 1500,   
@@ -56,7 +56,11 @@ window.addEventListener("DOMContentLoaded", e => {
 
     const spriteCoordinates = {
         "154": {x: 48, y: 117},
-        "121": {x: 71, y: 94}
+        "121": {x: 25, y: 94},
+        "129": {x: 210, y: 94},
+        "122": {x: 48, y: 94},
+        "123": {x: 71, y: 94},
+        "124": {x: 94, y: 94}
     } 
 
 
@@ -144,7 +148,7 @@ window.addEventListener("DOMContentLoaded", e => {
 
     // Grab level data from json.
 
-    Util.get("test-smol.json", function (req) {
+    Util.get("test-smoller.json", function (req) {
         setup(JSON.parse(req.responseText));
         frame();
     });   
