@@ -1,9 +1,8 @@
 const Util = require("./util");
 
 export default class Player{
-    constructor(ctx, dt, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, tcell, GRAVITY, TILESIZE, COLOR){
+    constructor(ctx, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, tcell, GRAVITY, TILESIZE, COLOR){
         this.ctx = ctx;
-        this.dt = dt;
         this.UNIT = UNIT;
         this.ACCELERATION = ACCELERATION;
         this.FRICTION = FRICTION;
@@ -108,7 +107,7 @@ export default class Player{
     }
 
     renderPlayer(ctx, player, dt) {
-
+        debugger
         ctx.fillStyle = this.COLOR.YELLOW;
         ctx.fillRect(player.x + (player.dx * dt), player.y + (player.dy * dt), this.TILESIZE, this.TILESIZE);
 

@@ -69,15 +69,27 @@ window.addEventListener("DOMContentLoaded", e => {
         tcell = (tx, ty) => (cells[tx + (ty * MAPSIZE.tw)]);
 
 
+    const GameInstance = new Game(
+        ctx,
+        MAPSIZE, 
+        COLORS, 
+        tcell, 
+        TILESIZE, 
+        COLOR, 
+        spritesheet, 
+        spriteCoordinates, 
+        UNIT, 
+        ACCELERATION, 
+        FRICTION, 
+        IMPULSE, 
+        MAXDX, 
+        MAXDY, 
+        tileToPixel, 
+        pixelToTile,  
+        GRAVITY
+        )
 
-
-
-    let PlayerInstance = new Player(ctx, dt, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, tcell, GRAVITY, TILESIZE, COLOR)
-    const GameInstance = new Game(ctx, MAPSIZE, COLORS, tcell, TILESIZE, COLOR, spritesheet, spriteCoordinates)
-
-
-
-
+    // parses json to be useable by the app. Build objects from it that can be manipulated.
 
     const setup = map => {
         let data = map.layers[0].data,
@@ -122,13 +134,15 @@ window.addEventListener("DOMContentLoaded", e => {
         dt = dt + Math.min(1, (now - last) / 1000);
         while (dt > step) {
             dt = dt - step;
-            PlayerInstance.update(player, step);
+            GameInstance.update(player, step);
         }
         GameInstance.render(ctx, player, width, height, dt);
         last = now;
         requestAnimationFrame(frame, canvas);
     }
 
+
+    // Grab level data from json.
 
     Util.get("test.json", function (req) {
         setup(JSON.parse(req.responseText));
