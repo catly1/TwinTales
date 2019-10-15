@@ -1,5 +1,18 @@
 #canvas {
-    display: flex;
+    display: block;
     width: 100%;
     height: 100%;
 }
+
+.game{
+   margin: 1em auto; 
+   position: relative; 
+   width: 512px; 
+   height: 384px; 
+}
+
+    @media screen and (min-width:     0px) and (min-height:    0px) { .game { width:  512px; height: 384px; font-size:  7pt; } } /* block = 16 */
+    @media screen and (min-width:   840px) and (min-height:  530px) { .game { width:  640px; height: 480px; font-size:  9pt; } } /* block = 20 */
+    @media screen and (min-width:   968px) and (min-height:  626px) { .game { width:  768px; height: 576px; font-size: 11pt; } } /* block = 24 */
+    @media screen and (min-width:  1096px) and (min-height:  722px) { .game { width:  896px; height: 672px; font-size: 13pt; } } /* block = 28 */
+    @media screen and (min-width:  1224px) and (min-height:  818px) { .game { width: 1024px; height: 768px; font-size: 15pt; } } /* block = 32 */

@@ -1,1 +1,1 @@
-This is a platform game
+This is a platformer game
