@@ -19,3 +19,4 @@ Day1: Basic boiler plate code. An HTML and webpack configs. Do research on how t
 
 Day2: Learn how to texture/animate with canvas.
     - Changed the map size.
+    - Added the twin cahracter that shares the same input.
