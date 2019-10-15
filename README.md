@@ -1,5 +1,5 @@
 ## What is this?
-This is a platformer game where you can jump around.
+This is a platformer game where you control two characters that share the same input. The goal is to get them both at some point in the map at the same time.
 
 ## Features
 In this game, a player can:
@@ -9,12 +9,11 @@ In this game, a player can:
 
 ## Basic Display
 
-You should see the screen and the controls.
+You should see the screen and the controls. Should also explain the goal of the game.
 
 ## Development Timeline
 
 Day1: Basic boiler plate code. An HTML and webpack configs. Do research on how to work with canvas to display what would probably be a grid/tiled display.
+    - Can move and jump around now.
 
-Day2: Figure out how to add textures to these tile maps.
-
-Day3: I still dunno what to do.
+Day2: Learned how to texture/animate with canvas.
