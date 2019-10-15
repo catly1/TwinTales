@@ -15,5 +15,7 @@ You should see the screen and the controls. Should also explain the goal of the 
 
 Day1: Basic boiler plate code. An HTML and webpack configs. Do research on how to work with canvas to display what would probably be a grid/tiled display.
     - Can move and jump around now.
+    - Only show a single pixel dot for the character.
 
-Day2: Learned how to texture/animate with canvas.
+Day2: Learn how to texture/animate with canvas.
+    - Changed the map size.
