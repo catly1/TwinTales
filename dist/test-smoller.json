@@ -32,8 +32,8 @@
                  "type":"twin1",
                  "visible":true,
                  "width":21,
-                 "x":21.5,
-                 "y":205
+                 "x":31.5,
+                 "y":205.666666666667
                 }, 
                 {
                  "height":21,
@@ -49,10 +49,21 @@
                  "type":"twin2",
                  "visible":true,
                  "width":21,
-                 "x":275.5,
-                 "y":203.5
+                 "x":207.166666666667,
+                 "y":102.166666666667
                 }],
          "opacity":1,
+         "properties":[
+                {
+                 "name":"height",
+                 "type":"int",
+                 "value":12
+                }, 
+                {
+                 "name":"width",
+                 "type":"int",
+                 "value":16
+                }],
          "type":"objectgroup",
          "visible":true,
          "x":0,

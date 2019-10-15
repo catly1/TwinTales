@@ -6,18 +6,17 @@ class Twin2 extends Player {
         super(ctx, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, tcell, GRAVITY, TILESIZE, COLOR)
     }
 
-    renderPlayer(ctx, player, dt) {
+    renderTwin(ctx, twin, dt) {
         ctx.fillStyle = this.COLOR.PURPLE;
-        ctx.fillRect(player.x + (player.dx * dt), player.y + (player.dy * dt), this.TILESIZE, this.TILESIZE);
-
-        var n, max;
+        ctx.fillRect(twin.x + (twin.dx * dt), twin.y + (twin.dy * dt), this.TILESIZE, this.TILESIZE);
+        let n, max;
 
         ctx.fillStyle = this.COLOR.PURPLE;
-        for (n = 0, max = player.collected; n < max; n++)
+        for (n = 0, max = twin.collected; n < max; n++)
             ctx.fillRect(this.tileToPixel(2 + n), this.tileToPixel(2), this.TILESIZE / 2, this.TILESIZE / 2);
 
         ctx.fillStyle = this.COLOR.SLATE;
-        for (n = 0, max = player.killed; n < max; n++)
+        for (n = 0, max = twin.killed; n < max; n++)
             ctx.fillRect(this.tileToPixel(2 + n), this.tileToPixel(3), this.TILESIZE / 2, this.TILESIZE / 2);
 
     }

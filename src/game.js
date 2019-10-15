@@ -24,8 +24,8 @@ class Game {
         ctx.clearRect(0, 0, width, height);
         // Now draw!
         this.renderMap(ctx);
-        this.twin1.renderPlayer(ctx, twin1, dt);
-        this.twin2.renderPlayer(ctx, twin2, dt)
+        this.twin1.renderTwin(ctx, twin1, dt);
+        this.twin2.renderTwin(ctx, twin2, dt)
         ctx.fillStyle = "gray";
         ctx.globalCompositeOperation = 'destination-over'
         ctx.fillRect(0, 0, width, height);

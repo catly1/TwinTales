@@ -126,8 +126,8 @@ window.addEventListener("DOMContentLoaded", e => {
 
     const setupEntity = obj => {
         let entity = {};
-        entity.x = obj.x;
-        entity.y = obj.y;
+        entity.x = obj.x * 3; // multiplied by 3 because of resize
+        entity.y = obj.y * 3; // multiplied by 3 because of resize
         entity.dx = 0;
         entity.dy = 0;
         entity.gravity = UNIT * (obj.properties.gravity || GRAVITY);
