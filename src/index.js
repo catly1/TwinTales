@@ -128,8 +128,8 @@ window.addEventListener("DOMContentLoaded", e => {
                     twin2 = entity; 
                     break;
                 case "enemy" :
-                    enemies.push(entity);
                     debugger
+                    enemies.push(entity);
                     break;
             }
         })
@@ -144,18 +144,31 @@ window.addEventListener("DOMContentLoaded", e => {
         entity.y = obj.y * 3; // multiplied by 3 because of resize
         entity.dx = 0;
         entity.dy = 0;
-        entity.gravity = UNIT * (obj.properties.gravity || GRAVITY);
-        entity.maxdx = UNIT * (obj.properties.maxdx || MAXDX);
-        entity.maxdy = UNIT * (obj.properties.maxdy || MAXDY);
-        entity.impulse = UNIT * (obj.properties.impulse || IMPULSE);
-        entity.accel = entity.maxdx / (obj.properties.accel || ACCELERATION);
-        entity.friction = entity.maxdx / (obj.properties.friction || FRICTION);
+        entity.left = ""
+        entity.right = ""
+        entity.maxdx = UNIT * MAXDX;
+        entity.gravity = UNIT * GRAVITY;
+        entity.maxdy = UNIT * MAXDY;
+        entity.impulse = UNIT * IMPULSE;
+        entity.accel = entity.maxdx /  ACCELERATION;
+        entity.friction = entity.maxdx / FRICTION;
+
+        obj.properties.forEach(property => {
+            if (property.name === "left") entity.left = property.value
+            if (property.name === "right") entity.left = property.value
+            if (property.name === "maxdx") {
+                debugger
+                entity.maxdx = UNIT * property.value
+            }
+            
+        })
+
         // entity.enemy = obj.type == "enemy";
         // entity.twin1 = obj.type == "twin1";
         // entity.treasure = obj.type == "treasure";
         // entity.twin2 = obj.type == "twin2";
-        entity.left = obj.properties.left;
-        entity.right = obj.properties.right;
+        // entity.left = obj.properties.find(property => property.name = "left").value
+        // entity.right = obj.properties.right;
         entity.start = { x: obj.x, y: obj.y }
         entity.killed = entity.collected = 0;
         entity.animation = {}

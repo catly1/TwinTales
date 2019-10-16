@@ -56,16 +56,23 @@
                  "height":21,
                  "id":4,
                  "name":"enemy 1",
-                 "properties":{
-                     "maxdx": "10",
-                     "right": "true"
-                 },
+                 "properties":[
+                        {
+                         "name":"left",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"maxdx",
+                         "type":"int",
+                         "value":10
+                        }],
                  "rotation":0,
                  "type":"enemy",
                  "visible":true,
                  "width":21,
-                 "x":370.5,
-                 "y":203.5
+                 "x":158.5,
+                 "y":207.5
                 }],
          "opacity":1,
          "properties":[

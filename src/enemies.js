@@ -19,7 +19,6 @@ export default class Enemies {
                 falling = enemy.falling,
                 friction = enemy.friction * (falling ? 0.5 : 1),
                 accel = enemy.accel * (falling ? 0.5 : 1);
-            debugger
             enemy.ddx = 0;
             enemy.ddy = enemy.gravity;
             if (enemy.left)
@@ -33,10 +32,10 @@ export default class Enemies {
             else if (wasright)
                 enemy.ddx = enemy.ddx - friction;  // enemy was going right, but not any more
 
-            if (enemy.jump && !enemy.jumping && !falling) {
-                enemy.ddy = enemy.ddy - enemy.impulse;     // apply an instantaneous (large) vertical impulse
-                enemy.jumping = true;
-            }
+            // if (enemy.jump && !enemy.jumping && !falling) {
+            //     enemy.ddy = enemy.ddy - enemy.impulse;     // apply an instantaneous (large) vertical impulse
+            //     enemy.jumping = true;
+            // }
 
             enemy.y = enemy.y + (step * enemy.dy)
             enemy.x = enemy.x + (step * enemy.dx)
@@ -64,6 +63,7 @@ export default class Enemies {
                 enemy.left = true;
             }
 
+            // vertical collision
             if (enemy.dy > 0) {
                 if ((celldown && !cell) ||
                     (celldiag && !cellright && nx)) {
@@ -86,6 +86,21 @@ export default class Enemies {
             }
 
 
+            // horizontal collision
+            if (enemy.dx > 0) {
+                if ((cellright && !cell) ||
+                    (celldiag && !celldown && ny)) {
+                    enemy.x = this.tileToPixel(tx);       // clamp the x position to avoid moving into the platform we just hit
+                    enemy.dx = 0;            // stop horizontal velocity
+                }
+            }
+            else if (enemy.dx < 0) {
+                if ((cell && !cellright) ||
+                    (celldown && !celldiag && ny)) {
+                    enemy.x = this.tileToPixel(tx + 1);  // clamp the x position to avoid moving into the platform we just hit
+                    enemy.dx = 0;           // stop horizontal velocity
+                }
+            }
 
 
             
