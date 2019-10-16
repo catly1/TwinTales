@@ -54,20 +54,25 @@ window.addEventListener("DOMContentLoaded", e => {
                 twin2.jump = down;
                 return false;
             case KEY.ENTER:
-                debugger
                 handleEnter()
                 return false;
         }
     }
 
     const handleEnter = () =>{
-        if (!paused){
-            // debugger
-            paused = true
-        } else {
-            // debugger
-            paused = false
+        if (currentLevel < 1 && currentLevel !== 1){
+            debugger
+            currentLevel = 1
         }
+
+
+        // if (!paused){
+        //     // debugger
+        //     paused = true
+        // } else {
+        //     // debugger
+        //     paused = false
+        // }
     }
   
     document.addEventListener('keydown', function (ev) { return onKey(ev, ev.keyCode, true); }, false);
@@ -95,7 +100,9 @@ window.addEventListener("DOMContentLoaded", e => {
         cells = [],
         enemies = [],
         paused = false,
-        doors = []
+        doors = [],
+        currentLevel = 0,
+        gameOver = false
 
     const tileToPixel = t => (t * TILESIZE),
         pixelToTile = p => (Math.floor(p / TILESIZE)),
@@ -215,12 +222,14 @@ window.addEventListener("DOMContentLoaded", e => {
 
 
     // Grab level data from json.
+    
     let level
-    switch (GameInstance.currentLevel) {
-        case 0:
-
+    switch (currentLevel) {
         case 1:
-            level = "test-smoller.json"
+            console.log("hey");
+        case 0:
+            level = "test-smoller.json";
+            // return false;
     }
 
     Util.get(level, function (req) {

@@ -26,6 +26,9 @@ class Game {
         this.twin2.update(twin2, step)
         this.enemies.updateEnemies(twin1, twin2, step)
         this.doors.updateDoors(twin1, twin2, step)
+        if (this.doors.stageCompleted()){
+            debugger
+        }
     }
 
 

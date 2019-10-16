@@ -10,6 +10,8 @@ export default class Doors {
         this.tileToPixel = options.tileToPixel;
         this.COLOR = options.COLOR;
         this.ctx = options.ctx
+        this.twin1AtDoor = false;
+        this.twin2AtDoor = false;
     }
 
     updateDoors(twin1, twin2, step) {
@@ -104,25 +106,17 @@ export default class Doors {
 
 
 
-            // monster and player overlap
-            if (!door.dead) { // only do this if the monster is dead
-                if (Util.overlap(twin1.x, twin1.y, this.TILESIZE, this.TILESIZE, door.x, door.y, this.TILESIZE, this.TILESIZE)) {
-                    if ((twin1.dy > 0) && (door.y - twin1.y > this.TILESIZE / 2)) {
-                        door.dead = true // kill door if stepped on
-                    } else {
-                        this.killTwin(twin1)
-                    }
-                }
+
+                if ((Util.overlap(twin1.x, twin1.y, this.TILESIZE, this.TILESIZE, door.x, door.y, this.TILESIZE, this.TILESIZE))) {
+                        // this.killTwin(twin1)
+                    this.twin1AtDoor = true
+                } 
 
                 if (Util.overlap(twin2.x, twin2.y, this.TILESIZE, this.TILESIZE, door.x, door.y, this.TILESIZE, this.TILESIZE)) {
-                    if ((twin2.dy > 0) && (door.y - twin2.y > this.TILESIZE / 2)) {
-                        door.dead = true // kill door if stepped on
-                    } else {
-                        this.killTwin(twin2)
-                    }
-                }
+                        // this.killTwin(twin2)
+                    this.twin2AtDoor = true
+                } 
 
-            }
             door.falling = !(celldown || (nx && celldiag));
 
         })
@@ -143,6 +137,10 @@ export default class Doors {
                 this.ctx.fillRect(door.x + (door.dx * dt), door.y + (door.dy * dt), this.TILESIZE, this.TILESIZE)
             }
         })
+    }
+
+    stageCompleted(){
+        return this.twin1AtDoor && this.twin2AtDoor
     }
 
 }
