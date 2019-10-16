@@ -1,9 +1,7 @@
 const Util = require("./util");
-const loliSheet = new Image()
-loliSheet.src = "../images/loli.png"
+const twinSheet = new Image()
+twinSheet.src = "../images/twinspritesheet.png"
 
-// const loliSheet = new Image();
-// loliSheet.src = "../images/loli.png";
 
 
 
@@ -30,11 +28,11 @@ export default class Player{
         // ctx.fillStyle = this.COLOR.YELLOW;
         // ctx.fillRect(twin.x + (twin.dx * dt), twin.y + (twin.dy * dt), this.TILESIZE, this.TILESIZE);
         ctx.drawImage(
-            loliSheet, // Source image object
+            twinSheet, // Source image object
             twin.animation.x + (twin.animationFrame * twin.animation.w), //	Source x
             twin.animation.y, // 	Source y
-            47, // Source width
-            47, // Source height
+            54, // Source width
+            54, // Source height
             twin.x + (twin.dx * dt), // Destination x
             twin.y + (twin.dy * dt), // Destination y
             this.TILESIZE, // Destination width
@@ -148,7 +146,18 @@ export default class Player{
 
 
     animate(player){
-        if (this.TWIN1ANIMATIONS) Util.animate(player, this.TWIN1ANIMATIONS.IDLE)
+        if (player.left) {
+            Util.animate(player, this.TWIN1ANIMATIONS.LEFT)
+        } else if (player.right) {
+            Util.animate(player, this.TWIN1ANIMATIONS.RIGHT)
+        } else if (player.jumping) {
+            Util.animate(player, this.TWIN1ANIMATIONS.JUMPINGL)
+        } else if (player.falling) {
+            Util.animate(player, this.TWIN1ANIMATIONS.FALLINGL)
+        } else {
+            Util.animate(player, this.TWIN1ANIMATIONS.IDLE)
+        }
+
 
     }
 

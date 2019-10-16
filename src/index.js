@@ -14,8 +14,8 @@ spritesheet.src = "../images/spritesheet.png"
 const MAPSIZE = { tw: 16, th: 12 },
     TILESIZE = 63,
     UNIT = TILESIZE,
-    GRAVITY = 9.8 * 6, 
-    MAXDX = 7,      
+    GRAVITY = 9.8 * 8, 
+    MAXDX = 5,      
     MAXDY = 20,      
     ACCELERATION = 1 / 2,    
     FRICTION = 1 / 6,   
@@ -29,7 +29,13 @@ const MAPSIZE = { tw: 16, th: 12 },
 let now, last = Util.timestamp(),
     dt = 0,
     TWIN1ANIMATIONS = {
-    IDLE: { x: 0, y: 0, w: 47, h: 47, frames: 4, fps: 5 }
+    IDLE: { x: 0, y: 0, w: 54, h: 54, frames: 4, fps: 5 },
+    LEFT: { x: 0, y: 54, w: 54, h: 54, frames: 8, fps: 10 },
+    RIGHT: { x: 0, y: 108, w: 54, h: 54, frames: 8, fps: 10 },
+    JUMPINGL: { x: 0, y: 162, w: 54, h: 54, frames: 4, fps: 10 },
+    JUMPINGR: { x: 0, y: 216, w: 54, h: 54, frames: 4, fps: 10 },
+    FALLINGL: { x: 0, y: 270, w: 54, h: 54, frames: 4, fps: 10 },
+    FALLINGR: { x: 0, y: 324, w: 54, h: 54, frames: 4, fps: 10 },
     }
 
 ///
