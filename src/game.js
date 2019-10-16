@@ -1,6 +1,7 @@
 import Twin1 from './twin1.js'
 import Twin2 from './twin2.js'
 import Player from './player.js'
+import Enemies from './monster.js';
 
 class Game {
     constructor(options) {
@@ -14,11 +15,13 @@ class Game {
         this.spriteCoordinates = options.spriteCoordinates
         this.twin1 = new Player(options)
         this.twin2 = new Twin2(options)
+        this.enemies = new Enemies(options)
     }
 
     update(twin1, twin2, step){
         this.twin1.update(twin1, step)
         this.twin2.update(twin2, step)
+        this.enemies.updateEnemies(twin1, twin2, step)
     }
 
 

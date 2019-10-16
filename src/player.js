@@ -61,7 +61,6 @@ export default class Player{
             accel = player.accel * (falling ? 0.5 : 1);
 
         this.animate(player)
-
         player.ddx = 0;
         player.ddy = player.gravity;
         if (player.left)
@@ -115,6 +114,7 @@ export default class Player{
         else if (player.dy < 0) {
             if ((cell && !celldown) ||
                 (cellright && !celldiag && nx)) {
+                    debugger
                 player.y = this.tileToPixel(ty + 1);   // clamp the y position to avoid jumping into platform above
                 player.dy = 0;            // stop upward velocity
                 cell = celldown;     // player is no longer really in that cell, we clamped them to the cell below

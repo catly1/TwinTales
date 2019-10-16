@@ -11,11 +11,11 @@ spritesheet.src = "../images/spritesheet.png"
 
 
 
-const MAPSIZE = { tw: 16, th: 12 },
+const MAPSIZE = { tw: 21, th: 12 },
     TILESIZE = 63,
     UNIT = TILESIZE,
-    GRAVITY = 9.8 * 10.5, 
-    MAXDX = 5,      
+    GRAVITY = 9.8 * 8, 
+    MAXDX = 6,      
     MAXDY = 20,      
     ACCELERATION = 1 / 2,    
     FRICTION = 1 / 6,   
@@ -80,7 +80,8 @@ window.addEventListener("DOMContentLoaded", e => {
 
     let twin1 = {},
         twin2 = {},
-        cells = []
+        cells = [],
+        enemies = []
 
     const tileToPixel = t => (t * TILESIZE),
         pixelToTile = p => (Math.floor(p / TILESIZE)),
@@ -105,7 +106,8 @@ window.addEventListener("DOMContentLoaded", e => {
         tileToPixel,
         pixelToTile,
         GRAVITY,
-        TWIN1ANIMATIONS
+        TWIN1ANIMATIONS,
+        enemies
     }
 
     const GameInstance = new Game(
@@ -127,6 +129,9 @@ window.addEventListener("DOMContentLoaded", e => {
                 case "twin2" : 
                     twin2 = entity; 
                     break;
+                case "enemy" :
+                    enemies.push(entity);
+                    break;
             }
         })
 
@@ -146,10 +151,10 @@ window.addEventListener("DOMContentLoaded", e => {
         entity.impulse = UNIT * (obj.properties.impulse || IMPULSE);
         entity.accel = entity.maxdx / (obj.properties.accel || ACCELERATION);
         entity.friction = entity.maxdx / (obj.properties.friction || FRICTION);
-        entity.monster = obj.type == "monster";
-        entity.twin1 = obj.type == "twin1";
-        entity.treasure = obj.type == "treasure";
-        entity.twin2 = obj.type == "twin2";
+        // entity.enemy = obj.type == "enemy";
+        // entity.twin1 = obj.type == "twin1";
+        // entity.treasure = obj.type == "treasure";
+        // entity.twin2 = obj.type == "twin2";
         entity.left = obj.properties.left;
         entity.right = obj.properties.right;
         entity.start = { x: obj.x, y: obj.y }
