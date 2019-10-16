@@ -146,15 +146,28 @@ export default class Player{
 
 
     animate(player){
-        if (player.left) {
+        if (player.left && !player.jumping && !player.falling) {
             Util.animate(player, this.TWIN1ANIMATIONS.LEFT)
-        } else if (player.right) {
+        } else if (player.right && !player.jumping && !player.falling) {
             Util.animate(player, this.TWIN1ANIMATIONS.RIGHT)
-        } else if (player.jumping) {
+        } else if (player.jump && !player.falling ) {
+            debugger
             Util.animate(player, this.TWIN1ANIMATIONS.JUMPINGL)
-        } else if (player.falling) {
+        // } else if ((player.jump && !player.left && !player.falling) || (player.jump && player.right && !player.falling)) {
+        //     debugger
+        //     Util.animate(player, this.TWIN1ANIMATIONS.JUMPINGR)
+        // } else if ( player.jump && !player.falling ) {
+        //     debugger
+        //     Util.animate(player, this.TWIN1ANIMATIONS.JUMPINGL)
+        } else if (player.falling && player.left) {
             Util.animate(player, this.TWIN1ANIMATIONS.FALLINGL)
-        } else {
+        } else if (player.falling && player.right) {
+            Util.animate(player, this.TWIN1ANIMATIONS.FALLINGR)}
+        else if (player.falling && !player.jump) {
+            debugger
+            Util.animate(player, this.TWIN1ANIMATIONS.FALLINGL)
+        }
+        else {
             Util.animate(player, this.TWIN1ANIMATIONS.IDLE)
         }
 
