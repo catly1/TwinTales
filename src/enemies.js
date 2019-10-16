@@ -32,10 +32,10 @@ export default class Enemies {
             else if (wasright)
                 enemy.ddx = enemy.ddx - friction;  // enemy was going right, but not any more
 
-            // if (enemy.jump && !enemy.jumping && !falling) {
-            //     enemy.ddy = enemy.ddy - enemy.impulse;     // apply an instantaneous (large) vertical impulse
-            //     enemy.jumping = true;
-            // }
+            if (enemy.jump && !enemy.jumping && !falling) {
+                enemy.ddy = enemy.ddy - enemy.impulse;     // apply an instantaneous (large) vertical impulse
+                enemy.jumping = true;
+            }
 
             enemy.y = enemy.y + (step * enemy.dy)
             enemy.x = enemy.x + (step * enemy.dx)
@@ -112,9 +112,18 @@ export default class Enemies {
                     } else {
                         this.killTwin(twin1) 
                     }
-            }
-        }
+                }
 
+                if (Util.overlap(twin2.x, twin2.y, this.TILESIZE, this.TILESIZE, enemy.x, enemy.y, this.TILESIZE, this.TILESIZE)) {
+                    if ((twin2.dy > 0) && (enemy.y - twin2.y > this.TILESIZE / 2)) {
+                        enemy.dead = true // kill enemy if stepped on
+                    } else {
+                        this.killTwin(twin2)
+                    }
+                }
+
+            }
+            enemy.falling = !(celldown || (nx && celldiag));
 
         })
 

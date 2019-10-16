@@ -2,6 +2,7 @@ import Twin1 from './twin1.js'
 import Twin2 from './twin2.js'
 import Player from './player.js'
 import Enemies from './enemies.js';
+import Doors from './door.js'
 
 class Game {
     constructor(options) {
@@ -16,12 +17,15 @@ class Game {
         this.twin1 = new Player(options)
         this.twin2 = new Twin2(options)
         this.enemies = new Enemies(options)
+        this.doors = new Doors(options)
+        this.currentLevel = 1
     }
 
     update(twin1, twin2, step){
         this.twin1.update(twin1, step)
         this.twin2.update(twin2, step)
         this.enemies.updateEnemies(twin1, twin2, step)
+        this.doors.updateDoors(twin1, twin2, step)
     }
 
 
@@ -32,6 +36,7 @@ class Game {
         this.twin1.renderTwin(ctx, twin1, dt);
         this.twin2.renderTwin(ctx, twin2, dt)
         this.enemies.renderEnemies(dt)
+        this.doors.renderDoors(dt)
         ctx.fillStyle = "gray";
         ctx.globalCompositeOperation = 'destination-over'
         ctx.fillRect(0, 0, width, height);

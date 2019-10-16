@@ -20,7 +20,7 @@ const MAPSIZE = { tw: 21, th: 12 },
     IMPULSE = 1500,   
     COLOR = { BLACK: '#000000', YELLOW: '#ECD078', BRICK: '#D95B43', PINK: '#C02942', PURPLE: '#542437', GREY: '#333', SLATE: '#53777A', GOLD: 'gold' },
     COLORS = [COLOR.YELLOW, COLOR.BRICK, COLOR.PINK, COLOR.PURPLE, COLOR.GREY],
-    KEY = { SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, W: 87, A: 65, S: 83, D: 68};
+    KEY = { SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, W: 87, A: 65, S: 83, D: 68, ENTER: 13};
 
     
 
@@ -53,6 +53,20 @@ window.addEventListener("DOMContentLoaded", e => {
                 twin1.jump = down; 
                 twin2.jump = down;
                 return false;
+            case KEY.ENTER:
+                debugger
+                handleEnter()
+                return false;
+        }
+    }
+
+    const handleEnter = () =>{
+        if (!paused){
+            // debugger
+            paused = true
+        } else {
+            // debugger
+            paused = false
         }
     }
   
@@ -79,7 +93,9 @@ window.addEventListener("DOMContentLoaded", e => {
     let twin1 = {},
         twin2 = {},
         cells = [],
-        enemies = []
+        enemies = [],
+        paused = false,
+        doors = []
 
     const tileToPixel = t => (t * TILESIZE),
         pixelToTile = p => (Math.floor(p / TILESIZE)),
@@ -105,7 +121,8 @@ window.addEventListener("DOMContentLoaded", e => {
         pixelToTile,
         GRAVITY,
         TWIN1ANIMATIONS,
-        enemies
+        enemies,
+        doors
     }
 
     const GameInstance = new Game(
@@ -130,6 +147,9 @@ window.addEventListener("DOMContentLoaded", e => {
                 case "enemy" :
                     enemies.push(entity);
                     break;
+                case "door" :
+                    doors.push(entity);
+                    break;
             }
         })
 
@@ -151,12 +171,19 @@ window.addEventListener("DOMContentLoaded", e => {
         entity.impulse = UNIT * IMPULSE;
         entity.accel = entity.maxdx /  ACCELERATION;
         entity.friction = entity.maxdx / FRICTION;
+        // entity.jump = true
 
         obj.properties.forEach(property => {
             if (property.name === "left") entity.left = property.value
             if (property.name === "right") entity.left = property.value
             if (property.name === "maxdx") {
                 entity.maxdx = UNIT * property.value
+            }
+            if (property.name === "maxdy") {
+                entity.maxdy = UNIT * property.value
+            }
+            if (property.name === "jump"){
+                entity.jump = property.value
             }
             
         })
@@ -167,7 +194,7 @@ window.addEventListener("DOMContentLoaded", e => {
         // entity.twin2 = obj.type == "twin2";
         // entity.left = obj.properties.find(property => property.name = "left").value
         // entity.right = obj.properties.right;
-        entity.start = { x: obj.x, y: obj.y }
+        entity.start = { x: obj.x * 3, y: obj.y * 3 }
         entity.killed = entity.collected = 0;
         entity.animation = {}
         return entity;
@@ -177,7 +204,7 @@ window.addEventListener("DOMContentLoaded", e => {
     const frame = () => {
         now = Util.timestamp();
         dt = dt + Math.min(1, (now - last) / 1000);
-        while (dt > step) {
+        while (dt > step && !paused) {
             dt = dt - step;
             GameInstance.update(twin1, twin2, step);
         }
@@ -188,12 +215,18 @@ window.addEventListener("DOMContentLoaded", e => {
 
 
     // Grab level data from json.
+    let level
+    switch (GameInstance.currentLevel) {
+        case 0:
 
-    Util.get("test-smoller.json", function (req) {
+        case 1:
+            level = "test-smoller.json"
+    }
+
+    Util.get(level, function (req) {
         setup(JSON.parse(req.responseText));
         frame();
     });   
-
 
 
 })
