@@ -2,7 +2,7 @@ import Twin1 from './twin1.js'
 import Twin2 from './twin2.js'
 
 class Game {
-    constructor(ctx, MAPSIZE, COLORS, tcell, TILESIZE, COLOR, spritesheet, spriteCoordinates, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, GRAVITY) {
+    constructor(ctx, MAPSIZE, COLORS, tcell, TILESIZE, COLOR, spritesheet, spriteCoordinates, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, GRAVITY, TWIN1ANIMATIONS) {
         this.ctx = ctx;
         this.MAPSIZE = MAPSIZE;
         this.COLORS = COLORS;
@@ -11,7 +11,7 @@ class Game {
         this.COLOR = COLOR;
         this.spritesheet = spritesheet;
         this.spriteCoordinates = spriteCoordinates
-        this.twin1 = new Twin1(ctx, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, tcell, GRAVITY, TILESIZE, COLOR)
+        this.twin1 = new Twin1(ctx, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, tcell, GRAVITY, TILESIZE, COLOR, TWIN1ANIMATIONS)
         this.twin2 = new Twin2(ctx, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, tcell, GRAVITY, TILESIZE, COLOR)
     }
 
@@ -19,6 +19,7 @@ class Game {
         this.twin1.update(twin1, step)
         this.twin2.update(twin2, step)
     }
+
 
     render(ctx, twin1, twin2, width, height, dt){
         ctx.clearRect(0, 0, width, height);
@@ -55,6 +56,8 @@ class Game {
             }
         }
     }
+
+    
 
 
 }

@@ -24,15 +24,15 @@ const MAPSIZE = { tw: 16, th: 12 },
     COLORS = [COLOR.YELLOW, COLOR.BRICK, COLOR.PINK, COLOR.PURPLE, COLOR.GREY],
     KEY = { SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, W: 87, A: 65, S: 83, D: 68};
 
-
-
+    
 
 let now, last = Util.timestamp(),
-    dt = 0
+    dt = 0,
+    TWIN1ANIMATIONS = {
+    IDLE: { x: 0, y: 0, w: 47, h: 47, frames: 4, fps: 5 }
+    }
 
-
-//
-
+///
 
 window.addEventListener("DOMContentLoaded", e => {
     const onKey = (ev, key, down) => {
@@ -81,7 +81,6 @@ window.addEventListener("DOMContentLoaded", e => {
         cell = (x, y) => (tcell(pixeltoTile(x), pixelToTile(y))),
         tcell = (tx, ty) => (cells[tx + (ty * MAPSIZE.tw)]);
 
-
     const GameInstance = new Game(
         ctx,
         MAPSIZE, 
@@ -99,7 +98,8 @@ window.addEventListener("DOMContentLoaded", e => {
         MAXDY, 
         tileToPixel, 
         pixelToTile,  
-        GRAVITY
+        GRAVITY,
+        TWIN1ANIMATIONS
         )
 
     // parses json to be useable by the app. Build objects from it that can be manipulated.
@@ -139,11 +139,12 @@ window.addEventListener("DOMContentLoaded", e => {
         entity.monster = obj.type == "monster";
         entity.twin1 = obj.type == "twin1";
         entity.treasure = obj.type == "treasure";
-        entity.twin2 = obj.type == "twin2"
+        entity.twin2 = obj.type == "twin2";
         entity.left = obj.properties.left;
         entity.right = obj.properties.right;
         entity.start = { x: obj.x, y: obj.y }
         entity.killed = entity.collected = 0;
+        entity.animation = {}
         return entity;
     }
 

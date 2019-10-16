@@ -1,7 +1,12 @@
 const Util = require("./util");
 
+// const loliSheet = new Image();
+// loliSheet.src = "../images/loli.png";
+
+
+
 export default class Player{
-    constructor(ctx, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, tcell, GRAVITY, TILESIZE, COLOR){
+    constructor(ctx, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, tcell, GRAVITY, TILESIZE, COLOR, TWIN1ANIMATIONS){
         this.ctx = ctx;
         this.UNIT = UNIT;
         this.ACCELERATION = ACCELERATION;
@@ -15,7 +20,11 @@ export default class Player{
         this.GRAVITY = GRAVITY;
         this.TILESIZE = TILESIZE;
         this.COLOR = COLOR;
+        this.TWIN1ANIMATIONS = TWIN1ANIMATIONS
     }
+
+
+
 
     update( player, dt){
         let wasleft = player.dx < 0,
@@ -23,6 +32,8 @@ export default class Player{
             falling = player.falling,
             friction = player.friction * (falling ? 0.5 : 1),
             accel = player.accel * (falling ? 0.5 : 1);
+
+        this.animate(player)
 
         player.ddx = 0;
         player.ddy = player.gravity;
@@ -106,6 +117,11 @@ export default class Player{
 
     }
 
+
+    animate(player){
+        if (this.TWIN1ANIMATIONS) Util.animate(player, this.TWIN1ANIMATIONS.IDLE)
+
+    }
 
 
 }
