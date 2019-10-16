@@ -1,4 +1,6 @@
 const Util = require("./util");
+const loliSheet = new Image()
+loliSheet.src = "../images/loli.png"
 
 // const loliSheet = new Image();
 // loliSheet.src = "../images/loli.png";
@@ -6,25 +8,52 @@ const Util = require("./util");
 
 
 export default class Player{
-    constructor(ctx, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, tcell, GRAVITY, TILESIZE, COLOR, TWIN1ANIMATIONS){
-        this.ctx = ctx;
-        this.UNIT = UNIT;
-        this.ACCELERATION = ACCELERATION;
-        this.FRICTION = FRICTION;
-        this.IMPULSE = IMPULSE;
-        this.MAXDX = MAXDX;
-        this.MAXDY = MAXDY;
-        this.tileToPixel = tileToPixel;
-        this.pixelToTile = pixelToTile;
-        this.tcell = tcell;
-        this.GRAVITY = GRAVITY;
-        this.TILESIZE = TILESIZE;
-        this.COLOR = COLOR;
-        this.TWIN1ANIMATIONS = TWIN1ANIMATIONS
+    constructor(options){
+        this.ctx = options.ctx;
+        this.UNIT = options.UNIT;
+        this.ACCELERATION = options.ACCELERATION;
+        this.FRICTION = options.FRICTION;
+        this.IMPULSE = options.IMPULSE;
+        this.MAXDX = options.MAXDX;
+        this.MAXDY = options.MAXDY;
+        this.tileToPixel = options.tileToPixel;
+        this.pixelToTile = options.pixelToTile;
+        this.tcell = options.tcell;
+        this.GRAVITY = options.GRAVITY;
+        this.TILESIZE = options.TILESIZE;
+        this.COLOR = options.COLOR;
+        this.TWIN1ANIMATIONS = options.TWIN1ANIMATIONS
     }
 
 
+    renderTwin(ctx, twin, dt) {
+        // ctx.fillStyle = this.COLOR.YELLOW;
+        // ctx.fillRect(twin.x + (twin.dx * dt), twin.y + (twin.dy * dt), this.TILESIZE, this.TILESIZE);
+        ctx.drawImage(
+            loliSheet, // Source image object
+            twin.animation.x + (twin.animationFrame * twin.animation.w), //	Source x
+            twin.animation.y, // 	Source y
+            47, // Source width
+            47, // Source height
+            twin.x + (twin.dx * dt), // Destination x
+            twin.y + (twin.dy * dt), // Destination y
+            this.TILESIZE, // Destination width
+            this.TILESIZE // Destination height
+        )
 
+        // this.idle(ctx, twin, dt)
+
+        let n, max;
+
+        ctx.fillStyle = this.COLOR.GOLD;
+        for (n = 0, max = twin.collected; n < max; n++)
+            ctx.fillRect(this.tileToPixel(2 + n), this.tileToPixel(2), this.TILESIZE / 2, this.TILESIZE / 2);
+
+        ctx.fillStyle = this.COLOR.SLATE;
+        for (n = 0, max = twin.killed; n < max; n++)
+            ctx.fillRect(this.tileToPixel(2 + n), this.tileToPixel(3), this.TILESIZE / 2, this.TILESIZE / 2);
+
+    }
 
     update( player, dt){
         let wasleft = player.dx < 0,

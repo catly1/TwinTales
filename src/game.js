@@ -1,18 +1,19 @@
 import Twin1 from './twin1.js'
 import Twin2 from './twin2.js'
+import Player from './player.js'
 
 class Game {
-    constructor(ctx, MAPSIZE, COLORS, tcell, TILESIZE, COLOR, spritesheet, spriteCoordinates, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, GRAVITY, TWIN1ANIMATIONS) {
-        this.ctx = ctx;
-        this.MAPSIZE = MAPSIZE;
-        this.COLORS = COLORS;
-        this.tcell = tcell;
-        this.TILESIZE = TILESIZE;
-        this.COLOR = COLOR;
-        this.spritesheet = spritesheet;
-        this.spriteCoordinates = spriteCoordinates
-        this.twin1 = new Twin1(ctx, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, tcell, GRAVITY, TILESIZE, COLOR, TWIN1ANIMATIONS)
-        this.twin2 = new Twin2(ctx, UNIT, ACCELERATION, FRICTION, IMPULSE, MAXDX, MAXDY, tileToPixel, pixelToTile, tcell, GRAVITY, TILESIZE, COLOR)
+    constructor(options) {
+        this.ctx = options.ctx;
+        this.MAPSIZE = options.MAPSIZE;
+        this.COLORS = options.COLORS;
+        this.tcell = options.tcell;
+        this.TILESIZE = options.TILESIZE;
+        this.COLOR = options.COLOR;
+        this.spritesheet = options.spritesheet;
+        this.spriteCoordinates = options.spriteCoordinates
+        this.twin1 = new Player(options)
+        this.twin2 = new Twin2(options)
     }
 
     update(twin1, twin2, step){

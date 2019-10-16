@@ -81,25 +81,29 @@ window.addEventListener("DOMContentLoaded", e => {
         cell = (x, y) => (tcell(pixeltoTile(x), pixelToTile(y))),
         tcell = (tx, ty) => (cells[tx + (ty * MAPSIZE.tw)]);
 
-    const GameInstance = new Game(
+    const options = {
         ctx,
-        MAPSIZE, 
-        COLORS, 
-        tcell, 
-        TILESIZE, 
-        COLOR, 
-        spritesheet, 
-        spriteCoordinates, 
-        UNIT, 
-        ACCELERATION, 
-        FRICTION, 
-        IMPULSE, 
-        MAXDX, 
-        MAXDY, 
-        tileToPixel, 
-        pixelToTile,  
+        MAPSIZE,
+        COLORS,
+        tcell,
+        TILESIZE,
+        COLOR,
+        spritesheet,
+        spriteCoordinates,
+        UNIT,
+        ACCELERATION,
+        FRICTION,
+        IMPULSE,
+        MAXDX,
+        MAXDY,
+        tileToPixel,
+        pixelToTile,
         GRAVITY,
         TWIN1ANIMATIONS
+    }
+
+    const GameInstance = new Game(
+            options
         )
 
     // parses json to be useable by the app. Build objects from it that can be manipulated.
