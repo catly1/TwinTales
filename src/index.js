@@ -1,9 +1,7 @@
 import Game from './game.js';
-const GameView = require("./game_view")
 const Util = require("./util");
-import Player from './player.js'
-const spritesheet = new Image()
-spritesheet.src = "../images/spritesheet.png"
+const spritesheet = new Image();
+spritesheet.src = "../images/spritesheet.png";
 
 // Constants and functions
 
@@ -131,6 +129,7 @@ window.addEventListener("DOMContentLoaded", e => {
                     break;
                 case "enemy" :
                     enemies.push(entity);
+                    debugger
                     break;
             }
         })

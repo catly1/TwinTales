@@ -1,7 +1,7 @@
 import Twin1 from './twin1.js'
 import Twin2 from './twin2.js'
 import Player from './player.js'
-import Enemies from './monster.js';
+import Enemies from './enemies.js';
 
 class Game {
     constructor(options) {
@@ -31,6 +31,7 @@ class Game {
         this.renderMap(ctx);
         this.twin1.renderTwin(ctx, twin1, dt);
         this.twin2.renderTwin(ctx, twin2, dt)
+        this.enemies.renderEnemies(dt)
         ctx.fillStyle = "gray";
         ctx.globalCompositeOperation = 'destination-over'
         ctx.fillRect(0, 0, width, height);

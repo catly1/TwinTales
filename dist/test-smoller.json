@@ -51,6 +51,21 @@
                  "width":21,
                  "x":287.166666666667,
                  "y":203.666666666667
+                }, 
+                {
+                 "height":21,
+                 "id":4,
+                 "name":"enemy 1",
+                 "properties":{
+                     "maxdx": "10",
+                     "right": "true"
+                 },
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":21,
+                 "x":370.5,
+                 "y":203.5
                 }],
          "opacity":1,
          "properties":[
@@ -70,7 +85,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":4,
+ "nextobjectid":5,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.5",
