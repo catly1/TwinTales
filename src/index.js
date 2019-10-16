@@ -128,7 +128,6 @@ window.addEventListener("DOMContentLoaded", e => {
                     twin2 = entity; 
                     break;
                 case "enemy" :
-                    debugger
                     enemies.push(entity);
                     break;
             }
@@ -157,7 +156,6 @@ window.addEventListener("DOMContentLoaded", e => {
             if (property.name === "left") entity.left = property.value
             if (property.name === "right") entity.left = property.value
             if (property.name === "maxdx") {
-                debugger
                 entity.maxdx = UNIT * property.value
             }
             

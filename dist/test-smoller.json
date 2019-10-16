@@ -65,7 +65,7 @@
                         {
                          "name":"maxdx",
                          "type":"int",
-                         "value":10
+                         "value":3
                         }],
                  "rotation":0,
                  "type":"enemy",

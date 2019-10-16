@@ -105,12 +105,15 @@ export default class Enemies {
 
             
             // monster and player overlap
-            if (Util.overlap(twin1.x, twin1.y, this.TILESIZE, this.TILESIZE, enemy.x, enemy.y, this.TILESIZE, this.TILESIZE)) {
-                if ((twin1.dy > 0) && (enemy.y - twin1.y > this.TILESIZE / 2))
-                    enemy.dead = true // kill enemy if stepped on
-                else
-                    this.killTwin(twin1) 
+            if (!enemy.dead){ // only do this if the monster is dead
+                if (Util.overlap(twin1.x, twin1.y, this.TILESIZE, this.TILESIZE, enemy.x, enemy.y, this.TILESIZE, this.TILESIZE)) {
+                    if ((twin1.dy > 0) && (enemy.y - twin1.y > this.TILESIZE / 2)){
+                        enemy.dead = true // kill enemy if stepped on
+                    } else {
+                        this.killTwin(twin1) 
+                    }
             }
+        }
 
 
         })
@@ -118,6 +121,7 @@ export default class Enemies {
     }
     
     killTwin(twin){
+        // debugger
         twin.x = twin.start.x
         twin.y = twin.start.y
         twin.dx = twin.dy = 0;
