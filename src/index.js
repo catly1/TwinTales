@@ -20,7 +20,8 @@ const MAPSIZE = { tw: 21, th: 12 },
     IMPULSE = 1500,   
     COLOR = { BLACK: '#000000', YELLOW: '#ECD078', BRICK: '#D95B43', PINK: '#C02942', PURPLE: '#542437', GREY: '#333', SLATE: '#53777A', GOLD: 'gold' },
     COLORS = [COLOR.YELLOW, COLOR.BRICK, COLOR.PINK, COLOR.PURPLE, COLOR.GREY],
-    KEY = { SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, W: 87, A: 65, S: 83, D: 68, ENTER: 13};
+    KEY = { SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, W: 87, A: 65, S: 83, D: 68, ENTER: 13},
+    LEVELS = ["level2.json", "level3.json", "test-smoller.json"]
 
     
 
@@ -101,7 +102,8 @@ window.addEventListener("DOMContentLoaded", e => {
         enemies = [],
         paused = false,
         doors = [],
-        currentLevel = 0,
+        selectedLevel = "",
+        lastLevel = "",
         gameOver = false,
         gameState= {
             twin1AtDoor: false,
@@ -228,17 +230,23 @@ window.addEventListener("DOMContentLoaded", e => {
         last = now;
         requestAnimationFrame(frame, canvas);
         } else {
-
+            
             switch (gameInstance.currentLevel){
                 case 2:
                     Util.get("level2.json", resetGame); 
                     break 
                 case 3:
-                    doors
                     Util.get("level3.json", resetGame);
+                    lastLevel = "level3.json"
                     break
-                default:
-                    Util.get("test-smoller.json", resetGame);
+                default: 
+                    selectedLevel = LEVELS[Math.floor(LEVELS.length * Math.random())]
+                    while ( selectedLevel === lastLevel){
+                        selectedLevel = LEVELS[Math.floor(LEVELS.length * Math.random())] 
+                    }
+                    if (selectedLevel)
+                    Util.get( selectedLevel , resetGame);
+                    lastLevel = selectedLevel.slice()
                     break  
             }
 
@@ -257,5 +265,6 @@ window.addEventListener("DOMContentLoaded", e => {
     Util.get("test-smoller.json", req => {
         setup(JSON.parse(req.responseText));
         frame();
+        lastLevel = "test-smoller.json"
     });   
 })

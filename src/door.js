@@ -15,7 +15,6 @@ export default class Doors {
 
     updateDoors(twin1, twin2, step) {
         this.doors.forEach(door => {
-            debugger
             let wasleft = door.dx < 0,
                 wasright = door.dx > 0,
                 falling = door.falling,
