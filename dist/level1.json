@@ -2,9 +2,9 @@
  "infinite":false,
  "layers":[
         {
-         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 687, 687, 687, 687, 687, 687, 687, 687, 687, 687, 687, 687, 687, 687, 687, 687, 687, 687, 687, 687, 687],
+         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 2, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 0, 0, 0, 2, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
          "height":12,
-         "id":1,
+         "id":3,
          "name":"Tile Layer 1",
          "opacity":1,
          "type":"tilelayer",
@@ -20,7 +20,7 @@
          "objects":[
                 {
                  "height":70,
-                 "id":3,
+                 "id":1,
                  "name":"twin1",
                  "properties":[
                         {
@@ -32,17 +32,79 @@
                  "type":"twin1",
                  "visible":true,
                  "width":70,
-                 "x":81.5,
-                 "y":666.833333333333
+                 "x":202.833333333333,
+                 "y":526.666666666667
+                }, 
+                {
+                 "height":70,
+                 "id":3,
+                 "name":"twin2",
+                 "properties":[
+                        {
+                         "name":"preferences",
+                         "type":"string",
+                         "value":""
+                        }],
+                 "rotation":0,
+                 "type":"twin2",
+                 "visible":true,
+                 "width":70,
+                 "x":884.499999999997,
+                 "y":667.666666666667
+                }, 
+                {
+                 "height":70,
+                 "id":6,
+                 "name":"door1",
+                 "properties":[
+                        {
+                         "name":"preferences",
+                         "type":"string",
+                         "value":""
+                        }],
+                 "rotation":0,
+                 "type":"door",
+                 "visible":true,
+                 "width":70,
+                 "x":621.166666666666,
+                 "y":409.5
+                }, 
+                {
+                 "height":70,
+                 "id":7,
+                 "name":"door2",
+                 "properties":[
+                        {
+                         "name":"preferences",
+                         "type":"string",
+                         "value":""
+                        }],
+                 "rotation":0,
+                 "type":"door",
+                 "visible":true,
+                 "width":70,
+                 "x":1336.16666666667,
+                 "y":423.166666666667
                 }],
          "opacity":1,
+         "properties":[
+                {
+                 "name":"height",
+                 "type":"int",
+                 "value":12
+                }, 
+                {
+                 "name":"width",
+                 "type":"int",
+                 "value":16
+                }],
          "type":"objectgroup",
          "visible":true,
          "x":0,
          "y":0
         }],
- "nextlayerid":3,
- "nextobjectid":4,
+ "nextlayerid":4,
+ "nextobjectid":8,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.5",
@@ -50,15 +112,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"D:\/Downloads\/Platformer Art Complete Pack\/Base pack\/Tiles\/ist it fixed.tsx"
-        }, 
-        {
-         "firstgid":157,
-         "source":"D:\/Downloads\/Platformer Art Complete Pack\/combined\/maybefinal.tsx"
-        }, 
-        {
-         "firstgid":686,
-         "source":"D:\/Downloads\/Platformer Art Complete Pack\/test\/complete.tsx"
+         "source":"completed.tsx"
         }],
  "tilewidth":70,
  "type":"map",

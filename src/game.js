@@ -65,9 +65,9 @@ class Game {
                 if (cell) {
                     // let sprite = this.spriteCoordinates[(cell-686).toString()];
                     let spritesLibrary = library.frames;
-                    let paddedNum = Util.padZero((cell - 685), 3);
-                    let sprite = spritesLibrary[paddedNum].frame
+                    let paddedNum = Util.padZero((cell), 3); // adjust the cell ID from Tiled in here
                     debugger
+                    let sprite = spritesLibrary[paddedNum].frame
                     ctx.drawImage(
                         this.spritesheet,
                         sprite.x,
