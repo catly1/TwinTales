@@ -20,13 +20,49 @@ export default class Player{
         this.GRAVITY = options.GRAVITY;
         this.TILESIZE = options.TILESIZE;
         this.COLOR = options.COLOR;
-        this.TWIN1ANIMATIONS = options.TWIN1ANIMATIONS
+        this.TWIN1ANIMATIONS = options.TWIN1ANIMATIONS;
+        this.breathInc = 0.04;
+        this.breathDir = 1;
+        this.breathAmt = 0;
+        this.breathMax = 2;
+        
+    }
+
+    updateBreath() {
+        if (this.breathDir === 1) {  // breath in
+            this.breathAmt -= this.breathInc;
+            if (this.breathAmt < -this.breathMax) {
+                this.breathDir = -1;
+            }
+        } else {  // breath out
+            this.breathAmt += this.breathInc;
+            if (this.breathAmt > this.breathMax) {
+                this.breathDir = 1;
+            }
+        }
     }
 
 
     renderTwin(ctx, twin, dt) {
         // ctx.fillStyle = this.COLOR.YELLOW;
         // ctx.fillRect(twin.x + (twin.dx * dt), twin.y + (twin.dy * dt), this.TILESIZE, this.TILESIZE);
+
+        this.updateBreath()
+        let breatheHeight
+        if (twin.animation.y === 0) {
+            breatheHeight = this.TILESIZE - this.breathAmt
+        } else {
+            breatheHeight = this.TILESIZE
+        }
+
+        let breatheDest
+            if (twin.animation.y === 0) {
+            breatheDest = twin.y + (twin.dy * dt) + this.breathAmt
+            }  else {
+                debugger
+            breatheDest = twin.y + (twin.dy * dt)
+        }
+
         ctx.drawImage(
             twinSheet, // Source image object
             twin.animation.x + (twin.animationFrame * twin.animation.w), //	Source x
@@ -34,10 +70,12 @@ export default class Player{
             245, // Source width
             245, // Source height
             twin.x + (twin.dx * dt), // Destination x
-            twin.y + (twin.dy * dt), // Destination y
+            breatheDest, // Destination y
             this.TILESIZE, // Destination width
-            this.TILESIZE // Destination height
+            breatheHeight // Destination height
         )
+
+
 
         // this.idle(ctx, twin, dt)
 
@@ -59,6 +97,7 @@ export default class Player{
             falling = player.falling,
             friction = player.friction * (falling ? 0.5 : 1),
             accel = player.accel * (falling ? 0.5 : 1);
+
 
         this.animate(player)
         player.ddx = 0;

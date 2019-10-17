@@ -211,7 +211,7 @@ window.addEventListener("DOMContentLoaded", e => {
         // entity.twin2 = obj.type == "twin2";
         // entity.left = obj.properties.find(property => property.name = "left").value
         // entity.right = obj.properties.right;
-        entity.start = { x: obj.x , y: obj.y * 3 }
+        entity.start = { x: obj.x , y: obj.y }
         entity.killed = entity.collected = 0;
         entity.animation = {}
         return entity;
