@@ -10,7 +10,7 @@ spritesheet.src = "../images/spritesheet.png";
 
 
 const MAPSIZE = { tw: 21, th: 12 },
-    TILESIZE = 63,
+    TILESIZE = 70,
     UNIT = TILESIZE,
     GRAVITY = 9.8 * 8, 
     MAXDX = 6,      
@@ -92,7 +92,7 @@ window.addEventListener("DOMContentLoaded", e => {
         "129": {x: 210, y: 94},
         "122": {x: 48, y: 94},
         "123": {x: 71, y: 94},
-        "124": {x: 94, y: 94}
+        "0": {x: 94, y: 94}
     } 
 
 
@@ -173,8 +173,8 @@ window.addEventListener("DOMContentLoaded", e => {
 
     const setupEntity = obj => {
         let entity = {};
-        entity.x = obj.x * 3; // multiplied by 3 because of resize
-        entity.y = obj.y * 3; // multiplied by 3 because of resize
+        entity.x = obj.x; // multiplied by 3 because of resize
+        entity.y = obj.y; // multiplied by 3 because of resize
         entity.dx = 0;
         entity.dy = 0;
         entity.left = ""
@@ -211,7 +211,7 @@ window.addEventListener("DOMContentLoaded", e => {
         // entity.twin2 = obj.type == "twin2";
         // entity.left = obj.properties.find(property => property.name = "left").value
         // entity.right = obj.properties.right;
-        entity.start = { x: obj.x * 3, y: obj.y * 3 }
+        entity.start = { x: obj.x , y: obj.y }
         entity.killed = entity.collected = 0;
         entity.animation = {}
         return entity;
@@ -234,15 +234,14 @@ window.addEventListener("DOMContentLoaded", e => {
             switch (gameInstance.currentLevel){
                 case 2:
                     Util.get("level2.json", resetGame)
-                    break 
+
                 case 3:
                     Util.get("level3.json", resetGame)
                     lastLevel = "level3.js";
-                    break
                 default: 
                     Util.get( endless() , resetGame)
                         lastLevel = selectedLevel.slice()
-                    break  
+
             }
 
         }
@@ -265,10 +264,11 @@ window.addEventListener("DOMContentLoaded", e => {
         frame();
     }
 
-    // Grab level data from json.
-    Util.get("test-smoller.json", req => {
+    Util.get("level1.json", req => {
         setup(JSON.parse(req.responseText));
         frame();
-        lastLevel = "test-smoller.json"
     });   
+
+    // Grab level data from json.
+
 })

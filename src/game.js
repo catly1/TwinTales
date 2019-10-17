@@ -2,7 +2,9 @@ import Twin1 from './twin1.js'
 import Twin2 from './twin2.js'
 import Player from './player.js'
 import Enemies from './enemies.js';
-import Doors from './door.js'
+import Doors from './door.js';
+import library from "../images/spritesheetAtlast.js"
+const Util = require("./util");
 
 class Game {
     constructor(options) {
@@ -61,16 +63,20 @@ class Game {
             for (x = 0; x < this.MAPSIZE.tw; x++) {
                 cell = this.tcell(x, y);
                 if (cell) {
-                    let sprite = this.spriteCoordinates[(cell-1).toString()]
+                    // let sprite = this.spriteCoordinates[(cell-686).toString()];
+                    let spritesLibrary = library.frames;
+                    let paddedNum = Util.padZero((cell - 685), 3);
+                    let sprite = spritesLibrary[paddedNum].frame
+                    debugger
                     ctx.drawImage(
                         this.spritesheet,
                         sprite.x,
                         sprite.y,
-                        this.TILESIZE / 3,
-                        this.TILESIZE / 3,
+                        sprite.w,
+                        sprite.h,
                         x * this.TILESIZE,
                         y * this.TILESIZE,
-                        this.TILESIZE * 1.03,
+                        this.TILESIZE,
                         this.TILESIZE
                     )
 

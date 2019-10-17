@@ -47,7 +47,13 @@ const Util = {
             ((x2 + w2 - 1) < x1) ||
             ((y1 + h1 - 1) < y2) ||
             ((y2 + h2 - 1) < y1))
+    },
+
+    padZero(num, length){
+        let len = length - ("" + num).length;
+        return (len > 0 ? new Array(++len).join('0') : '') + num
     }
 }
 
 module.exports = Util
+
