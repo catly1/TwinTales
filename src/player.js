@@ -173,5 +173,12 @@ export default class Player{
 
     }
 
+    static updatePosition(player, step) {
+        player.x = Util.normalizex(player.x + (step * player.dx));
+        player.y = player.y + (step * player.dy);
+        player.dx = Util.bound(player.dx + (step * player.ddx), -player.maxdx, player.maxdx);
+        player.dy = Util.bound(player.dy + (step * player.ddy), -player.maxdy, player.maxdy);
+    }
+
 
 }

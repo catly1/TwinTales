@@ -52,6 +52,14 @@ const Util = {
     padZero(num, length){
         let len = length - ("" + num).length;
         return (len > 0 ? new Array(++len).join('0') : '') + num
+    },
+
+    normalizex(x, width) {
+        while (x < 0)
+            x += (width - 0);
+        while (x >= width)
+            x -= (width - 0);
+        return x;
     }
 }
 

@@ -51,6 +51,10 @@ class Game {
         this.twin2.renderTwin(ctx, twin2, dt)
         this.enemies.renderEnemies(dt)
         this.doors.renderDoors(dt)
+        this.renderBackground(ctx, width, height)
+    }
+
+    renderBackground(ctx, width, height){
         ctx.fillStyle = "gray";
         ctx.globalCompositeOperation = 'destination-over'
         ctx.fillRect(0, 0, width, height);
