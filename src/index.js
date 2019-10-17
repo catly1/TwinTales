@@ -28,13 +28,13 @@ const MAPSIZE = { tw: 21, th: 12 },
 let now, last = Util.timestamp(),
     dt = 0,
     TWIN1ANIMATIONS = {
-    IDLE: { x: 0, y: 0, w: 54, h: 54, frames: 4, fps: 5 },
-    LEFT: { x: 0, y: 54, w: 54, h: 54, frames: 8, fps: 10 },
-    RIGHT: { x: 0, y: 108, w: 54, h: 54, frames: 8, fps: 10 },
-    JUMPINGL: { x: 0, y: 162, w: 54, h: 54, frames: 4, fps: 10 },
-    JUMPINGR: { x: 0, y: 216, w: 54, h: 54, frames: 4, fps: 10 },
-    FALLINGL: { x: 0, y: 270, w: 54, h: 54, frames: 4, fps: 10 },
-    FALLINGR: { x: 0, y: 324, w: 54, h: 54, frames: 4, fps: 10 },
+    IDLE: { x: 0, y: 0, w: 245, h: 245, frames: 24, fps: 10 },
+    LEFT: { x: 0, y: 245, w: 245, h: 245, frames: 10, fps: 10 },
+    RIGHT: { x: 0, y: 490, w: 245, h: 245, frames: 10, fps: 10 },
+    // JUMPINGL: { x: 0, y: 162, w: 245, h: 245, frames: 4, fps: 10 },
+    // JUMPINGR: { x: 0, y: 216, w: 245, h: 245, frames: 4, fps: 10 },
+    FALLINGL: { x: 0, y: 735, w: 245, h: 245, frames: 2, fps: 10 },
+    FALLINGR: { x: 0, y: 980, w: 245, h: 245, frames: 2, fps: 10 },
     }
 
 ///
@@ -211,7 +211,7 @@ window.addEventListener("DOMContentLoaded", e => {
         // entity.twin2 = obj.type == "twin2";
         // entity.left = obj.properties.find(property => property.name = "left").value
         // entity.right = obj.properties.right;
-        entity.start = { x: obj.x , y: obj.y }
+        entity.start = { x: obj.x , y: obj.y * 3 }
         entity.killed = entity.collected = 0;
         entity.animation = {}
         return entity;

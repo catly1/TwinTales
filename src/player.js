@@ -31,8 +31,8 @@ export default class Player{
             twinSheet, // Source image object
             twin.animation.x + (twin.animationFrame * twin.animation.w), //	Source x
             twin.animation.y, // 	Source y
-            54, // Source width
-            54, // Source height
+            245, // Source width
+            245, // Source height
             twin.x + (twin.dx * dt), // Destination x
             twin.y + (twin.dy * dt), // Destination y
             this.TILESIZE, // Destination width
@@ -144,13 +144,14 @@ export default class Player{
     }
 
 
-    animate(player){
+    animate(player){ 
+        
         if (player.left && !player.jumping && !player.falling) {
             Util.animate(player, this.TWIN1ANIMATIONS.LEFT)
         } else if (player.right && !player.jumping && !player.falling) {
             Util.animate(player, this.TWIN1ANIMATIONS.RIGHT)
         } else if (player.jump && !player.falling ) {
-            Util.animate(player, this.TWIN1ANIMATIONS.JUMPINGL)
+            Util.animate(player, this.TWIN1ANIMATIONS.FALLINGL)
         // } else if ((player.jump && !player.left && !player.falling) || (player.jump && player.right && !player.falling)) {
         //     debugger
         //     Util.animate(player, this.TWIN1ANIMATIONS.JUMPINGR)
@@ -164,7 +165,7 @@ export default class Player{
         else if (player.falling && !player.jump) {
             Util.animate(player, this.TWIN1ANIMATIONS.FALLINGL)
         } else if (player.jump) {
-            Util.animate(player, this.TWIN1ANIMATIONS.JUMPINGL)
+            Util.animate(player, this.TWIN1ANIMATIONS.FALLINGL)
         }
         else {
             Util.animate(player, this.TWIN1ANIMATIONS.IDLE)

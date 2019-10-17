@@ -1,5 +1,3 @@
-import Twin1 from './twin1.js'
-import Twin2 from './twin2.js'
 import Player from './player.js'
 import Enemies from './enemies.js';
 import Doors from './door.js';
@@ -17,7 +15,7 @@ class Game {
         this.spritesheet = options.spritesheet;
         this.spriteCoordinates = options.spriteCoordinates
         this.twin1 = new Player(options)
-        this.twin2 = new Twin2(options)
+        this.twin2 = new Player(options)
         this.enemies = new Enemies(options)
         this.doors = new Doors(options)
         this.gameState = options.gameState
