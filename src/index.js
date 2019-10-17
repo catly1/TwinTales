@@ -233,32 +233,36 @@ window.addEventListener("DOMContentLoaded", e => {
             
             switch (gameInstance.currentLevel){
                 case 2:
-                    Util.get("level2.json", resetGame); 
+                    Util.get("level2.json", resetGame)
                     break 
                 case 3:
-                    Util.get("level3.json", resetGame);
-                    lastLevel = "level3.json"
+                    Util.get("level3.json", resetGame)
+                    lastLevel = "level3.js";
                     break
                 default: 
-                    selectedLevel = LEVELS[Math.floor(LEVELS.length * Math.random())]
-                    while ( selectedLevel === lastLevel){
-                        selectedLevel = LEVELS[Math.floor(LEVELS.length * Math.random())] 
-                    }
-                    if (selectedLevel)
-                    Util.get( selectedLevel , resetGame);
-                    lastLevel = selectedLevel.slice()
+                    Util.get( endless() , resetGame)
+                        lastLevel = selectedLevel.slice()
                     break  
             }
 
         }
     }
 
+    const endless = () =>{
+        debugger
+        selectedLevel = LEVELS[Math.floor(LEVELS.length * Math.random())]
+        while (selectedLevel === lastLevel) {
+            selectedLevel = LEVELS[Math.floor(LEVELS.length * Math.random())]
+        }
+        return selectedLevel
+    }
+
     const resetGame = req => {
         enemies.length = 0
         doors.length = 0
         setup(JSON.parse(req.responseText));
-        frame();
         gameInstance.gameRunning = true
+        frame();
     }
 
     // Grab level data from json.

@@ -35,6 +35,7 @@ class Game {
         if (this.gameState.twin1AtDoor && this.gameState.twin2AtDoor) {
             ++this.currentLevel
             this.gameRunning = false
+            return true
         }
         return false
     }
