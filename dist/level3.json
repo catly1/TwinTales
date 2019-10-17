@@ -120,8 +120,8 @@
                  "type":"door",
                  "visible":true,
                  "width":21,
-                 "x":168.5,
-                 "y":146
+                 "x":161,
+                 "y":144.5
                 }, 
                 {
                  "height":21,
@@ -137,8 +137,8 @@
                  "type":"door",
                  "visible":true,
                  "width":21,
-                 "x":397.5,
-                 "y":124.5
+                 "x":380,
+                 "y":148
                 }],
          "opacity":1,
          "properties":[

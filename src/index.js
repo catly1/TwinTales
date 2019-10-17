@@ -228,31 +228,34 @@ window.addEventListener("DOMContentLoaded", e => {
         last = now;
         requestAnimationFrame(frame, canvas);
         } else {
-            ++gameInstance.currentLevel
+
             switch (gameInstance.currentLevel){
                 case 2:
-                    Util.get("level2.json", resetGame);  
+                    Util.get("level2.json", resetGame); 
+                    break 
                 case 3:
+                    doors
                     Util.get("level3.json", resetGame);
-                case 4:
-                    debugger
-                    Util.get("test-smoller.json", resetGame);  
+                    break
+                default:
+                    Util.get("test-smoller.json", resetGame);
+                    break  
             }
 
         }
     }
 
     const resetGame = req => {
+        enemies.length = 0
+        doors.length = 0
         setup(JSON.parse(req.responseText));
         frame();
         gameInstance.gameRunning = true
     }
 
     // Grab level data from json.
-
     Util.get("test-smoller.json", req => {
         setup(JSON.parse(req.responseText));
         frame();
     });   
-
 })
