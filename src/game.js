@@ -18,7 +18,9 @@ class Game {
         this.twin2 = new Twin2(options)
         this.enemies = new Enemies(options)
         this.doors = new Doors(options)
+        this.gameState = options.gameState
         this.currentLevel = 1
+        this.gameRunning = true;
     }
 
     update(twin1, twin2, step){
@@ -26,9 +28,14 @@ class Game {
         this.twin2.update(twin2, step)
         this.enemies.updateEnemies(twin1, twin2, step)
         this.doors.updateDoors(twin1, twin2, step)
-        if (this.doors.stageCompleted()){
-            debugger
+        this.stageCompleted()
+    }
+
+    stageCompleted(){
+        if (this.gameState.twin1AtDoor && this.gameState.twin2AtDoor) {
+            this.gameRunning = false
         }
+        return false
     }
 
 

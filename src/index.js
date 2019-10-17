@@ -102,7 +102,11 @@ window.addEventListener("DOMContentLoaded", e => {
         paused = false,
         doors = [],
         currentLevel = 0,
-        gameOver = false
+        gameOver = false,
+        gameState= {
+            twin1AtDoor: false,
+            twin2AtDoor: false,
+        }
 
     const tileToPixel = t => (t * TILESIZE),
         pixelToTile = p => (Math.floor(p / TILESIZE)),
@@ -129,10 +133,11 @@ window.addEventListener("DOMContentLoaded", e => {
         GRAVITY,
         TWIN1ANIMATIONS,
         enemies,
-        doors
+        doors,
+        gameState
     }
 
-    const GameInstance = new Game(
+    const gameInstance = new Game(
             options
         )
 
@@ -178,6 +183,9 @@ window.addEventListener("DOMContentLoaded", e => {
         entity.impulse = UNIT * IMPULSE;
         entity.accel = entity.maxdx /  ACCELERATION;
         entity.friction = entity.maxdx / FRICTION;
+        entity.in1 = false
+        entity.in2 = false
+        entity.name = obj.name
         // entity.jump = true
 
         obj.properties.forEach(property => {
@@ -209,33 +217,42 @@ window.addEventListener("DOMContentLoaded", e => {
 
 
     const frame = () => {
+        if(gameInstance.gameRunning) {
         now = Util.timestamp();
         dt = dt + Math.min(1, (now - last) / 1000);
-        while (dt > step && !paused) {
+        while (dt > step) {
             dt = dt - step;
-            GameInstance.update(twin1, twin2, step);
+            gameInstance.update(twin1, twin2, step);
         }
-        GameInstance.render(ctx, twin1, twin2, width, height, dt);
+        gameInstance.render(ctx, twin1, twin2, width, height, dt);
         last = now;
         requestAnimationFrame(frame, canvas);
+        } else {
+            ++gameInstance.currentLevel
+            switch (gameInstance.currentLevel){
+                case 2:
+                    Util.get("level2.json", resetGame);  
+                case 3:
+                    Util.get("level3.json", resetGame);
+                case 4:
+                    debugger
+                    Util.get("test-smoller.json", resetGame);  
+            }
+
+        }
     }
 
+    const resetGame = req => {
+        setup(JSON.parse(req.responseText));
+        frame();
+        gameInstance.gameRunning = true
+    }
 
     // Grab level data from json.
-    
-    let level
-    switch (currentLevel) {
-        case 1:
-            console.log("hey");
-        case 0:
-            level = "test-smoller.json";
-            // return false;
-    }
 
-    Util.get(level, function (req) {
+    Util.get("test-smoller.json", req => {
         setup(JSON.parse(req.responseText));
         frame();
     });   
-
 
 })

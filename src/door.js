@@ -9,9 +9,8 @@ export default class Doors {
         this.pixelToTile = options.pixelToTile;
         this.tileToPixel = options.tileToPixel;
         this.COLOR = options.COLOR;
-        this.ctx = options.ctx
-        this.twin1AtDoor = false;
-        this.twin2AtDoor = false;
+        this.ctx = options.ctx;
+        this.gameState = options.gameState;
     }
 
     updateDoors(twin1, twin2, step) {
@@ -106,16 +105,24 @@ export default class Doors {
 
 
 
+                if (door.name === "door1") {
+                    if ((Util.overlap(twin1.x, twin1.y, this.TILESIZE, this.TILESIZE, door.x, door.y, this.TILESIZE, this.TILESIZE))) {
+                            // this.killTwin(twin1)
+                        this.gameState.twin1AtDoor = true
+                    } else 
+                    {
+                        this.gameState.twin1AtDoor = false
+                    }
+                }
 
-                if ((Util.overlap(twin1.x, twin1.y, this.TILESIZE, this.TILESIZE, door.x, door.y, this.TILESIZE, this.TILESIZE))) {
-                        // this.killTwin(twin1)
-                    this.twin1AtDoor = true
-                } 
-
-                if (Util.overlap(twin2.x, twin2.y, this.TILESIZE, this.TILESIZE, door.x, door.y, this.TILESIZE, this.TILESIZE)) {
-                        // this.killTwin(twin2)
-                    this.twin2AtDoor = true
-                } 
+                if (door.name === "door2") {
+                    if (Util.overlap(twin2.x, twin2.y, this.TILESIZE, this.TILESIZE, door.x, door.y, this.TILESIZE, this.TILESIZE)) {
+                            // this.killTwin(twin2)
+                        this.gameState.twin2AtDoor = true
+                    } else {
+                        this.gameState.twin2AtDoor = false
+                    }
+                }
 
             door.falling = !(celldown || (nx && celldiag));
 
@@ -137,10 +144,6 @@ export default class Doors {
                 this.ctx.fillRect(door.x + (door.dx * dt), door.y + (door.dy * dt), this.TILESIZE, this.TILESIZE)
             }
         })
-    }
-
-    stageCompleted(){
-        return this.twin1AtDoor && this.twin2AtDoor
     }
 
 }
