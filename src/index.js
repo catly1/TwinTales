@@ -67,6 +67,7 @@ window.addEventListener("DOMContentLoaded", e => {
             case KEY.SPACE: 
                     twin1.jump = down;
                     twin2.jump = down;
+                    setTimeout(handleJump, 100)
                 break;
             case KEY.ENTER:
                 handleEnter()
@@ -77,6 +78,11 @@ window.addEventListener("DOMContentLoaded", e => {
 
 
 
+    }
+
+    const handleJump = () => {
+        twin1.jump = false
+        twin2.jump =false
     }
 
     const handleEnter = () =>{
@@ -96,13 +102,17 @@ window.addEventListener("DOMContentLoaded", e => {
   
     document.addEventListener('keydown', function (ev) { return onKey(ev, ev.keyCode, true); }, false);
     document.addEventListener('keyup', function (ev) { return onKey(ev, ev.keyCode, false); }, false);
-    
+
     const canvas = document.getElementById('canvas'),
         ctx = canvas.getContext("2d"),
         width = canvas.width = MAPSIZE.tw * TILESIZE,
         height = canvas.height = MAPSIZE.th * TILESIZE,
         fps = 60,
         step = 1 / fps
+
+    const sidebar = document.getElementById("sidebar")
+        sidebar.style.cssText = `height: ${canvas.clientHeight}px`
+    const gameDiv = document.getElementById("game")
 
     const spriteCoordinates = {
         "154": {x: 48, y: 117},
