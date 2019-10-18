@@ -253,9 +253,6 @@ window.addEventListener("DOMContentLoaded", e => {
             switch (gameInstance.currentLevel){
                 case 2:
                     Util.get("level2.json", resetGame);
-                    // currentAudio.stop()
-                    currentAudio
-                    volume
                     debugger
                     // Audio("../audio/stage loop1.mp3")
                     break;
@@ -314,7 +311,7 @@ window.addEventListener("DOMContentLoaded", e => {
 
     Util.get("level1.json", req => {
         setup(JSON.parse(req.responseText));
-        Audio("../audio/stage loop1.mp3");
+        // Audio("../audio/stage loop1.mp3");
         frame();
     });   
 
@@ -322,8 +319,10 @@ window.addEventListener("DOMContentLoaded", e => {
     document.getElementById("mute").addEventListener("click", e => {
         if (volume.value === 1) { 
             volume.value = 0
+            document.getElementById("mute").src = "../images/knob-left.png"
         } else {
             volume.value = 1
+            document.getElementById("mute").src = "../images/knob-right.png"
         }
     })
     // Grab level data from json.

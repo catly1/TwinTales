@@ -1,20 +1,96 @@
-#canvas {
-    display: block;
+body{
+    margin: 0;
+    border: 0;
+    padding: 0;
+
+}
+
+.background{
+    display: flex;
+    color: white;
     width: 100%;
-    height: 100%;
+    height: 98vh;
+    background-color: rgb(37, 5, 5);
+    box-shadow: inset 0 0 100px black;
+    padding: 0 40px;
+    padding-bottom: 19px;
+}
+
+#canvas {
+    display:flex;
+    width: 100%;
+    /* height: 100%; */
+    border: 20px black solid;
+    border-radius: 50px;
     /* background-color:blue;  */
 }
 
-.game{
-   margin: 1em auto; 
-   position: relative; 
-   width: 512px; 
-   height: 384px; 
-   display: flex;
+.left-side{
+    width: 15%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    justify-content: space-between;
+    height: 100%;
+    background: white;
+    border-radius: 10px;
+    margin-top: 10px ;
+    margin-right: 10px;
 }
 
-    @media screen and (min-width:     0px) and (min-height:    0px) { .game { width:  512px; height: 384px; font-size:  7pt; } } /* block = 16 */
-    @media screen and (min-width:   840px) and (min-height:  530px) { .game { width:  640px; height: 480px; font-size:  9pt; } } /* block = 20 */
-    @media screen and (min-width:   968px) and (min-height:  626px) { .game { width:  768px; height: 576px; font-size: 11pt; } } /* block = 24 */
-    @media screen and (min-width:  1096px) and (min-height:  722px) { .game { width:  896px; height: 672px; font-size: 13pt; } } /* block = 28 */
-    @media screen and (min-width:  1224px) and (min-height:  818px) { .game { width: 1441px; height: auto; font-size: 15pt; } } /* block = 32 */
+
+
+.canvas-wrapper{
+    /* padding-top: 20px; */
+}
+
+.game{
+   /* width: 50vh; */
+  height: auto;
+  width: 100%;
+   /* height: auto; */
+   display: flex;
+   /* justify-content: center; */
+}
+
+.mute-button{
+    /* margin-right: 10; */
+    width: 80%;
+    padding: 0 20px;
+}
+
+  
+.post-it{
+    width: 121%;
+
+}
+
+
+
+.how-to{
+z-index: 5;
+    top: -308px;
+    left: 108px;
+    position: relative;
+    color: black;
+    font-family: 'Schoolbell', arial, serif;
+    font-size: 30px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.how-to ul {
+position: relative;
+    font-size: 21px;
+    top: -13px;
+    left: -32px;
+}
+
+.how-to li {
+    width: 119px;
+}
+
+.how-to li:last-child{
+    margin-top: 10px;
+}
