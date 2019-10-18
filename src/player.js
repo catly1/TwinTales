@@ -1,6 +1,8 @@
 const Util = require("./util");
 const twinSheet = new Image()
+const twinSheet2 = new Image()
 twinSheet.src = "../images/twinspritesheet.png"
+twinSheet2.src = "../images/twinspritesheet2.png"
 
 
 
@@ -62,8 +64,16 @@ export default class Player{
             breatheDest = twin.y + (twin.dy * dt)
         }
 
+        let sheet
+        if (twin.name === "twin1"){
+            sheet = twinSheet
+        } else {
+            sheet = twinSheet2
+        }
+
+
         ctx.drawImage(
-            twinSheet, // Source image object
+            sheet, // Source image object
             twin.animation.x + (twin.animationFrame * twin.animation.w), //	Source x
             twin.animation.y, // 	Source y
             245, // Source width
