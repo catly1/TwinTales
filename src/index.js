@@ -253,7 +253,7 @@ window.addEventListener("DOMContentLoaded", e => {
         dt = dt + Math.min(1, (now - last) / 1000);
         while (dt > step) {
             dt = dt - step;
-            gameInstance.update(twin1, twin2, step);
+            gameInstance.update(twin1, twin2, step, width, height);
         }
         gameInstance.render(ctx, twin1, twin2, width, height, dt);
         last = now;

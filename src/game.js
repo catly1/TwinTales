@@ -3,6 +3,8 @@ import Enemies from './enemies.js';
 import Doors from './door.js';
 import library from "../images/spritesheetAtlast.js"
 const Util = require("./util");
+const background1 = new Image();
+background1.src = '../images/BG.png'
 
 class Game {
     constructor(options) {
@@ -21,13 +23,15 @@ class Game {
         this.gameState = options.gameState
         this.currentLevel = 1
         this.gameRunning = true;
+        this.secondCounter= 0;
     }
 
-    update(twin1, twin2, step){
+    update(twin1, twin2, step, width, height){
         this.twin1.update(twin1, step)
         this.twin2.update(twin2, step)
         this.enemies.updateEnemies(twin1, twin2, step)
         this.doors.updateDoors(twin1, twin2, step)
+
         this.stageCompleted()
     }
 
@@ -49,15 +53,38 @@ class Game {
         this.twin2.renderTwin(ctx, twin2, dt)
         this.enemies.renderEnemies(dt)
         this.doors.renderDoors(dt)
-        this.renderBackground(ctx, width, height)
+        // this.renderBackground(ctx, width, height)
+        this.animateBackground(width, height, dt)
     }
 
     renderBackground(ctx, width, height){
         ctx.fillStyle = "gray";
         ctx.globalCompositeOperation = 'destination-over'
-        ctx.fillRect(0, 0, width, height);
+        ctx.drawImage(
+                background1,
+                0,
+                0
+            )
     }
 
+    animateBackground(width, height, dt){
+        this.secondCounter += dt;
+
+        let animationSpeed = 100
+        let numImages = Math.ceil(width / background1.height) + 1
+        let ypos = this.secondCounter * animationSpeed % background1.width;
+        this.ctx.save();
+        this.ctx.translate( ypos, 0)
+        for (let num = 0; num < numImages; num++){
+        this.ctx.globalCompositeOperation = 'destination-over'
+            this.ctx.drawImage(
+                background1,
+                0,
+                0
+            )
+        }
+        this.ctx.restore();
+    }
 
     renderMap(ctx) {
         let x, y, cell;
