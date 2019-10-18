@@ -24,6 +24,7 @@ class Game {
         this.currentLevel = 1
         this.gameRunning = true;
         this.secondCounter= 0;
+        this.scrollVal = 0
     }
 
     update(twin1, twin2, step, width, height){
@@ -70,20 +71,67 @@ class Game {
     animateBackground(width, height, dt){
         this.secondCounter += dt;
 
-        let animationSpeed = 100
-        let numImages = Math.ceil(width / background1.height) + 1
-        let ypos = this.secondCounter * animationSpeed % background1.width;
-        this.ctx.save();
-        this.ctx.translate( ypos, 0)
-        for (let num = 0; num < numImages; num++){
-        this.ctx.globalCompositeOperation = 'destination-over'
-            this.ctx.drawImage(
-                background1,
-                0,
-                0
-            )
+        // let animationSpeed = 100
+        // let numImages = Math.ceil(width / background1.height) + 1
+        // let ypos = this.secondCounter * animationSpeed % background1.width;
+        // this.ctx.save();
+        // this.ctx.translate( ypos, 0)
+        // for (let num = 0; num < numImages; num++){
+        // 
+        //     this.ctx.drawImage(
+        //         background1,
+        //         0,
+        //         0,
+        //         // background1.width,
+        //         // background1.height,
+        //         // 0,
+        //         // 0,
+        //         // width,
+        //         // height
+                
+        //     )
+        // }
+        // this.ctx.restore();
+
+        let scrollSpeed = 1
+
+        if (this.scrollVal >= width){
+            this.scrollVal = 0;
         }
-        this.ctx.restore();
+
+        this.scrollVal += scrollSpeed;
+        this.ctx.globalCompositeOperation = 'destination-over'
+
+        
+
+
+
+        this.ctx.drawImage(
+            background1, 
+            width - this.scrollVal, 
+            0, 
+            width, 
+            height, 
+            // 0, 
+            // 0, 
+            // width, 
+            // height
+            );
+        
+        this.ctx.drawImage(
+            background1,
+            - this.scrollVal,
+            0,
+            width,
+            height
+        );
+
+        // To go the other way instead
+        // this.ctx.drawImage(background1, -this.scrollVal, 0, background1.width, background1.height);
+        // this.ctx.drawImage(background1, width - this.scrollVal, 0, background1.width, background1.height);
+
+
+
     }
 
     renderMap(ctx) {
