@@ -59,7 +59,6 @@ export default class Player{
             if (twin.animation.y === 0) {
             breatheDest = twin.y + (twin.dy * dt) + this.breathAmt
             }  else {
-                debugger
             breatheDest = twin.y + (twin.dy * dt)
         }
 

@@ -233,22 +233,22 @@ window.addEventListener("DOMContentLoaded", e => {
             
             switch (gameInstance.currentLevel){
                 case 2:
-                    Util.get("level2.json", resetGame)
-
+                    Util.get("level2.json", resetGame);
+                    break;
                 case 3:
-                    Util.get("level3.json", resetGame)
-                    lastLevel = "level3.js";
+                    Util.get("level3.json", resetGame);
+                    break;
                 default: 
-                    Util.get( endless() , resetGame)
-                        lastLevel = selectedLevel.slice()
-
+                    debugger
+                    Util.get( endless() , resetGame);
+                    lastLevel = selectedLevel.slice();
+                    break;
             }
 
         }
     }
 
     const endless = () =>{
-        debugger
         selectedLevel = LEVELS[Math.floor(LEVELS.length * Math.random())]
         while (selectedLevel === lastLevel) {
             selectedLevel = LEVELS[Math.floor(LEVELS.length * Math.random())]
