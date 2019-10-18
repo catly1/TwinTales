@@ -3,8 +3,10 @@ import Enemies from './enemies.js';
 import Doors from './door.js';
 import library from "../images/spritesheetAtlast.js"
 const Util = require("./util");
-const background1 = new Image();
-background1.src = '../images/BG.png'
+const staticBackground1 = new Image();
+staticBackground1.src = '../images/staticBackground1.png'
+const animatedBackground1 = new Image();
+animatedBackground1.src = "../images/anibackground1.png"
 
 class Game {
     constructor(options) {
@@ -54,18 +56,22 @@ class Game {
         this.twin2.renderTwin(ctx, twin2, dt)
         this.enemies.renderEnemies(dt)
         this.doors.renderDoors(dt)
-        // this.renderBackground(ctx, width, height)
+        this.renderStaticBackground(ctx, width, height)
         this.animateBackground(width, height, dt)
     }
 
-    renderBackground(ctx, width, height){
+    renderStaticBackground(ctx, width, height){
         ctx.fillStyle = "gray";
-        ctx.globalCompositeOperation = 'destination-over'
+        this.ctx.globalCompositeOperation = 'destination-over'
+        ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
         ctx.drawImage(
-                background1,
+                staticBackground1,
                 0,
-                0
+                0,
+                width,
+                height
             )
+        // ctx.fillRect(0, 0, width,height);
     }
 
     animateBackground(width, height, dt){
@@ -93,7 +99,7 @@ class Game {
         // }
         // this.ctx.restore();
 
-        let scrollSpeed = 1
+        let scrollSpeed = 0.2
 
         if (this.scrollVal >= width){
             this.scrollVal = 0;
@@ -107,7 +113,7 @@ class Game {
 
 
         this.ctx.drawImage(
-            background1, 
+            animatedBackground1, 
             width - this.scrollVal, 
             0, 
             width, 
@@ -119,7 +125,7 @@ class Game {
             );
         
         this.ctx.drawImage(
-            background1,
+            animatedBackground1,
             - this.scrollVal,
             0,
             width,
