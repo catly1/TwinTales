@@ -24,6 +24,7 @@ const MAPSIZE = { tw: 21, th: 12 },
     LEVELS = ["level2.json", "level3.json", "test-smoller.json"]
 
     
+let currentAudio, volume
 
 let now, last = Util.timestamp(),
     dt = 0,
@@ -39,30 +40,47 @@ let now, last = Util.timestamp(),
 
 ///
 
+
+
+
 window.addEventListener("DOMContentLoaded", e => {
+
+
+
+
+
+    
+
+
+
     const onKey = (ev, key, down) => {
+        if (stamina > 0){
         switch (key) {
             case KEY.A: 
                 twin1.left = down; 
                 twin2.left = down; 
-                return false;
+                break;
             case KEY.D: 
                 twin1.right = down;
                 twin2.right = down; 
-                return false;
+                break;
             case KEY.SPACE: 
-                twin1.jump = down; 
-                twin2.jump = down;
-                return false;
+                    twin1.jump = down;
+                    twin2.jump = down;
+                break;
             case KEY.ENTER:
                 handleEnter()
-                return false;
+                break;
         }
+        }
+
+
+
+
     }
 
     const handleEnter = () =>{
         if (currentLevel < 1 && currentLevel !== 1){
-            debugger
             currentLevel = 1
         }
 
@@ -108,7 +126,8 @@ window.addEventListener("DOMContentLoaded", e => {
         gameState= {
             twin1AtDoor: false,
             twin2AtDoor: false,
-        }
+        },
+        stamina = 100;
 
     const tileToPixel = t => (t * TILESIZE),
         pixelToTile = p => (Math.floor(p / TILESIZE)),
@@ -234,12 +253,16 @@ window.addEventListener("DOMContentLoaded", e => {
             switch (gameInstance.currentLevel){
                 case 2:
                     Util.get("level2.json", resetGame);
+                    // currentAudio.stop()
+                    currentAudio
+                    volume
+                    debugger
+                    // Audio("../audio/stage loop1.mp3")
                     break;
                 case 3:
                     Util.get("level3.json", resetGame);
                     break;
                 default: 
-                    debugger
                     Util.get( endless() , resetGame);
                     lastLevel = selectedLevel.slice();
                     break;
@@ -264,11 +287,46 @@ window.addEventListener("DOMContentLoaded", e => {
         frame();
     }
 
+    const Audio = (audio) =>{
+        let url = audio;
+
+        let context = new AudioContext();
+        let source = context.createBufferSource();
+        let gain = context.createGain();
+        volume = gain.gain
+        gain.connect(context.destination)
+        source.connect(gain);
+        let request = new XMLHttpRequest();
+        request.open('GET', url, true);
+
+        request.responseType = 'arraybuffer';
+        request.onload = function () {
+            context.decodeAudioData(request.response, function (response) {
+                source.buffer = response;
+                currentAudio = source
+                source.start(0);
+                source.loop = true;
+            }, function () { console.error('The request failed.'); });
+        }
+        request.send();
+    }
+
+
     Util.get("level1.json", req => {
         setup(JSON.parse(req.responseText));
+        Audio("../audio/stage loop1.mp3");
         frame();
     });   
 
+
+    document.getElementById("mute").addEventListener("click", e => {
+        if (volume.value === 1) { 
+            volume.value = 0
+        } else {
+            volume.value = 1
+        }
+    })
     // Grab level data from json.
 
 })
+
