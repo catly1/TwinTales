@@ -57,27 +57,91 @@ body{
 }
 
 .mute-button{
-    /* margin-right: 10; */
+    /* margin-right: 2; */
     width: 80%;
-    padding: 0 20px;
+    padding: 2 20px;
     /* margin-top: 40px; */
     cursor: pointer;
 }
 
 .volume{
     color: rgb(51, 51, 51);
-    margin-bottom: 20px;
-    font-size: 18px;
+    margin-bottom: 15px;
+    font-size: 30px;
+    font-weight: bold;
     font-family: sans-serif;
 }
   
 .post-it{
     width: 121%;
-
+    position: relative;
+    z-index: 1;
 }
 
 
 
 .instructions{
     margin-top: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.other-buttons{
+    display: flex;
+    flex-direction: column;
+    /* background: rgb(189, 187, 187); */
+    border-radius: 5px;
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
+    margin: 0 10px;
+    margin-top: 30px;
+    border: darkgray 1px solid;
+    /* box-shadow: 2px 2px rgb(131, 131, 131); */
+    width: 30%;
+    min-width: 50px;
+    min-height: 50px;
+}
+
+.other-buttons:hover{
+    box-shadow:0 1px 3px rgba(0,0,0,0.4)
+}
+
+
+.other-buttons a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 14%
+}
+
+.other-buttons a:first-child{
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
+    background-image: -webkit-linear-gradient(bottom,#ccc 0%,#eee 90%,#fff 50%,#eee 100%);
+}
+
+.other-buttons a:last-child{
+    background-color: white;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.other-buttons a:hover{
+}
+
+.other-buttons img{
+    width: 100%;
+}
+
+.speaker-grill{
+    bottom: 20px;
+    position: absolute;
+    /* top: 27px; */
+    align-self: center;
+    color: black;
+    word-wrap: break-word;
+    width: 80%;
+    height: 110%;
+    border-radius: 5px;
 }
