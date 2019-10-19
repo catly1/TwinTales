@@ -58,7 +58,7 @@ body{
 
 .mute-button{
     /* margin-right: 2; */
-    width: 80%;
+    width: 85%;
     padding: 2 20px;
     /* margin-top: 40px; */
     cursor: pointer;
@@ -141,7 +141,16 @@ body{
     align-self: center;
     color: black;
     word-wrap: break-word;
-    width: 80%;
+    width: 85%;
     height: 110%;
     border-radius: 5px;
+}
+
+.middle{
+    display: flex;
+    width: 85%;
+}
+
+.flavor-stuff{
+    
 }
