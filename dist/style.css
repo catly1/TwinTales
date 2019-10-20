@@ -94,12 +94,11 @@ body{
     border-radius: 5px;
     border-top-right-radius: 7px;
     border-top-left-radius: 7px;
-    margin: 0 10px;
-    margin-top: 30px;
+
     border: darkgray 1px solid;
     /* box-shadow: 2px 2px rgb(131, 131, 131); */
     width: 30%;
-    min-width: 50px;
+    min-width: 70px;
     min-height: 50px;
 }
 
@@ -149,8 +148,21 @@ body{
 .middle{
     display: flex;
     width: 85%;
+    /* margin: 0 3%; */
+    margin-top: 15%;
+    /* background: rgb(7, 1, 1); */
+    /* padding: 5%; */
+    /* border-radius: 10px; */
+    margin-left: 15%;
+    justify-content: center;
 }
 
 .flavor-stuff{
-    
+    display: flex;
+    justify-content: center;
+}
+
+.flavor-stuff img{
+    width: 45%;
+    object-fit: contain;
 }

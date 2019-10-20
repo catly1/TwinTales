@@ -231,7 +231,9 @@ window.addEventListener("DOMContentLoaded", e => {
             if (property.name === "jump"){
                 entity.jump = property.value
             }
-            
+            if (property.name === "gravity"){
+                entity.gravity = property.value
+            }
         })
 
         // entity.enemy = obj.type == "enemy";
