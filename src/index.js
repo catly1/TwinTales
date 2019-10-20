@@ -376,6 +376,7 @@ window.addEventListener("DOMContentLoaded", e => {
         let context = new AudioContext();
         let source = context.createBufferSource();
         let gain = context.createGain();
+        let audioVol = gain.gain
         volume = gain.gain
         gain.connect(context.destination)
         source.connect(gain);
@@ -392,6 +393,7 @@ window.addEventListener("DOMContentLoaded", e => {
             }, function () { console.error('The request failed.'); });
         }
         if (savedVolume === 0 ) { volume.value = 0 }
+        handVolumeButton(audioVol)
         // volume.value = 0 // prevent bgm from playing. remove on deployment5
         request.send();
     }
@@ -403,18 +405,19 @@ window.addEventListener("DOMContentLoaded", e => {
         frame();
     });   
 
-
-    document.getElementById("mute").addEventListener("click", e => {
-        if (volume.value === 1) { 
-            volume.value = 0
-            savedVolume = 0
-            document.getElementById("mute").src = "../images/knob-left.png"
-        } else {
-            volume.value = 1
-            savedVolume = 1
-            document.getElementById("mute").src = "../images/knob-right.png"
-        }
-    })
+    const handVolumeButton = (audioVol) => {
+        document.getElementById("mute").addEventListener("click", e => {
+            if (audioVol.value === 1) { 
+                audioVol.value = 0
+                savedVolume = 0
+                document.getElementById("mute").src = "../images/knob-left.png"
+            } else {
+                audioVol.value = 1
+                savedVolume = 1
+                document.getElementById("mute").src = "../images/knob-right.png"
+            }
+        })
+    }
     // Grab level data from json.
 
 })

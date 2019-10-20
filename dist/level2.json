@@ -55,7 +55,7 @@
                 {
                  "height":70,
                  "id":4,
-                 "name":"snail",
+                 "name":"ghost",
                  "properties":[
                         {
                          "name":"left",
@@ -77,7 +77,7 @@
                 {
                  "height":70,
                  "id":5,
-                 "name":"snail",
+                 "name":"slime",
                  "properties":[
                         {
                          "name":"jump",

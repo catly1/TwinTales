@@ -62,6 +62,14 @@ export default class Enemies {
             if (enemy.name == "snail") {
                 animation = SNAILANIMATIONS
             }
+            
+            if (enemy.name == "slime"){
+                animation = SLIMENIMATIONS
+            }
+
+            if (enemy.name == "ghost"){
+                animation = GHOSTANIMATIONS
+            }
 
             this.animate(enemy, animation)
 
@@ -222,10 +230,6 @@ export default class Enemies {
                     sheet = twinSheet2
                     sw = 245,
                     sh = 245
-                }
-
-                if (enemy.name == "snail") {
-
                 }
 
                 // this.ctx.fillRect(enemy.x + (enemy.dx * dt), enemy.y + (enemy.dy * dt), this.TILESIZE, this.TILESIZE)
