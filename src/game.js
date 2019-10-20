@@ -150,7 +150,6 @@ class Game {
 
     screenText(txt,x,y, mode, size){
         size = size || "50px"
-        debugger
         if (mode === "textOn" && this.textOn) {
             if (!this.textStart) {
                 this.textStart = Date.now()
@@ -273,8 +272,6 @@ class Game {
                     // let sprite = this.spriteCoordinates[(cell-686).toString()];
                     let spritesLibrary = library.frames;
                     let paddedNum = Util.padZero((cell), 3); // adjust the cell ID from Tiled in here
-                    if (!spritesLibrary[paddedNum])
-                    debugger
                     let sprite = spritesLibrary[paddedNum].frame
 
                     ctx.drawImage(

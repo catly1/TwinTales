@@ -1,9 +1,11 @@
-const Util = require("./util")
+const Util = require("./util");
 import Player from './player.js';
-const twinSheet = new Image()
-const twinSheet2 = new Image()
-twinSheet.src = "../images/twinspritesheet.png"
-twinSheet2.src = "../images/twinspritesheet2.png"
+const twinSheet = new Image();
+const twinSheet2 = new Image();
+twinSheet.src = "../images/twinspritesheet.png";
+twinSheet2.src = "../images/twinspritesheet2.png";
+const enemySheet = new Image();
+enemySheet.src = "../images/enemies.png"
 
 let TWIN1ANIMATIONS = {
     IDLE: { x: 0, y: 0, w: 245, h: 245, frames: 24, fps: 10 },
@@ -13,6 +15,21 @@ let TWIN1ANIMATIONS = {
     // JUMPINGR: { x: 0, y: 216, w: 245, h: 245, frames: 4, fps: 10 },
     FALLINGL: { x: 0, y: 735, w: 245, h: 245, frames: 2, fps: 10 },
     FALLINGR: { x: 0, y: 980, w: 245, h: 245, frames: 2, fps: 10 },
+}
+
+let GHOSTANIMATIONS = {
+    LEFT: { x: 0, y: 0, w: 50, h: 50, frames: 2, fps: 5 },
+    RIGHT: { x: 100, y: 0, w: 50, h: 50, frames: 2, fps: 5 },
+}
+
+let SLIMENIMATIONS = {
+    LEFT: { x: 200, y: 0, w: 50, h: 50, frames: 2, fps: 5 },
+    RIGHT: { x: 300, y: 0, w: 50, h: 50, frames: 2, fps: 5 },
+}
+
+let SNAILANIMATIONS = {
+    LEFT: { x: 400, y: 0, w: 50, h: 50, frames: 2, fps: 5 },
+    RIGHT: { x: 500, y: 0, w: 50, h: 50, frames: 2, fps: 5 },
 }
 
 export default class Enemies { 
@@ -36,7 +53,17 @@ export default class Enemies {
                 friction = enemy.friction * (falling ? 0.5 : 1),
                 accel = enemy.accel * (falling ? 0.5 : 1);
 
-            this.animate(enemy)
+
+            let animation
+            if (enemy.name == "twin1" || enemy.name == "twin2") {
+                animation = TWIN1ANIMATIONS
+            }
+
+            if (enemy.name == "snail") {
+                animation = SNAILANIMATIONS
+            }
+
+            this.animate(enemy, animation)
 
 
             enemy.ddx = 0;
@@ -179,25 +206,35 @@ export default class Enemies {
             if ( !enemy.dead ){
 
                 let size
-                let sheet = twinSheet2
+                let sheet = enemySheet
+                let sw = 50, sh = 50
                 if (enemy.name == "twin1"){
                     size = this.TILESIZE * 2
                     sheet = twinSheet
+                    sw = 245,
+                    sh = 245
                 } else {
                     size = this.TILESIZE
                 }
 
-                if (enemy.name == "twin2") size = this.TILESIZE * 2
+                if (enemy.name == "twin2") {
+                    size = this.TILESIZE * 2
+                    sheet = twinSheet2
+                    sw = 245,
+                    sh = 245
+                }
 
+                if (enemy.name == "snail") {
 
+                }
 
                 // this.ctx.fillRect(enemy.x + (enemy.dx * dt), enemy.y + (enemy.dy * dt), this.TILESIZE, this.TILESIZE)
                 this.ctx.drawImage(
                     sheet, // Source image object
                     enemy.animation.x + (enemy.animationFrame * enemy.animation.w), //	Source x
                     enemy.animation.y, // 	Source y
-                    245, // Source width
-                    245, // Source height
+                    sw, // Source width
+                    sh, // Source height
                     enemy.x + (enemy.dx * dt), // Destination x
                     enemy.y + (enemy.dy * dt), // Destination y
                     size, // Destination width
@@ -207,13 +244,23 @@ export default class Enemies {
         })
     }
 
-    animate(enemy) {
-        if (enemy.name == "twin1" || enemy.name == "twin2")
-        if (enemy.left && !enemy.jumping && !enemy.falling) {
-            Util.animate(enemy, TWIN1ANIMATIONS.LEFT)
-        } else if (enemy.right) {
-            Util.animate(enemy, TWIN1ANIMATIONS.RIGHT)
-        }
+    animate(enemy, animation) {
+        // if (enemy.name == "twin1" || enemy.name == "twin2") {
+            if (enemy.left && !enemy.falling) {
+                Util.animate(enemy, animation.LEFT)
+            } else if (enemy.right) {
+                Util.animate(enemy, animation.RIGHT)
+            }
+
+
+
+        // if (enemy.name == "snail"){
+        //     if (enemy.left) {
+        //         Util.animate(enemy, TWIN1ANIMATIONS.LEFT)
+        //     } else if (enemy.right) {
+        //         Util.animate(enemy, TWIN1ANIMATIONS.RIGHT)
+        //     }
+        // }
         //  else if (enemy.jump && !enemy.falling) {
         //     Util.animate(enemy, this.TWIN1ANIMATIONS.FALLINGL)
         // } else if (enemy.falling && enemy.left) {
