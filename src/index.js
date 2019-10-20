@@ -2,6 +2,7 @@ import Game from './game.js';
 const Util = require("./util");
 const spritesheet = new Image();
 spritesheet.src = "../images/spritesheet.png";
+const jumpSound = new Audio ('../audio/jump1.wav')
 
 // Constants and functions
 
@@ -21,22 +22,13 @@ const MAPSIZE = { tw: 21, th: 12 },
     COLOR = { BLACK: '#000000', YELLOW: '#ECD078', BRICK: '#D95B43', PINK: '#C02942', PURPLE: '#542437', GREY: '#333', SLATE: '#53777A', GOLD: 'gold' },
     COLORS = [COLOR.YELLOW, COLOR.BRICK, COLOR.PINK, COLOR.PURPLE, COLOR.GREY],
     KEY = { SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, W: 87, A: 65, S: 83, D: 68, ENTER: 13},
-    LEVELS = ["level2.json", "level3.json", "test-smoller.json"]
+    LEVELS = ["/dist/level2.json", "/dist/level3.json", "/dist/test-smoller.json"]
 
     
-let currentAudio, volume
+let currentAudio, volume, savedVolume
 
 let now, last = Util.timestamp(),
-    dt = 0,
-    TWIN1ANIMATIONS = {
-    IDLE: { x: 0, y: 0, w: 245, h: 245, frames: 24, fps: 10 },
-    LEFT: { x: 0, y: 245, w: 245, h: 245, frames: 10, fps: 10 },
-    RIGHT: { x: 0, y: 490, w: 245, h: 245, frames: 10, fps: 10 },
-    // JUMPINGL: { x: 0, y: 162, w: 245, h: 245, frames: 4, fps: 10 },
-    // JUMPINGR: { x: 0, y: 216, w: 245, h: 245, frames: 4, fps: 10 },
-    FALLINGL: { x: 0, y: 735, w: 245, h: 245, frames: 2, fps: 10 },
-    FALLINGR: { x: 0, y: 980, w: 245, h: 245, frames: 2, fps: 10 },
-    }
+    dt = 0
 
 ///
 
@@ -67,6 +59,7 @@ window.addEventListener("DOMContentLoaded", e => {
             case KEY.SPACE: 
                     twin1.jump = down;
                     twin2.jump = down;
+                
                     setTimeout(handleJump, 100)
                 break;
             case KEY.ENTER:
@@ -81,13 +74,17 @@ window.addEventListener("DOMContentLoaded", e => {
     }
 
     const handleJump = () => {
+        jumpSound.play()
         twin1.jump = false
         twin2.jump =false
+
     }
 
     const handleEnter = () =>{
-        if (currentLevel < 1 && currentLevel !== 1){
-            currentLevel = 1
+        if (gameInstance.currentLevel < 1){
+            ++gameInstance.currentLevel
+            gameInstance.gameRunning = false
+            frame()
         }
 
 
@@ -162,10 +159,11 @@ window.addEventListener("DOMContentLoaded", e => {
         tileToPixel,
         pixelToTile,
         GRAVITY,
-        TWIN1ANIMATIONS,
         enemies,
         doors,
-        gameState
+        gameState,
+        width,
+        height
     }
 
     const gameInstance = new Game(
@@ -248,6 +246,7 @@ window.addEventListener("DOMContentLoaded", e => {
         return entity;
     }
 
+    let startTime = new Date().getTime(), endTime;
 
     const frame = () => {
         if(gameInstance.gameRunning) {
@@ -263,13 +262,20 @@ window.addEventListener("DOMContentLoaded", e => {
         } else {
             
             switch (gameInstance.currentLevel){
+                case 1:
+
+                    setTimeout(content, 600)
+                    black()
+                    // loading()
+                    //     }, 5000 - (endTime - startTime))
+                    // )
+
+                    break;
                 case 2:
-                    Util.get("level2.json", resetGame);
-                    debugger
-                    // Audio("../audio/stage loop1.mp3")
+                    Util.get("/dist/level2.json", resetGame);
                     break;
                 case 3:
-                    Util.get("level3.json", resetGame);
+                    Util.get("/dist/level3.json", resetGame);
                     break;
                 default: 
                     Util.get( endless() , resetGame);
@@ -280,6 +286,59 @@ window.addEventListener("DOMContentLoaded", e => {
         }
     }
 
+
+
+     let dashLen = 220, dashOffset = dashLen, speed = 30,
+        txt = "Loading", x = 300, i = 0;
+
+    const black = () => {
+        gameInstance.loading()
+        loading()
+        requestAnimationFrame(black)
+    }
+
+    // const popupMessage = () => {
+    //     ctx.font = "50px Comic Sans MS, cursive, TSCu_Comic, sans-serif";
+    //     ctx.lineWidth = 5; ctx.lineJoin = "round";
+    //     ctx.strokeStyle = "rgba(114, 26, 26, 1)";
+    //     ctx.fillStyle = "white"
+    //     ctx.setLineDash([dashLen - dashOffset, dashOffset - speed]); // create a long dash mask
+    //     dashOffset -= speed;                                         // reduce dash length
+    //     // ctx.globalAlpha = .9
+    //     ctx.fillText(txt, x, 90); 
+    //     requestAnimationFrame(popupMessage)
+    // }
+
+
+    const loading = () =>{
+        // ctx.clearRect(x, 0, 60, 150);
+        ctx.font = "50px Comic Sans MS, cursive, TSCu_Comic, sans-serif";
+        ctx.lineWidth = 5; ctx.lineJoin = "round"; 
+        ctx.strokeStyle = "rgba(114, 26, 26, 1)";
+        ctx.fillStyle = "white"
+        ctx.setLineDash([dashLen - dashOffset, dashOffset - speed]); // create a long dash mask
+        dashOffset -= speed;                                         // reduce dash length
+        // ctx.globalAlpha = .9
+        ctx.fillText(txt, x, 90);                               // stroke letter
+        
+        // ctx.globalCompositeOperation = 'source-out'
+        // if (dashOffset > 0 && (i < txt.length - 1))    {   
+        //     debugger  // animate
+        //     ctx.fillText(txt[i], x, 90);                               // fill final letter
+        //     dashOffset = dashLen;                                      // prep next char
+        //     x += ctx.measureText(txt[i++]).width + ctx.lineWidth * Math.random();
+        //     // ctx.setTransform(1, 0, 0, 1, 0, 3 * Math.random());        // random y-delta
+        //     // ctx.rotate(Math.random() * 0.005);             
+        // }            // random rotation
+    }
+
+  
+    const content = () =>{
+        Util.get("/dist/level1.json", resetGame);
+        currentAudio.stop()
+        Audio("../audio/stage loop1.mp3")
+    }
+
     const endless = () =>{
         selectedLevel = LEVELS[Math.floor(LEVELS.length * Math.random())]
         while (selectedLevel === lastLevel) {
@@ -287,6 +346,7 @@ window.addEventListener("DOMContentLoaded", e => {
         }
         return selectedLevel
     }
+
 
     const resetGame = req => {
         enemies.length = 0
@@ -317,13 +377,15 @@ window.addEventListener("DOMContentLoaded", e => {
                 source.loop = true;
             }, function () { console.error('The request failed.'); });
         }
+        if (savedVolume === 0 ) { volume.value = 0 }
+        volume.value = 0 // prevent bgm from playing. remove on deployment5
         request.send();
     }
 
 
-    Util.get("level1.json", req => {
+    Util.get("/dist/startscreen.json", req => {
         setup(JSON.parse(req.responseText));
-        // Audio("../audio/stage loop1.mp3");
+        Audio("../audio/start.mp3");
         frame();
     });   
 
@@ -331,9 +393,11 @@ window.addEventListener("DOMContentLoaded", e => {
     document.getElementById("mute").addEventListener("click", e => {
         if (volume.value === 1) { 
             volume.value = 0
+            savedVolume = 0
             document.getElementById("mute").src = "../images/knob-left.png"
         } else {
             volume.value = 1
+            savedVolume = 1
             document.getElementById("mute").src = "../images/knob-right.png"
         }
     })

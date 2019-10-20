@@ -22,11 +22,23 @@ class Game {
         this.twin2 = new Player(options)
         this.enemies = new Enemies(options)
         this.doors = new Doors(options)
+
+        this.width = options.width;
+        this.height = options.height;
+
         this.gameState = options.gameState
-        this.currentLevel = 1
+        this.currentLevel = 0;
         this.gameRunning = true;
-        this.secondCounter= 0;
+        this.startTime= Date.now();
         this.scrollVal = 0
+        this.loadScrollVal = 0
+
+        this.dashLen = 220
+        this.dashOffset = this.dashLen
+        this.speed = 5
+        this.txt = "Twin Tales!"
+        this.x = 30
+        this.i = 0  
     }
 
     update(twin1, twin2, step, width, height){
@@ -41,8 +53,10 @@ class Game {
     stageCompleted(){
         if (this.gameState.twin1AtDoor && this.gameState.twin2AtDoor) {
             ++this.currentLevel
+
+            // this.loadingScreen(width, height, dt)
             this.gameRunning = false
-            return true
+    
         }
         return false
     }
@@ -50,7 +64,10 @@ class Game {
 
     render(ctx, twin1, twin2, width, height, dt){
         ctx.clearRect(0, 0, width, height);
-        // Now draw!
+        this.startScreenText()
+        // this.renderStartScreen()
+        // if(!this.gameRunning) this.loading()
+        // draw functions here
         this.renderMap(ctx);
         this.twin1.renderTwin(ctx, twin1, dt);
         this.twin2.renderTwin(ctx, twin2, dt)
@@ -58,12 +75,13 @@ class Game {
         this.doors.renderDoors(dt)
         this.renderStaticBackground(ctx, width, height)
         this.animateBackground(width, height, dt)
+        
     }
 
     renderStaticBackground(ctx, width, height){
         ctx.fillStyle = "gray";
         this.ctx.globalCompositeOperation = 'destination-over'
-        ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+        // ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
         ctx.drawImage(
                 staticBackground1,
                 0,
@@ -74,70 +92,137 @@ class Game {
         // ctx.fillRect(0, 0, width,height);
     }
 
-    animateBackground(width, height, dt){
-        this.secondCounter += dt;
+    // renderStartScreen(){
+    //     this.ctx.font = "50px Comic Sans MS, cursive, TSCu_Comic, sans-serif";
+    //     this.ctx.lineWidth = 4;
+    //     this.ctx.lineJoin = "round";
+    //     // this.ctx.globalAlpha = 1 / 3;
+        
 
-        // let animationSpeed = 100
-        // let numImages = Math.ceil(width / background1.height) + 1
-        // let ypos = this.secondCounter * animationSpeed % background1.width;
-        // this.ctx.save();
-        // this.ctx.translate( ypos, 0)
-        // for (let num = 0; num < numImages; num++){
-        // 
-        //     this.ctx.drawImage(
-        //         background1,
-        //         0,
-        //         0,
-        //         // background1.width,
-        //         // background1.height,
-        //         // 0,
-        //         // 0,
-        //         // width,
-        //         // height
-                
-        //     )
-        // }
-        // this.ctx.restore();
+    //     // this.ctx.clearRect(this.x, 0, 60, 150);
+    //     // this.ctx.globalCompositeOperation = 'destination-over'
+
+    //     this.ctx.setLineDash([this.dashLen - this.dashOffset, this.dashOffset - this.speed]);
+    //     this.dashOffset -= this.speed;
+    //     this.ctx.strokeText(this.txt[this.i], this.x, 90);
+    //     if (this.dashOffset < 0 && (this.i < this.txt.length - 1 )){
+    //         this.ctx.fillText(this.txt[this.i], this.x, 90);
+    //         this.dashOffset = this.dashLen;
+    //         this.x += this.ctx.measureText(this.txt[this.i++]).width + this.ctx.lineWidth * Math.random();
+    //         this.ctx.setTransform(1, 0, 0, 1, 0, 3 * Math.random())
+    //         this.ctx.rotate(Math.random() * 0.005)
+    //     }
+        
+
+    // }
+
+    animateBackground(){
+        // this.secondCounter += dt;
 
         let scrollSpeed = 0.2
 
-        if (this.scrollVal >= width){
+        if (this.scrollVal >= this.width){
             this.scrollVal = 0;
         }
 
         this.scrollVal += scrollSpeed;
-        this.ctx.globalCompositeOperation = 'destination-over'
-
-        
-
+        // this.ctx.globalCompositeOperation = 'destination-over'
 
 
         this.ctx.drawImage(
             animatedBackground1, 
-            width - this.scrollVal, 
+            this.width - this.scrollVal, 
             0, 
-            width, 
-            height, 
-            // 0, 
-            // 0, 
-            // width, 
-            // height
+            this.width, 
+            this.height, 
             );
         
         this.ctx.drawImage(
             animatedBackground1,
             - this.scrollVal,
             0,
-            width,
-            height
+            this.width,
+            this.height
+        );
+    }
+
+    startScreenText(){
+        if (!this.textStart) {
+            this.textStart = Date.now()
+            debugger
+                         // stroke letter
+        } else if ( (Date.now() - this.textStart)/1000 < 10 ) {
+            debugger
+            this.ctx.font = "50px Comic Sans MS, cursive, TSCu_Comic, sans-serif";
+            this.ctx.lineWidth = 5; this.ctx.lineJoin = "round";
+            this.ctx.strokeStyle = "rgba(114, 26, 26, 1)";
+            this.ctx.fillStyle = "white"
+            this.ctx.setLineDash([this.dashLen - this.dashOffset, this.dashOffset - this.speed]); // create a long dash mask
+            this.dashOffset -= this.speed;                                         // reduce dash length
+            // this.ctx.globalAlpha = .9
+            this.ctx.fillText(this.txt, this.x, 90);      
+        }
+    }
+
+    loading() {
+
+        let scrollSpeed = 20
+
+        if (this.loadScrollVal >= this.width) {
+            this.loadScrollVal = 0;
+        }
+
+        this.loadScrollVal += scrollSpeed;
+        this.ctx.globalCompositeOperation = "source-over"
+        this.ctx.fillStyle = "rgba(0, 0, 0, .9)";
+        // this.ctx.fillRect(this.width - this.loadScrollVal, 0, this.width, this.height);
+        // this.ctx.fillRect(-1, 0, this.width, this.height)
+        this.ctx.drawImage(
+            animatedBackground1, 
+            this.width - this.loadScrollVal, 
+            0, 
+            this.width, 
+            this.height, 
+            );
+
+        // this.ctx.drawImage(
+        //     animatedBackground1,
+        //     - this.scrollVal,
+        //     0,
+        //     this.width,
+        //     this.height
+        // );
+    }
+
+    clearLoad(){
+
+    }
+
+    loadingScreen(){
+        if (this.scrollVal >= this.width) {
+            this.scrollVal = 0;
+        }
+
+        this.scrollVal += scrollSpeed;
+        this.ctx.globalCompositeOperation = 'source-over'
+
+
+        this.ctx.drawImage(
+            animatedBackground1,
+            this.width - this.scrollVal,
+            0,
+            this.width,
+            this.height,
         );
 
-        // To go the other way instead
-        // this.ctx.drawImage(background1, -this.scrollVal, 0, background1.width, background1.height);
-        // this.ctx.drawImage(background1, width - this.scrollVal, 0, background1.width, background1.height);
-
-
-
+        this.ctx.drawImage(
+            animatedBackground1,
+            - this.scrollVal,
+            0,
+            this.width,
+            this.height
+        );
+        return true
     }
 
     renderMap(ctx) {

@@ -29,6 +29,7 @@ const Util = {
             entity.animationCounter = 0;
         }
         else if (++(entity.animationCounter) == Math.round(60 / animation.fps)) {
+            
             entity.animationFrame = this.normalize(entity.animationFrame + 1, 0, entity.animation.frames);
             entity.animationCounter = 0;
         }

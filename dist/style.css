@@ -22,6 +22,7 @@ body{
     border: 20px black solid;
     border-radius: 50px;
     /* background-color:blue;  */
+    background: black;
 }
 
 .left-side{

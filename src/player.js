@@ -4,7 +4,15 @@ const twinSheet2 = new Image()
 twinSheet.src = "../images/twinspritesheet.png"
 twinSheet2.src = "../images/twinspritesheet2.png"
 
-
+let TWIN1ANIMATIONS = {
+    IDLE: { x: 0, y: 0, w: 245, h: 245, frames: 24, fps: 10 },
+    LEFT: { x: 0, y: 245, w: 245, h: 245, frames: 10, fps: 10 },
+    RIGHT: { x: 0, y: 490, w: 245, h: 245, frames: 10, fps: 10 },
+    // JUMPINGL: { x: 0, y: 162, w: 245, h: 245, frames: 4, fps: 10 },
+    // JUMPINGR: { x: 0, y: 216, w: 245, h: 245, frames: 4, fps: 10 },
+    FALLINGL: { x: 0, y: 735, w: 245, h: 245, frames: 2, fps: 10 },
+    FALLINGR: { x: 0, y: 980, w: 245, h: 245, frames: 2, fps: 10 },
+}
 
 
 export default class Player{
@@ -22,7 +30,6 @@ export default class Player{
         this.GRAVITY = options.GRAVITY;
         this.TILESIZE = options.TILESIZE;
         this.COLOR = options.COLOR;
-        this.TWIN1ANIMATIONS = options.TWIN1ANIMATIONS;
         this.breathInc = 0.04;
         this.breathDir = 1;
         this.breathAmt = 0;
@@ -195,28 +202,28 @@ export default class Player{
     animate(player){ 
         
         if (player.left && !player.jumping && !player.falling) {
-            Util.animate(player, this.TWIN1ANIMATIONS.LEFT)
+            Util.animate(player, TWIN1ANIMATIONS.LEFT)
         } else if (player.right && !player.jumping && !player.falling) {
-            Util.animate(player, this.TWIN1ANIMATIONS.RIGHT)
+            Util.animate(player, TWIN1ANIMATIONS.RIGHT)
         } else if (player.jump && !player.falling ) {
-            Util.animate(player, this.TWIN1ANIMATIONS.FALLINGL)
+            Util.animate(player, TWIN1ANIMATIONS.FALLINGL)
         // } else if ((player.jump && !player.left && !player.falling) || (player.jump && player.right && !player.falling)) {
         //     debugger
-        //     Util.animate(player, this.TWIN1ANIMATIONS.JUMPINGR)
+        //     Util.animate(player, TWIN1ANIMATIONS.JUMPINGR)
         // } else if ( player.jump && !player.falling ) {
         //     debugger
-        //     Util.animate(player, this.TWIN1ANIMATIONS.JUMPINGL)
+        //     Util.animate(player, TWIN1ANIMATIONS.JUMPINGL)
         } else if (player.falling && player.left) {
-            Util.animate(player, this.TWIN1ANIMATIONS.FALLINGL)
+            Util.animate(player, TWIN1ANIMATIONS.FALLINGL)
         } else if (player.falling && player.right) {
-            Util.animate(player, this.TWIN1ANIMATIONS.FALLINGR)}
+            Util.animate(player, TWIN1ANIMATIONS.FALLINGR)}
         else if (player.falling && !player.jump) {
-            Util.animate(player, this.TWIN1ANIMATIONS.FALLINGL)
+            Util.animate(player, TWIN1ANIMATIONS.FALLINGL)
         } else if (player.jump) {
-            Util.animate(player, this.TWIN1ANIMATIONS.FALLINGL)
+            Util.animate(player, TWIN1ANIMATIONS.FALLINGL)
         }
         else {
-            Util.animate(player, this.TWIN1ANIMATIONS.IDLE)
+            Util.animate(player, TWIN1ANIMATIONS.IDLE)
         }
 
 

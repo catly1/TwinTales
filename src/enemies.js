@@ -1,5 +1,19 @@
 const Util = require("./util")
 import Player from './player.js';
+const twinSheet = new Image()
+const twinSheet2 = new Image()
+twinSheet.src = "../images/twinspritesheet.png"
+twinSheet2.src = "../images/twinspritesheet2.png"
+
+let TWIN1ANIMATIONS = {
+    IDLE: { x: 0, y: 0, w: 245, h: 245, frames: 24, fps: 10 },
+    LEFT: { x: 0, y: 245, w: 245, h: 245, frames: 10, fps: 10 },
+    RIGHT: { x: 0, y: 490, w: 245, h: 245, frames: 10, fps: 20 },
+    // JUMPINGL: { x: 0, y: 162, w: 245, h: 245, frames: 4, fps: 10 },
+    // JUMPINGR: { x: 0, y: 216, w: 245, h: 245, frames: 4, fps: 10 },
+    FALLINGL: { x: 0, y: 735, w: 245, h: 245, frames: 2, fps: 10 },
+    FALLINGR: { x: 0, y: 980, w: 245, h: 245, frames: 2, fps: 10 },
+}
 
 export default class Enemies { 
     constructor(options){
@@ -11,6 +25,7 @@ export default class Enemies {
         this.tileToPixel = options.tileToPixel;
         this.COLOR = options.COLOR;
         this.ctx = options.ctx
+        this.TWIN1ANIMATIONS = options.TWIN1ANIMATIONS;
     }
 
     updateEnemies(twin1, twin2, step){
@@ -20,6 +35,10 @@ export default class Enemies {
                 falling = enemy.falling,
                 friction = enemy.friction * (falling ? 0.5 : 1),
                 accel = enemy.accel * (falling ? 0.5 : 1);
+
+            this.animate(enemy)
+
+
             enemy.ddx = 0;
             enemy.ddy = enemy.gravity;
             if (enemy.left)
@@ -111,7 +130,8 @@ export default class Enemies {
                     if ((twin1.dy > 0) && (enemy.y - twin1.y > this.TILESIZE / 2)){
                        this.killEnemy(enemy, twin1, step)
                     } else {
-                        this.killTwin(twin1) 
+                        
+                        if(twin1.name)this.killTwin(twin1) 
                     }
                 }
 
@@ -119,7 +139,8 @@ export default class Enemies {
                     if ((twin2.dy > 0) && (enemy.y - twin2.y > this.TILESIZE / 2)) {
                         enemy.dead = true // kill enemy if stepped on
                     } else {
-                        this.killTwin(twin2)
+                        
+                        if (twin2.name)this.killTwin(twin2)
                     }
                 }
 
@@ -146,13 +167,70 @@ export default class Enemies {
         twin.dx = twin.dy = 0;
     }
 
+
+
     renderEnemies(dt){
         this.ctx.fillstyle = this.COLOR.SLATE;
+
+
+
+
         this.enemies.forEach(enemy => {
             if ( !enemy.dead ){
-                this.ctx.fillRect(enemy.x + (enemy.dx * dt), enemy.y + (enemy.dy * dt), this.TILESIZE, this.TILESIZE)
+
+                let size
+                let sheet = twinSheet2
+                if (enemy.name == "twin1"){
+                    size = this.TILESIZE * 2
+                    sheet = twinSheet
+                } else {
+                    size = this.TILESIZE
+                }
+
+                if (enemy.name == "twin2") size = this.TILESIZE * 2
+
+
+
+                // this.ctx.fillRect(enemy.x + (enemy.dx * dt), enemy.y + (enemy.dy * dt), this.TILESIZE, this.TILESIZE)
+                this.ctx.drawImage(
+                    sheet, // Source image object
+                    enemy.animation.x + (enemy.animationFrame * enemy.animation.w), //	Source x
+                    enemy.animation.y, // 	Source y
+                    245, // Source width
+                    245, // Source height
+                    enemy.x + (enemy.dx * dt), // Destination x
+                    enemy.y + (enemy.dy * dt), // Destination y
+                    size, // Destination width
+                    size // Destination height
+                )
             }
         })
+    }
+
+    animate(enemy) {
+        if (enemy.name == "twin1" || enemy.name == "twin2")
+        if (enemy.left && !enemy.jumping && !enemy.falling) {
+            Util.animate(enemy, TWIN1ANIMATIONS.LEFT)
+        } else if (enemy.right) {
+            Util.animate(enemy, TWIN1ANIMATIONS.RIGHT)
+        }
+        //  else if (enemy.jump && !enemy.falling) {
+        //     Util.animate(enemy, this.TWIN1ANIMATIONS.FALLINGL)
+        // } else if (enemy.falling && enemy.left) {
+        //     Util.animate(enemy, this.TWIN1ANIMATIONS.FALLINGL)
+        // } else if (enemy.falling && enemy.right) {
+        //     Util.animate(enemy, this.TWIN1ANIMATIONS.FALLINGR)
+        // }
+        // else if (enemy.falling && !enemy.jump) {
+        //     Util.animate(enemy, this.TWIN1ANIMATIONS.FALLINGL)
+        // } else if (enemy.jump) {
+        //     Util.animate(enemy, this.TWIN1ANIMATIONS.FALLINGL)
+        // }
+        // else {
+        //     Util.animate(enemy, this.TWIN1ANIMATIONS.IDLE)
+        // }
+
+
     }
 
 }
