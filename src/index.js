@@ -84,6 +84,7 @@ window.addEventListener("DOMContentLoaded", e => {
         if (gameInstance.currentLevel < 1){
             ++gameInstance.currentLevel
             gameInstance.gameRunning = false
+            gameInstance.textOn = true
             frame()
         }
 
@@ -293,7 +294,7 @@ window.addEventListener("DOMContentLoaded", e => {
 
     const black = () => {
         gameInstance.loading()
-        loading()
+        gameInstance.screenText("loading", 1055, 707, "textOn" )
         requestAnimationFrame(black)
     }
 
@@ -378,7 +379,7 @@ window.addEventListener("DOMContentLoaded", e => {
             }, function () { console.error('The request failed.'); });
         }
         if (savedVolume === 0 ) { volume.value = 0 }
-        volume.value = 0 // prevent bgm from playing. remove on deployment5
+        // volume.value = 0 // prevent bgm from playing. remove on deployment5
         request.send();
     }
 

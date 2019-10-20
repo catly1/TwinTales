@@ -39,6 +39,7 @@ class Game {
         this.txt = "Twin Tales!"
         this.x = 30
         this.i = 0  
+        this.textOn = false
     }
 
     update(twin1, twin2, step, width, height){
@@ -53,7 +54,7 @@ class Game {
     stageCompleted(){
         if (this.gameState.twin1AtDoor && this.gameState.twin2AtDoor) {
             ++this.currentLevel
-
+            this.textOn = true
             // this.loadingScreen(width, height, dt)
             this.gameRunning = false
     
@@ -64,7 +65,8 @@ class Game {
 
     render(ctx, twin1, twin2, width, height, dt){
         ctx.clearRect(0, 0, width, height);
-        this.startScreenText()
+        this.handleTextEvents()
+        
         // this.renderStartScreen()
         // if(!this.gameRunning) this.loading()
         // draw functions here
@@ -146,21 +148,54 @@ class Game {
         );
     }
 
-    startScreenText(){
-        if (!this.textStart) {
-            this.textStart = Date.now()
-            debugger
-                         // stroke letter
-        } else if ( (Date.now() - this.textStart)/1000 < 10 ) {
-            debugger
-            this.ctx.font = "50px Comic Sans MS, cursive, TSCu_Comic, sans-serif";
-            this.ctx.lineWidth = 5; this.ctx.lineJoin = "round";
-            this.ctx.strokeStyle = "rgba(114, 26, 26, 1)";
-            this.ctx.fillStyle = "white"
-            this.ctx.setLineDash([this.dashLen - this.dashOffset, this.dashOffset - this.speed]); // create a long dash mask
-            this.dashOffset -= this.speed;                                         // reduce dash length
-            // this.ctx.globalAlpha = .9
-            this.ctx.fillText(this.txt, this.x, 90);      
+    screenText(txt,x,y, mode, size){
+        size = size || "50px"
+        debugger
+        if (mode === "textOn" && this.textOn) {
+            if (!this.textStart) {
+                this.textStart = Date.now()
+                            // stroke letter
+            } else if ( (Date.now() - this.textStart)/1000 < 5 ) {
+                this.ctx.font = `${size} Comic Sans MS, cursive, TSCu_Comic, sans-serif`;
+                this.ctx.lineWidth = 1;
+                this.ctx.strokeStyle = "black";
+                this.ctx.fillStyle = "white"    
+                this.ctx.strokeText(txt, x, y)
+                this.ctx.fillText(txt, x, y);      
+            } else {
+                this.textOn = false
+                this.textStart = ""
+            }
+        }
+
+
+        if (mode === "stayOn"){
+            this.ctx.font = `${size} Comic Sans MS, cursive, TSCu_Comic, sans-serif`
+            this.ctx.lineWidth = 1;
+            this.ctx.strokeStyle = "black";
+            this.ctx.fillStyle = "white"                              // reduce dash length
+            this.ctx.strokeText(txt, x, y)
+            this.ctx.fillText(txt, x, y);  
+        }
+
+    }
+
+    handleTextEvents(){
+        switch (this.currentLevel){
+            case 0:
+                
+                this.screenText("Twin Tales !", 320, 310, "stayOn" , "150px")
+                this.screenText("Press Enter", 600, 627, "stayOn" )
+                break
+            case 1:
+                this.screenText("Get in here!", 416, 588, "textOn")
+                this.screenText("Get in here!", 1101, 596, "textOn")
+                break
+            case 2:
+                this.screenText("Watch Out!", 330, 620, "textOn")
+                this.screenText("Watch Out!", 920, 620, "textOn")
+                break
+
         }
     }
 
@@ -223,6 +258,10 @@ class Game {
             this.height
         );
         return true
+    }
+
+    loadingText(){
+
     }
 
     renderMap(ctx) {
