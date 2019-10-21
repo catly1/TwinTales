@@ -71,7 +71,7 @@ class Game {
         this.enemies.renderEnemies(dt)
         this.doors.renderDoors(dt)
         // this.renderStaticBackground(ctx, width, height)
-        // this.animateBackground(width, height, dt)
+        this.animateBackground(width, height, dt)
         
     }
 
