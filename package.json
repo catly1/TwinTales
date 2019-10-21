@@ -1,0 +1,19 @@
+{
+  "name": "twintales",
+  "version": "1.0.0",
+  "description": "This is a platformer game where you control two characters that share the same input. The goal is to get them both at some point in the map at the same time.",
+  "main": "webpack.config.js",
+  "scripts": {
+    "webpack": "webpack --watch dist/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/catly1/PlatformerGame.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/catly1/PlatformerGame/issues"
+  },
+  "homepage": "https://github.com/catly1/PlatformerGame#readme"
+}
