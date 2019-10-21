@@ -71,7 +71,7 @@ class Game {
         this.twin2.renderTwin(ctx, twin2, dt)
         this.enemies.renderEnemies(dt)
         this.doors.renderDoors(dt)
-        this.renderStaticBackground()
+        setTimeout(this.renderStaticBackground, 0)
         this.animateBackground(width, height, dt)
         
     }
