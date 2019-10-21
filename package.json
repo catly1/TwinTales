@@ -4,7 +4,7 @@
   "description": "This is a platformer game where you control two characters that share the same input. The goal is to get them both at some point in the map at the same time.",
   "main": "webpack.config.js",
   "scripts": {
-    "start": "node server.js", // serves the application
+    "start": "node server.js", 
     "heroku-postbuild": "webpack -p"
   },
   "repository": {
