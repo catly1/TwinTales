@@ -28,7 +28,7 @@ let SLIMENIMATIONS = {
 }
 
 let SNAILANIMATIONS = {
-    LEFT: { x: 400, y: 0, w: 50, h: 50, frames: 2, fps: 5 },
+    LEFT: { x: 400.4, y: 0, w: 50, h: 50, frames: 2, fps: 5 },
     RIGHT: { x: 500, y: 0, w: 50, h: 50, frames: 2, fps: 5 },
 }
 

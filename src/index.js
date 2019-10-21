@@ -50,7 +50,7 @@ window.addEventListener("DOMContentLoaded", e => {
         switch (key) {
             case KEY.A: 
                 twin1.left = down; 
-                if (gameInstance.currentLevel == 3){
+                if (gameInstance.currentLevel == 4){
                     twin2.right = down
                 } else {
                     twin2.left = down; 
@@ -58,7 +58,7 @@ window.addEventListener("DOMContentLoaded", e => {
                 break;
             case KEY.D: 
                 twin1.right = down;
-                if (gameInstance.currentLevel == 3) {
+                if (gameInstance.currentLevel == 4) {
                     twin2.left = down; 
                 } else {
                     twin2.right = down;
@@ -289,6 +289,9 @@ window.addEventListener("DOMContentLoaded", e => {
                     break;
                 case 3:
                     Util.get("/dist/level3.json", resetGame);
+                    break;
+                case 4:
+                    Util.get("/dist/level4.json", resetGame);
                     break;
                 default: 
 

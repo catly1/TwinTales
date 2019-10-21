@@ -194,7 +194,9 @@ class Game {
                 this.screenText("Watch Out!", 330, 620, "textOn")
                 this.screenText("Watch Out!", 920, 620, "textOn")
                 break
-
+            case 3:
+                this.screenText("You're on your own now", 330, 620, "textOn")
+                break
         }
     }
 
