@@ -115,6 +115,13 @@ export default class Player{
             accel = player.accel * (falling ? 0.5 : 1);
 
 
+        if (player.stepped) {
+            return this.stepped(player, dt)
+        }
+
+        if (player.stepped) {
+            debugger
+        }
         this.animate(player)
         player.ddx = 0;
         player.ddy = player.gravity;
@@ -132,6 +139,11 @@ export default class Player{
         if (player.jump && !player.jumping && !falling) {
             player.ddy = player.ddy - player.impulse;     // apply an instantaneous (large) vertical impulse
             player.jumping = true;
+        }
+
+        if (player.afterStep) {
+            player.ddy = (player.ddy - player.impulse);  
+            player.afterStep = false
         }
 
         player.y = player.y + (dt * player.dy)
@@ -226,6 +238,34 @@ export default class Player{
             Util.animate(player, TWIN1ANIMATIONS.IDLE)
         }
 
+
+    }
+
+
+    stepped(player, dt){
+        if (player.stepped === true) {
+            // debugger
+            player.dx = -player.dx / 2;
+            player.ddx = 0;
+            player.ddy = player.impulse / 2;
+            debugger
+            // player.hurting = FPS;
+            player.afterStep = true
+            player.stepped = false
+        }
+        // else {
+        //     debugger
+        //     player.ddy = -player.gravity;
+        //     player.stepped = false
+        // }
+        // Player.updatePosition(player, dt);
+        // if (player.y <= 0) {
+        //     debugger
+        //     player.stepped = false;
+        //     player.falling = false;
+        //     // player.y = 0;
+        //     // player.dy = 0;
+        // }
 
     }
 

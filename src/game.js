@@ -211,15 +211,15 @@ class Game {
         this.loadScrollVal += scrollSpeed;
         this.ctx.globalCompositeOperation = "source-over"
         this.ctx.fillStyle = "rgba(0, 0, 0, .9)";
-        // this.ctx.fillRect(this.width - this.loadScrollVal, 0, this.width, this.height);
+        this.ctx.fillRect(this.width - this.loadScrollVal, 0, this.width, this.height);
         // this.ctx.fillRect(-1, 0, this.width, this.height)
-        this.ctx.drawImage(
-            animatedBackground1, 
-            this.width - this.loadScrollVal, 
-            0, 
-            this.width, 
-            this.height, 
-            );
+        // this.ctx.drawImage(
+        //     animatedBackground1, 
+        //     this.width - this.loadScrollVal, 
+        //     0, 
+        //     this.width, 
+        //     this.height, 
+        //     );
 
         // this.ctx.drawImage(
         //     animatedBackground1,

@@ -164,6 +164,7 @@ export default class Enemies {
                 if (Util.overlap(twin1.x, twin1.y, this.TILESIZE, this.TILESIZE, enemy.x, enemy.y, this.TILESIZE, this.TILESIZE)) {
                     if ((twin1.dy > 0) && (enemy.y - twin1.y > this.TILESIZE / 2)){
                        this.killEnemy(enemy, twin1, step)
+                       
                     } else {
                         
                         if(twin1.name)this.killTwin(twin1) 
@@ -172,7 +173,7 @@ export default class Enemies {
 
                 if (Util.overlap(twin2.x, twin2.y, this.TILESIZE, this.TILESIZE, enemy.x, enemy.y, this.TILESIZE, this.TILESIZE)) {
                     if ((twin2.dy > 0) && (enemy.y - twin2.y > this.TILESIZE / 2)) {
-                        enemy.dead = true // kill enemy if stepped on
+                        this.killEnemy(enemy, twin2, step)
                     } else {
                         
                         if (twin2.name)this.killTwin(twin2)
@@ -187,11 +188,7 @@ export default class Enemies {
     }
     // animation not working, look into later.
     killEnemy(enemy, twin1, step){
-        twin1.dx = -twin1.dx / 2;
-        twin1.jump
-        twin1.ddx = 0;
-        twin1.ddy = twin1.impulse / 2;
-        Player.updatePosition(twin1, step)
+        twin1.stepped = true
         enemy.dead = true // kill enemy if stepped on
     }
     

@@ -22,7 +22,7 @@ const MAPSIZE = { tw: 21, th: 12 },
     COLOR = { BLACK: '#000000', YELLOW: '#ECD078', BRICK: '#D95B43', PINK: '#C02942', PURPLE: '#542437', GREY: '#333', SLATE: '#53777A', GOLD: 'gold' },
     COLORS = [COLOR.YELLOW, COLOR.BRICK, COLOR.PINK, COLOR.PURPLE, COLOR.GREY],
     KEY = { SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, W: 87, A: 65, S: 83, D: 68, ENTER: 13},
-    LEVELS = ["/dist/level2.json", "/dist/level3.json", "/dist/level1.json"]
+    LEVELS = ["/dist/level2.json", "/dist/level4.json", "/dist/level1.json"]
 
     
 let currentAudio, volume, savedVolume
@@ -224,6 +224,8 @@ window.addEventListener("DOMContentLoaded", e => {
         entity.in1 = false
         entity.in2 = false
         entity.name = obj.name
+        entity.stepped = false
+        entity.afterStep = false
         // entity.jump = true
 
         obj.properties.forEach(property => {
@@ -277,7 +279,7 @@ window.addEventListener("DOMContentLoaded", e => {
             switch (gameInstance.currentLevel){
                 case 1:
 
-                    setTimeout(content, 600)
+                    setTimeout(() => contentWithMusic("/dist/level1.json", "../audio/stage loop1.mp3"), 600)
                     black()
                     // loading()
                     //     }, 5000 - (endTime - startTime))
@@ -285,13 +287,19 @@ window.addEventListener("DOMContentLoaded", e => {
 
                     break;
                 case 2:
-                    Util.get("/dist/level2.json", resetGame);
+                    // Util.get("/dist/level2.json", resetGame);
+                    setTimeout(() => content("/dist/level2.json"), 600)
+                    black()
                     break;
                 case 3:
-                    Util.get("/dist/level3.json", resetGame);
+                    // Util.get("/dist/level3.json", resetGame);
+                    setTimeout(() => content("/dist/level3.json"), 600)
+                    black()
                     break;
                 case 4:
-                    Util.get("/dist/level4.json", resetGame);
+                    // Util.get("/dist/level4.json", resetGame);
+                    setTimeout(() => content("/dist/level4.json"), 600)
+                    black()
                     break;
                 default: 
 
@@ -310,7 +318,12 @@ window.addEventListener("DOMContentLoaded", e => {
 
     const black = () => {
         gameInstance.loading()
-        gameInstance.screenText("loading", 1055, 707, "textOn" )
+        let text = "Good Job!"
+        if (gameInstance.currentLevel == 1){
+            text = "loading"
+        }
+
+        gameInstance.screenText(text, 1055, 707, "textOn" )
         requestAnimationFrame(black)
     }
 
@@ -348,12 +361,16 @@ window.addEventListener("DOMContentLoaded", e => {
     //     //     // ctx.rotate(Math.random() * 0.005);             
     //     // }            // random rotation
     // }
-
-  
-    const content = () =>{
-        Util.get("/dist/level1.json", resetGame);
+    "/dist/level1.json"
+    "../audio/stage loop1.mp3"
+    const contentWithMusic = (stage, music) =>{
+        Util.get(stage, resetGame);
         currentAudio.stop()
-        Audio("../audio/stage loop1.mp3")
+        Audio(music)
+    }
+
+    const content = (stage) => {
+        Util.get(stage, resetGame);
     }
 
     const endless = () =>{
@@ -397,7 +414,7 @@ window.addEventListener("DOMContentLoaded", e => {
         }
         if (savedVolume === 0 ) { volume.value = 0 }
         handVolumeButton(audioVol)
-        // volume.value = 0 // prevent bgm from playing. remove on deployment5
+        volume.value = 0 // prevent bgm from playing. remove on deployment5
         request.send();
     }
 
