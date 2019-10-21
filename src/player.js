@@ -119,9 +119,6 @@ export default class Player{
             return this.stepped(player, dt)
         }
 
-        if (player.stepped) {
-            debugger
-        }
         this.animate(player)
         player.ddx = 0;
         player.ddy = player.gravity;
@@ -248,7 +245,6 @@ export default class Player{
             player.dx = -player.dx / 2;
             player.ddx = 0;
             player.ddy = player.impulse / 2;
-            debugger
             // player.hurting = FPS;
             player.afterStep = true
             player.stepped = false

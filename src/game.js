@@ -181,8 +181,7 @@ class Game {
 
     handleTextEvents(){
         switch (this.currentLevel){
-            case 0:
-                
+            case 0:  
                 this.screenText("Twin Tales !", 320, 310, "stayOn" , "150px")
                 this.screenText("Press Enter", 600, 627, "stayOn" )
                 break
@@ -195,7 +194,11 @@ class Game {
                 this.screenText("Watch Out!", 920, 620, "textOn")
                 break
             case 3:
-                this.screenText("You're on your own now", 330, 620, "textOn")
+                this.screenText("You're on your own now", 150, 620, "textOn")
+                break
+            case 6:
+                this.screenText("Thanks for Playing!", 320, 310, "stayOn", "100px")
+                this.screenText("Press Enter for Endless Mode", 400, 627, "stayOn")
                 break
         }
     }

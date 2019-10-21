@@ -85,28 +85,6 @@
                  "width":70,
                  "x":1242.83333333334,
                  "y":676.5
-                }, 
-                {
-                 "height":70,
-                 "id":8,
-                 "name":"snail",
-                 "properties":[
-                        {
-                         "name":"left",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"maxdx",
-                         "type":"int",
-                         "value":3
-                        }],
-                 "rotation":0,
-                 "type":"enemy",
-                 "visible":true,
-                 "width":70,
-                 "x":299.666666666667,
-                 "y":675.666666666667
                 }],
          "opacity":1,
          "properties":[

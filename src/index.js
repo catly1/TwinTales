@@ -22,7 +22,7 @@ const MAPSIZE = { tw: 21, th: 12 },
     COLOR = { BLACK: '#000000', YELLOW: '#ECD078', BRICK: '#D95B43', PINK: '#C02942', PURPLE: '#542437', GREY: '#333', SLATE: '#53777A', GOLD: 'gold' },
     COLORS = [COLOR.YELLOW, COLOR.BRICK, COLOR.PINK, COLOR.PURPLE, COLOR.GREY],
     KEY = { SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, W: 87, A: 65, S: 83, D: 68, ENTER: 13},
-    LEVELS = ["/dist/level2.json", "/dist/level4.json", "/dist/level1.json"]
+    LEVELS = ["/dist/level2.json", "/dist/level4.json", "/dist/level1.json", "/dist/level5.json"]
 
     
 let currentAudio, volume, savedVolume
@@ -50,7 +50,7 @@ window.addEventListener("DOMContentLoaded", e => {
         switch (key) {
             case KEY.A: 
                 twin1.left = down; 
-                if (gameInstance.currentLevel == 4){
+                if (gameInstance.currentLevel >= 4 && gameInstance.currentLevel <= 6){
                     twin2.right = down
                 } else {
                     twin2.left = down; 
@@ -58,7 +58,7 @@ window.addEventListener("DOMContentLoaded", e => {
                 break;
             case KEY.D: 
                 twin1.right = down;
-                if (gameInstance.currentLevel == 4) {
+                if (gameInstance.currentLevel >= 4 && gameInstance.currentLevel <= 6) {
                     twin2.left = down; 
                 } else {
                     twin2.right = down;
@@ -89,7 +89,7 @@ window.addEventListener("DOMContentLoaded", e => {
     }
 
     const handleEnter = () =>{
-        if (gameInstance.currentLevel < 1){
+        if (gameInstance.currentLevel < 1 || gameInstance.currentLevel == 6){
             ++gameInstance.currentLevel
             gameInstance.gameRunning = false
             gameInstance.textOn = true
@@ -278,7 +278,6 @@ window.addEventListener("DOMContentLoaded", e => {
             
             switch (gameInstance.currentLevel){
                 case 1:
-
                     setTimeout(() => contentWithMusic("/dist/level1.json", "../audio/stage loop1.mp3"), 600)
                     black()
                     // loading()
@@ -301,8 +300,18 @@ window.addEventListener("DOMContentLoaded", e => {
                     setTimeout(() => content("/dist/level4.json"), 600)
                     black()
                     break;
+                case 5:
+                    // Util.get("/dist/level4.json", resetGame);
+                    setTimeout(() => content("/dist/level5.json"), 600)
+                    // black()
+                    break;
+                case 6:
+                    // Util.get("/dist/level4.json", resetGame);
+                    // setTimeout(() => content("/dist/endscreen.json"), 600)
+                    Util.get("/dist/endscreen.json", resetGame);
+                    // black()
+                    break;
                 default: 
-
                     Util.get( endless() , resetGame);
                     lastLevel = selectedLevel.slice();
                     break;
@@ -414,7 +423,7 @@ window.addEventListener("DOMContentLoaded", e => {
         }
         if (savedVolume === 0 ) { volume.value = 0 }
         handVolumeButton(audioVol)
-        volume.value = 0 // prevent bgm from playing. remove on deployment5
+        // volume.value = 0 // prevent bgm from playing. remove on deployment5
         request.send();
     }
 
