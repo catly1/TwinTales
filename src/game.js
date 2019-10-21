@@ -39,10 +39,7 @@ class Game {
         this.txt = "Twin Tales!"
         this.x = 30
         this.i = 0  
-        this.textOn = false
-
-        this.staticBackground1 = new Image();
-        this.staticBackground1.src = '../images/staticBackground1.png'
+        this.textOn = false;
 
     }
 
@@ -74,16 +71,16 @@ class Game {
         this.twin2.renderTwin(ctx, twin2, dt)
         this.enemies.renderEnemies(dt)
         this.doors.renderDoors(dt)
-        this.renderStaticBackground(ctx, width, height)
+        this.renderStaticBackground()
         this.animateBackground(width, height, dt)
         
     }
 
-    renderStaticBackground(ctx, width, height){
+    renderStaticBackground(){
         // ctx.fillStyle = "gray";
         this.ctx.globalCompositeOperation = 'destination-over'
         this.ctx.drawImage(
-                this.staticBackground1,
+                staticBackground1,
                 0,
                 0,
                 this.width,
