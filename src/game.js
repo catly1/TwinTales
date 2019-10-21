@@ -41,8 +41,8 @@ class Game {
         this.i = 0  
         this.textOn = false
 
-        this.staticBackground1 = staticBackground1 = new Image();
-        
+        this.staticBackground1 = new Image();
+        this.staticBackground1.src = '../images/staticBackground1.png'
 
     }
 
@@ -81,7 +81,6 @@ class Game {
 
     renderStaticBackground(ctx, width, height){
         // ctx.fillStyle = "gray";
-        this.staticBackground1.src = '../images/staticBackground1.png'
         this.ctx.globalCompositeOperation = 'destination-over'
         this.ctx.drawImage(
                 this.staticBackground1,
