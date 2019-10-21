@@ -8,8 +8,6 @@ let TWIN1ANIMATIONS = {
     IDLE: { x: 0, y: 0, w: 245, h: 245, frames: 24, fps: 10 },
     LEFT: { x: 0, y: 245, w: 245, h: 245, frames: 10, fps: 10 },
     RIGHT: { x: 0, y: 490, w: 245, h: 245, frames: 10, fps: 10 },
-    // JUMPINGL: { x: 0, y: 162, w: 245, h: 245, frames: 4, fps: 10 },
-    // JUMPINGR: { x: 0, y: 216, w: 245, h: 245, frames: 4, fps: 10 },
     FALLINGL: { x: 0, y: 735, w: 245, h: 245, frames: 2, fps: 10 },
     FALLINGR: { x: 0, y: 980, w: 245, h: 245, frames: 2, fps: 10 },
 }
@@ -53,9 +51,6 @@ export default class Player{
 
 
     renderTwin(ctx, twin, dt) {
-        // ctx.fillStyle = this.COLOR.YELLOW;
-        // ctx.fillRect(twin.x + (twin.dx * dt), twin.y + (twin.dy * dt), this.TILESIZE, this.TILESIZE);
-
         this.updateBreath()
         let breatheHeight
         if (twin.animation.y === 0) {
@@ -91,10 +86,6 @@ export default class Player{
             breatheHeight // Destination height
         )
 
-
-
-        // this.idle(ctx, twin, dt)
-
         let n, max;
 
         ctx.fillStyle = this.COLOR.GOLD;
@@ -123,18 +114,18 @@ export default class Player{
         player.ddx = 0;
         player.ddy = player.gravity;
         if (player.left)
-            player.ddx = player.ddx - accel;     // player wants to go left
+            player.ddx = player.ddx - accel;    
         else if (wasleft)
-            player.ddx = player.ddx + friction;  // player was going left, but not any more
+            player.ddx = player.ddx + friction; 
 
-        if (player.right) { // player wants to go right
+        if (player.right) { 
             player.ddx = player.ddx + accel;    
         }
         else if (wasright)
-            player.ddx = player.ddx - friction;  // player was going right, but not any more
+            player.ddx = player.ddx - friction; 
 
         if (player.jump && !player.jumping && !falling) {
-            player.ddy = player.ddy - player.impulse;     // apply an instantaneous (large) vertical impulse
+            player.ddy = player.ddy - player.impulse;    
             player.jumping = true;
         }
 
@@ -150,7 +141,7 @@ export default class Player{
 
         if ((wasleft && (player.dx > 0)) ||
             (wasright && (player.dx < 0))) {
-            player.dx = 0; // clamp at zero to prevent friction from making us jiggle side to side
+            player.dx = 0; 
         }
 
         //collision settings
@@ -168,21 +159,21 @@ export default class Player{
         if (player.dy > 0) {
             if ((celldown && !cell) ||
                 (celldiag && !cellright && nx)) {
-                player.y = this.tileToPixel(ty);       // clamp the y position to avoid falling into platform below
-                player.dy = 0;            // stop downward velocity
-                player.falling = false;   // no longer falling
-                player.jumping = false;   // (or jumping)
-                ny = 0;                   // - no longer overlaps the cells below
+                player.y = this.tileToPixel(ty);       
+                player.dy = 0;            
+                player.falling = false; 
+                player.jumping = false;  
+                ny = 0;                  
             }
         }
         else if (player.dy < 0) {
             if ((cell && !celldown) ||
                 (cellright && !celldiag && nx)) {
-                player.y = this.tileToPixel(ty + 1);   // clamp the y position to avoid jumping into platform above
-                player.dy = 0;            // stop upward velocity
-                cell = celldown;     // player is no longer really in that cell, we clamped them to the cell below
-                cellright = celldiag;     // (ditto)
-                ny = 0;            // player no longer overlaps the cells below
+                player.y = this.tileToPixel(ty + 1);   
+                player.dy = 0;          
+                cell = celldown;     
+                cellright = celldiag;     
+                ny = 0;          
             }
         }
 
@@ -191,15 +182,15 @@ export default class Player{
         if (player.dx > 0) {
             if ((cellright && !cell) ||
                 (celldiag && !celldown && ny)) {
-                player.x = this.tileToPixel(tx);       // clamp the x position to avoid moving into the platform we just hit
-                player.dx = 0;            // stop horizontal velocity
+                player.x = this.tileToPixel(tx);       
+                player.dx = 0;           
             }
         }
         else if (player.dx < 0) {
             if ((cell && !cellright) ||
                 (celldown && !celldiag && ny)) {
-                player.x = this.tileToPixel(tx + 1);  // clamp the x position to avoid moving into the platform we just hit
-                player.dx = 0;           // stop horizontal velocity
+                player.x = this.tileToPixel(tx + 1);  
+                player.dx = 0;          
             }
         }
 
@@ -216,12 +207,6 @@ export default class Player{
             Util.animate(player, TWIN1ANIMATIONS.RIGHT)
         } else if (player.jump && !player.falling ) {
             Util.animate(player, TWIN1ANIMATIONS.FALLINGL)
-        // } else if ((player.jump && !player.left && !player.falling) || (player.jump && player.right && !player.falling)) {
-        //     debugger
-        //     Util.animate(player, TWIN1ANIMATIONS.JUMPINGR)
-        // } else if ( player.jump && !player.falling ) {
-        //     debugger
-        //     Util.animate(player, TWIN1ANIMATIONS.JUMPINGL)
         } else if (player.falling && player.left) {
             Util.animate(player, TWIN1ANIMATIONS.FALLINGL)
         } else if (player.falling && player.right) {
@@ -241,27 +226,12 @@ export default class Player{
 
     stepped(player, dt){
         if (player.stepped === true) {
-            // debugger
             player.dx = -player.dx / 2;
             player.ddx = 0;
             player.ddy = player.impulse / 2;
-            // player.hurting = FPS;
             player.afterStep = true
             player.stepped = false
         }
-        // else {
-        //     debugger
-        //     player.ddy = -player.gravity;
-        //     player.stepped = false
-        // }
-        // Player.updatePosition(player, dt);
-        // if (player.y <= 0) {
-        //     debugger
-        //     player.stepped = false;
-        //     player.falling = false;
-        //     // player.y = 0;
-        //     // player.dy = 0;
-        // }
 
     }
 

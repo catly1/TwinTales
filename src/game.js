@@ -55,7 +55,6 @@ class Game {
         if (this.gameState.twin1AtDoor && this.gameState.twin2AtDoor) {
             ++this.currentLevel
             this.textOn = true
-            // this.loadingScreen(width, height, dt)
             this.gameRunning = false
     
         }
@@ -66,10 +65,6 @@ class Game {
     render(ctx, twin1, twin2, width, height, dt){
         ctx.clearRect(0, 0, width, height);
         this.handleTextEvents()
-        
-        // this.renderStartScreen()
-        // if(!this.gameRunning) this.loading()
-        // draw functions here
         this.renderMap(ctx);
         this.twin1.renderTwin(ctx, twin1, dt);
         this.twin2.renderTwin(ctx, twin2, dt)
@@ -83,7 +78,6 @@ class Game {
     renderStaticBackground(ctx, width, height){
         ctx.fillStyle = "gray";
         this.ctx.globalCompositeOperation = 'destination-over'
-        // ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
         ctx.drawImage(
                 staticBackground1,
                 0,
@@ -91,35 +85,10 @@ class Game {
                 width,
                 height
             )
-        // ctx.fillRect(0, 0, width,height);
     }
 
-    // renderStartScreen(){
-    //     this.ctx.font = "50px Comic Sans MS, cursive, TSCu_Comic, sans-serif";
-    //     this.ctx.lineWidth = 4;
-    //     this.ctx.lineJoin = "round";
-    //     // this.ctx.globalAlpha = 1 / 3;
-        
-
-    //     // this.ctx.clearRect(this.x, 0, 60, 150);
-    //     // this.ctx.globalCompositeOperation = 'destination-over'
-
-    //     this.ctx.setLineDash([this.dashLen - this.dashOffset, this.dashOffset - this.speed]);
-    //     this.dashOffset -= this.speed;
-    //     this.ctx.strokeText(this.txt[this.i], this.x, 90);
-    //     if (this.dashOffset < 0 && (this.i < this.txt.length - 1 )){
-    //         this.ctx.fillText(this.txt[this.i], this.x, 90);
-    //         this.dashOffset = this.dashLen;
-    //         this.x += this.ctx.measureText(this.txt[this.i++]).width + this.ctx.lineWidth * Math.random();
-    //         this.ctx.setTransform(1, 0, 0, 1, 0, 3 * Math.random())
-    //         this.ctx.rotate(Math.random() * 0.005)
-    //     }
-        
-
-    // }
 
     animateBackground(){
-        // this.secondCounter += dt;
 
         let scrollSpeed = 0.2
 
@@ -128,7 +97,6 @@ class Game {
         }
 
         this.scrollVal += scrollSpeed;
-        // this.ctx.globalCompositeOperation = 'destination-over'
 
 
         this.ctx.drawImage(
@@ -153,7 +121,6 @@ class Game {
         if (mode === "textOn" && this.textOn) {
             if (!this.textStart) {
                 this.textStart = Date.now()
-                            // stroke letter
             } else if ( (Date.now() - this.textStart)/1000 < 5 ) {
                 this.ctx.font = `${size} Comic Sans MS, cursive, TSCu_Comic, sans-serif`;
                 this.ctx.lineWidth = 1;
@@ -172,7 +139,7 @@ class Game {
             this.ctx.font = `${size} Comic Sans MS, cursive, TSCu_Comic, sans-serif`
             this.ctx.lineWidth = 1;
             this.ctx.strokeStyle = "black";
-            this.ctx.fillStyle = "white"                              // reduce dash length
+            this.ctx.fillStyle = "white"                           
             this.ctx.strokeText(txt, x, y)
             this.ctx.fillText(txt, x, y);  
         }
@@ -215,22 +182,6 @@ class Game {
         this.ctx.globalCompositeOperation = "source-over"
         this.ctx.fillStyle = "rgba(0, 0, 0, .9)";
         this.ctx.fillRect(this.width - this.loadScrollVal, 0, this.width, this.height);
-        // this.ctx.fillRect(-1, 0, this.width, this.height)
-        // this.ctx.drawImage(
-        //     animatedBackground1, 
-        //     this.width - this.loadScrollVal, 
-        //     0, 
-        //     this.width, 
-        //     this.height, 
-        //     );
-
-        // this.ctx.drawImage(
-        //     animatedBackground1,
-        //     - this.scrollVal,
-        //     0,
-        //     this.width,
-        //     this.height
-        // );
     }
 
     clearLoad(){
@@ -274,9 +225,8 @@ class Game {
             for (x = 0; x < this.MAPSIZE.tw; x++) {
                 cell = this.tcell(x, y);
                 if (cell) {
-                    // let sprite = this.spriteCoordinates[(cell-686).toString()];
                     let spritesLibrary = library.frames;
-                    let paddedNum = Util.padZero((cell), 3); // adjust the cell ID from Tiled in here
+                    let paddedNum = Util.padZero((cell), 3); 
                     let sprite = spritesLibrary[paddedNum].frame
 
                     ctx.drawImage(

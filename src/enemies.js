@@ -11,8 +11,6 @@ let TWIN1ANIMATIONS = {
     IDLE: { x: 0, y: 0, w: 245, h: 245, frames: 24, fps: 10 },
     LEFT: { x: 0, y: 245, w: 245, h: 245, frames: 10, fps: 10 },
     RIGHT: { x: 0, y: 490, w: 245, h: 245, frames: 10, fps: 20 },
-    // JUMPINGL: { x: 0, y: 162, w: 245, h: 245, frames: 4, fps: 10 },
-    // JUMPINGR: { x: 0, y: 216, w: 245, h: 245, frames: 4, fps: 10 },
     FALLINGL: { x: 0, y: 735, w: 245, h: 245, frames: 2, fps: 10 },
     FALLINGR: { x: 0, y: 980, w: 245, h: 245, frames: 2, fps: 10 },
 }
@@ -53,7 +51,7 @@ export default class Enemies {
                 friction = enemy.friction * (falling ? 0.5 : 1),
                 accel = enemy.accel * (falling ? 0.5 : 1);
 
-
+            // Animations
             let animation
             if (enemy.name == "twin1" || enemy.name == "twin2") {
                 animation = TWIN1ANIMATIONS
@@ -73,22 +71,22 @@ export default class Enemies {
 
             this.animate(enemy, animation)
 
-
+            // Movement
             enemy.ddx = 0;
             enemy.ddy = enemy.gravity;
             if (enemy.left)
-                enemy.ddx = enemy.ddx - accel;     // enemy wants to go left
+                enemy.ddx = enemy.ddx - accel;    
             else if (wasleft)
-                enemy.ddx = enemy.ddx + friction;  // enemy was going left, but not any more
+                enemy.ddx = enemy.ddx + friction;  
 
-            if (enemy.right) { // enemy wants to go right
+            if (enemy.right) { 
                 enemy.ddx = enemy.ddx + accel;
             }
             else if (wasright)
-                enemy.ddx = enemy.ddx - friction;  // enemy was going right, but not any more
+                enemy.ddx = enemy.ddx - friction; 
 
             if (enemy.jump && !enemy.jumping && !falling) {
-                enemy.ddy = enemy.ddy - enemy.impulse;     // apply an instantaneous (large) vertical impulse
+                enemy.ddy = enemy.ddy - enemy.impulse;     
                 enemy.jumping = true;
             }
 
@@ -122,21 +120,21 @@ export default class Enemies {
             if (enemy.dy > 0) {
                 if ((celldown && !cell) ||
                     (celldiag && !cellright && nx)) {
-                    enemy.y = this.tileToPixel(ty);       // clamp the y position to avoid falling into platform below
-                    enemy.dy = 0;            // stop downward velocity
-                    enemy.falling = false;   // no longer falling
-                    enemy.jumping = false;   // (or jumping)
-                    ny = 0;                   // - no longer overlaps the cells below
+                    enemy.y = this.tileToPixel(ty);       
+                    enemy.dy = 0;           
+                    enemy.falling = false;  
+                    enemy.jumping = false; 
+                    ny = 0;                   
                 }
             }
             else if (enemy.dy < 0) {
                 if ((cell && !celldown) ||
                     (cellright && !celldiag && nx)) {
-                    enemy.y = this.tileToPixel(ty + 1);   // clamp the y position to avoid jumping into platform above
-                    enemy.dy = 0;            // stop upward velocity
-                    cell = celldown;     // player is no longer really in that cell, we clamped them to the cell below
-                    cellright = celldiag;     // (ditto)
-                    ny = 0;            // player no longer overlaps the cells below
+                    enemy.y = this.tileToPixel(ty + 1);   
+                    enemy.dy = 0;         
+                    cell = celldown;     
+                    cellright = celldiag;
+                    ny = 0;           
                 }
             }
 
@@ -145,22 +143,22 @@ export default class Enemies {
             if (enemy.dx > 0) {
                 if ((cellright && !cell) ||
                     (celldiag && !celldown && ny)) {
-                    enemy.x = this.tileToPixel(tx);       // clamp the x position to avoid moving into the platform we just hit
-                    enemy.dx = 0;            // stop horizontal velocity
+                    enemy.x = this.tileToPixel(tx);       
+                    enemy.dx = 0;            
                 }
             }
             else if (enemy.dx < 0) {
                 if ((cell && !cellright) ||
                     (celldown && !celldiag && ny)) {
-                    enemy.x = this.tileToPixel(tx + 1);  // clamp the x position to avoid moving into the platform we just hit
-                    enemy.dx = 0;           // stop horizontal velocity
+                    enemy.x = this.tileToPixel(tx + 1); 
+                    enemy.dx = 0;          
                 }
             }
 
 
             
             // monster and player overlap
-            if (!enemy.dead){ // only do this if the monster is dead
+            if (!enemy.dead){ 
                 if (Util.overlap(twin1.x, twin1.y, this.TILESIZE, this.TILESIZE, enemy.x, enemy.y, this.TILESIZE, this.TILESIZE)) {
                     if ((twin1.dy > 0) && (enemy.y - twin1.y > this.TILESIZE / 2)){
                        this.killEnemy(enemy, twin1, step)
@@ -186,14 +184,13 @@ export default class Enemies {
         })
 
     }
-    // animation not working, look into later.
+ 
     killEnemy(enemy, twin1, step){
         twin1.stepped = true
-        enemy.dead = true // kill enemy if stepped on
+        enemy.dead = true 
     }
     
     killTwin(twin){
-        // debugger
         twin.x = twin.start.x
         twin.y = twin.start.y
         twin.dx = twin.dy = 0;

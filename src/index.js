@@ -7,9 +7,6 @@ const jumpSound = new Audio ('../audio/jump1.wav')
 // Constants and functions
 
 
-
-
-
 const MAPSIZE = { tw: 21, th: 12 },
     TILESIZE = 70,
     UNIT = TILESIZE,
@@ -30,21 +27,7 @@ let currentAudio, volume, savedVolume
 let now, last = Util.timestamp(),
     dt = 0
 
-///
-
-
-
-
 window.addEventListener("DOMContentLoaded", e => {
-
-
-
-
-
-    
-
-
-
     const onKey = (ev, key, down) => {
         if (stamina > 0){
         switch (key) {
@@ -76,9 +59,6 @@ window.addEventListener("DOMContentLoaded", e => {
         }
         }
 
-
-
-
     }
 
     const handleJump = () => {
@@ -95,15 +75,6 @@ window.addEventListener("DOMContentLoaded", e => {
             gameInstance.textOn = true
             frame()
         }
-
-
-        // if (!paused){
-        //     // debugger
-        //     paused = true
-        // } else {
-        //     // debugger
-        //     paused = false
-        // }
     }
   
     document.addEventListener('keydown', function (ev) { return onKey(ev, ev.keyCode, true); }, false);
@@ -209,8 +180,8 @@ window.addEventListener("DOMContentLoaded", e => {
 
     const setupEntity = obj => {
         let entity = {};
-        entity.x = obj.x; // multiplied by 3 because of resize
-        entity.y = obj.y; // multiplied by 3 because of resize
+        entity.x = obj.x; 
+        entity.y = obj.y; 
         entity.dx = 0;
         entity.dy = 0;
         entity.left = ""
@@ -226,7 +197,6 @@ window.addEventListener("DOMContentLoaded", e => {
         entity.name = obj.name
         entity.stepped = false
         entity.afterStep = false
-        // entity.jump = true
 
         obj.properties.forEach(property => {
             if (property.name === "left") entity.left = property.value
@@ -248,13 +218,6 @@ window.addEventListener("DOMContentLoaded", e => {
                 entity.accel = property.value
             }
         })
-
-        // entity.enemy = obj.type == "enemy";
-        // entity.twin1 = obj.type == "twin1";
-        // entity.treasure = obj.type == "treasure";
-        // entity.twin2 = obj.type == "twin2";
-        // entity.left = obj.properties.find(property => property.name = "left").value
-        // entity.right = obj.properties.right;
         entity.start = { x: obj.x , y: obj.y }
         entity.killed = entity.collected = 0;
         entity.animation = {}
@@ -280,36 +243,24 @@ window.addEventListener("DOMContentLoaded", e => {
                 case 1:
                     setTimeout(() => contentWithMusic("/dist/level1.json", "../audio/stage loop1.mp3"), 600)
                     black()
-                    // loading()
-                    //     }, 5000 - (endTime - startTime))
-                    // )
-
                     break;
                 case 2:
-                    // Util.get("/dist/level2.json", resetGame);
                     setTimeout(() => content("/dist/level2.json"), 600)
                     black()
                     break;
                 case 3:
-                    // Util.get("/dist/level3.json", resetGame);
                     setTimeout(() => content("/dist/level3.json"), 600)
                     black()
                     break;
                 case 4:
-                    // Util.get("/dist/level4.json", resetGame);
                     setTimeout(() => content("/dist/level4.json"), 600)
                     black()
                     break;
                 case 5:
-                    // Util.get("/dist/level4.json", resetGame);
                     setTimeout(() => content("/dist/level5.json"), 600)
-                    // black()
                     break;
                 case 6:
-                    // Util.get("/dist/level4.json", resetGame);
-                    // setTimeout(() => content("/dist/endscreen.json"), 600)
                     Util.get("/dist/endscreen.json", resetGame);
-                    // black()
                     break;
                 default: 
                     Util.get( endless() , resetGame);
@@ -336,42 +287,6 @@ window.addEventListener("DOMContentLoaded", e => {
         requestAnimationFrame(black)
     }
 
-    // const popupMessage = () => {
-    //     ctx.font = "50px Comic Sans MS, cursive, TSCu_Comic, sans-serif";
-    //     ctx.lineWidth = 5; ctx.lineJoin = "round";
-    //     ctx.strokeStyle = "rgba(114, 26, 26, 1)";
-    //     ctx.fillStyle = "white"
-    //     ctx.setLineDash([dashLen - dashOffset, dashOffset - speed]); // create a long dash mask
-    //     dashOffset -= speed;                                         // reduce dash length
-    //     // ctx.globalAlpha = .9
-    //     ctx.fillText(txt, x, 90); 
-    //     requestAnimationFrame(popupMessage)
-    // }
-
-
-    // const loading = () =>{
-    //     // ctx.clearRect(x, 0, 60, 150);
-    //     ctx.font = "50px Comic Sans MS, cursive, TSCu_Comic, sans-serif";
-    //     ctx.lineWidth = 5; ctx.lineJoin = "round"; 
-    //     ctx.strokeStyle = "rgba(114, 26, 26, 1)";
-    //     ctx.fillStyle = "white"
-    //     ctx.setLineDash([dashLen - dashOffset, dashOffset - speed]); // create a long dash mask
-    //     dashOffset -= speed;                                         // reduce dash length
-    //     // ctx.globalAlpha = .9
-    //     ctx.fillText(txt, x, 90);                               // stroke letter
-        
-    //     // ctx.globalCompositeOperation = 'source-out'
-    //     // if (dashOffset > 0 && (i < txt.length - 1))    {   
-    //     //     debugger  // animate
-    //     //     ctx.fillText(txt[i], x, 90);                               // fill final letter
-    //     //     dashOffset = dashLen;                                      // prep next char
-    //     //     x += ctx.measureText(txt[i++]).width + ctx.lineWidth * Math.random();
-    //     //     // ctx.setTransform(1, 0, 0, 1, 0, 3 * Math.random());        // random y-delta
-    //     //     // ctx.rotate(Math.random() * 0.005);             
-    //     // }            // random rotation
-    // }
-    "/dist/level1.json"
-    "../audio/stage loop1.mp3"
     const contentWithMusic = (stage, music) =>{
         Util.get(stage, resetGame);
         currentAudio.stop()
@@ -447,7 +362,6 @@ window.addEventListener("DOMContentLoaded", e => {
             }
         })
     }
-    // Grab level data from json.
 
 })
 

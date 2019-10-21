@@ -24,19 +24,21 @@ export default class Doors {
                 accel = door.accel * (falling ? 0.5 : 1);
             door.ddx = 0;
             door.ddy = door.gravity;
-            if (door.left)
-                door.ddx = door.ddx - accel;     // door wants to go left
-            else if (wasleft)
-                door.ddx = door.ddx + friction;  // door was going left, but not any more
 
-            if (door.right) { // door wants to go right
+            // movement
+            if (door.left)
+                door.ddx = door.ddx - accel;     
+            else if (wasleft)
+                door.ddx = door.ddx + friction;  
+
+            if (door.right) { 
                 door.ddx = door.ddx + accel;
             }
             else if (wasright)
-                door.ddx = door.ddx - friction;  // door was going right, but not any more
+                door.ddx = door.ddx - friction;  
 
             if (door.jump && !door.jumping && !falling) {
-                door.ddy = door.ddy - door.impulse;     // apply an instantaneous (large) vertical impulse
+                door.ddy = door.ddy - door.impulse;    
                 door.jumping = true;
             }
 
@@ -70,21 +72,21 @@ export default class Doors {
             if (door.dy > 0) {
                 if ((celldown && !cell) ||
                     (celldiag && !cellright && nx)) {
-                    door.y = this.tileToPixel(ty);       // clamp the y position to avoid falling into platform below
-                    door.dy = 0;            // stop downward velocity
-                    door.falling = false;   // no longer falling
-                    door.jumping = false;   // (or jumping)
-                    ny = 0;                   // - no longer overlaps the cells below
+                    door.y = this.tileToPixel(ty);       
+                    door.dy = 0;            
+                    door.falling = false;   
+                    door.jumping = false;   
+                    ny = 0;                   
                 }
             }
             else if (door.dy < 0) {
                 if ((cell && !celldown) ||
                     (cellright && !celldiag && nx)) {
-                    door.y = this.tileToPixel(ty + 1);   // clamp the y position to avoid jumping into platform above
-                    door.dy = 0;            // stop upward velocity
-                    cell = celldown;     // player is no longer really in that cell, we clamped them to the cell below
-                    cellright = celldiag;     // (ditto)
-                    ny = 0;            // player no longer overlaps the cells below
+                    door.y = this.tileToPixel(ty + 1);   
+                    door.dy = 0;            
+                    cell = celldown;     
+                    cellright = celldiag;    
+                    ny = 0;          
                 }
             }
 
@@ -93,15 +95,15 @@ export default class Doors {
             if (door.dx > 0) {
                 if ((cellright && !cell) ||
                     (celldiag && !celldown && ny)) {
-                    door.x = this.tileToPixel(tx);       // clamp the x position to avoid moving into the platform we just hit
-                    door.dx = 0;            // stop horizontal velocity
+                    door.x = this.tileToPixel(tx);       
+                    door.dx = 0;           
                 }
             }
             else if (door.dx < 0) {
                 if ((cell && !cellright) ||
                     (celldown && !celldiag && ny)) {
-                    door.x = this.tileToPixel(tx + 1);  // clamp the x position to avoid moving into the platform we just hit
-                    door.dx = 0;           // stop horizontal velocity
+                    door.x = this.tileToPixel(tx + 1); 
+                    door.dx = 0;           
                 }
             }
 
@@ -109,7 +111,6 @@ export default class Doors {
 
                 if (door.name === "door1") {
                     if ((Util.overlap(twin1.x, twin1.y, this.TILESIZE, this.TILESIZE, door.x, door.y, this.TILESIZE, this.TILESIZE))) {
-                            // this.killTwin(twin1)
                         this.gameState.twin1AtDoor = true
                     } else 
                     {
@@ -119,7 +120,6 @@ export default class Doors {
 
                 if (door.name === "door2") {
                     if (Util.overlap(twin2.x, twin2.y, this.TILESIZE, this.TILESIZE, door.x, door.y, this.TILESIZE, this.TILESIZE)) {
-                            // this.killTwin(twin2)
                         this.gameState.twin2AtDoor = true
                     } else {
                         this.gameState.twin2AtDoor = false
@@ -133,7 +133,6 @@ export default class Doors {
     }
 
     killTwin(twin) {
-        // debugger
         twin.x = twin.start.x
         twin.y = twin.start.y
         twin.dx = twin.dy = 0;
