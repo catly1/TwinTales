@@ -73,7 +73,7 @@ window.addEventListener("DOMContentLoaded", e => {
             ++gameInstance.currentLevel
             gameInstance.gameRunning = false
             gameInstance.textOn = true
-            frame()
+            // frame()
         }
     }
   
@@ -282,12 +282,12 @@ window.addEventListener("DOMContentLoaded", e => {
         if (gameInstance.currentLevel == 1){
             text = "loading"
         }
-
         gameInstance.screenText(text, 1055, 707, "textOn" )
         requestAnimationFrame(black)
     }
 
     const contentWithMusic = (stage, music) =>{
+
         Util.get(stage, resetGame);
         currentAudio.stop()
         Audio(music)
