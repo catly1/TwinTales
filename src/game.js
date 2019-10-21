@@ -3,8 +3,8 @@ import Enemies from './enemies.js';
 import Doors from './door.js';
 import library from "../images/spritesheetAtlast.js"
 const Util = require("./util");
-const staticBackground1 = new Image();
-staticBackground1.src = '../images/staticBackground1.png'
+const staticBackground1 = new Image('../images/staticBackground1.png');
+// staticBackground1.src = '../images/staticBackground1.png'
 const animatedBackground1 = new Image();
 animatedBackground1.src = "../images/anibackground1.png"
 
@@ -79,7 +79,7 @@ class Game {
         // ctx.fillStyle = "gray";
         this.ctx.globalCompositeOperation = 'destination-over'
         this.ctx.drawImage(
-                animatedBackground1,
+                staticBackground1,
                 0,
                 0,
                 this.width,
