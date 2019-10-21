@@ -18,5 +18,8 @@
   "homepage": "https://github.com/catly1/PlatformerGame#readme",
   "dependencies": {
     "webpack": "^4.41.2"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.9"
   }
 }
