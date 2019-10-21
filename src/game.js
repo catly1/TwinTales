@@ -70,13 +70,13 @@ class Game {
         this.twin2.renderTwin(ctx, twin2, dt)
         this.enemies.renderEnemies(dt)
         this.doors.renderDoors(dt)
-        // this.renderStaticBackground(ctx, width, height)
+        this.renderStaticBackground(ctx, width, height)
         this.animateBackground(width, height, dt)
         
     }
 
     renderStaticBackground(ctx, width, height){
-        ctx.fillStyle = "gray";
+        // ctx.fillStyle = "gray";
         this.ctx.globalCompositeOperation = 'destination-over'
         ctx.drawImage(
                 staticBackground1,
