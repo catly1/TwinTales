@@ -4,7 +4,7 @@ import Doors from './door.js';
 import library from "../images/spritesheetAtlast.js"
 const Util = require("./util");
 const staticBackground1 = new Image();
-staticBackground1.src = '../images/staticBackground1.png'
+staticBackground1.src = '../images/staticbackground1.png'
 const animatedBackground1 = new Image();
 animatedBackground1.src = "../images/anibackground1.png"
 
@@ -71,7 +71,7 @@ class Game {
         this.twin2.renderTwin(ctx, twin2, dt)
         this.enemies.renderEnemies(dt)
         this.doors.renderDoors(dt)
-        setTimeout(this.renderStaticBackground, 0)
+        this.renderStaticBackground()
         this.animateBackground(width, height, dt)
         
     }
