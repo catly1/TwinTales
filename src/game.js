@@ -78,7 +78,7 @@ class Game {
     renderStaticBackground(ctx, width, height){
         // ctx.fillStyle = "gray";
         this.ctx.globalCompositeOperation = 'destination-over'
-        this.ctx.drawImage(
+        if(this.ctx) this.ctx.drawImage(
                 staticBackground1,
                 0,
                 0,
