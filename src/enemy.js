@@ -31,7 +31,7 @@ let SNAILANIMATIONS = {
     RIGHT: { x: 500, y: 0, w: 50, h: 50, frames: 2, fps: 5 },
 }
 
-export default class Enemies extends Entity { 
+export default class Enemy extends Entity { 
     constructor(options, object){
         super(options, object)
         this.enemies = options.enemies;
@@ -381,6 +381,40 @@ export default class Enemies extends Entity {
                 )
             }
         })
+    }
+
+    render(dt) {
+        let size
+        let sheet = enemySheet
+        let sw = 50, sh = 50
+        if (this.name == "twin1") {
+            size = this.TILESIZE * 2
+            sheet = twinSheet
+            sw = 245,
+                sh = 245
+        } else {
+            size = this.TILESIZE
+        }
+
+        if (this.name == "twin2") {
+            size = this.TILESIZE * 2
+            sheet = twinSheet2
+            sw = 245,
+                sh = 245
+        }
+
+        this.ctx.drawImage(
+            sheet, // Source image object
+            this.animation.x + (this.animationFrame * this.animation.w), //	Source x
+            this.animation.y, // 	Source y
+            sw, // Source width
+            sh, // Source height
+            this.x + (this.dx * dt), // Destination x
+            this.y + (this.dy * dt), // Destination y
+            size, // Destination width
+            size // Destination height
+        )
+    
     }
 
     animate(enemy, animation) {

@@ -2,7 +2,6 @@
 
 export default class Entity{
     constructor(options, obj){
-        debugger
         const { MAXDX, GRAVITY, MAXDY, IMPULSE, ACCELERATION, FRICTION, UNIT } = options
         this.x = obj.x;
         this.y = obj.y;

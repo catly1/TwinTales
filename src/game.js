@@ -1,5 +1,5 @@
 import Player from './player.js'
-import Enemies from './enemies.js';
+import Enemy from './enemy.js';
 import Doors from './door.js';
 import Entity from './entity'
 import library from "../images/spritesheetAtlast.js"
@@ -15,7 +15,7 @@ class Game {
         this.ctx = options.ctx;
         this.MAPSIZE = options.MAPSIZE;
         this.COLORS = options.COLORS;
-        this.tcell = options.tcell;
+        // this.tcell = options.tcell;
         this.TILESIZE = options.TILESIZE;
         this.COLOR = options.COLOR;
         this.spritesheet = options.spritesheet;
@@ -56,21 +56,19 @@ class Game {
     setup(map, frame){
         let data = map.layers[0].data,
             objects = map.layers[1].objects
-        debugger
         objects.forEach(object => {
             switch (object.type) {
                 case "twin1":
                     this.twin1 = new Player(this.options, object);
-                    debugger
                     break;
                 case "twin2":
                     this.twin2 = new Player(this.options, object);
                     break;
                 case "enemy":
-                    this.enemies.push(new Enemies(this.options, object));
+                    this.enemies.push(new Enemy(this.options, object));
                     break;
                 case "door":
-                    this.doors.push(new Enemies(this.options, object));
+                    this.doors.push(new Enemy(this.options, object));
                     break;
             }
         })
@@ -109,13 +107,20 @@ class Game {
         ctx.clearRect(0, 0, width, height);
         this.handleTextEvents()
         this.renderMap(ctx);
-        this.twin1.renderTwin(ctx, twin1, dt);
-        this.twin2.renderTwin(ctx, twin2, dt)
-        this.enemies.renderEnemies(dt)
-        this.doors.renderDoors(dt)
-        this.renderStaticBackground()
-        this.animateBackground(width, height, dt)
+        // this.twin1.renderTwin(ctx, twin1, dt);
+        // this.twin2.renderTwin(ctx, twin2, dt)
+        // this.enemies.renderEnemies(dt)
+        this.renderEnemies(dt)
+        // this.doors.renderDoors(dt)
+        // this.renderStaticBackground()
+        // this.animateBackground(width, height, dt)
         
+    }
+
+    renderEnemies(dt){
+        this.enemies.forEach(enemy => {
+            enemy.render(dt)
+        })
     }
 
     renderStaticBackground(){
@@ -262,6 +267,10 @@ class Game {
 
     }
 
+    tcell(tx, ty) {
+        return this.cells[tx + (ty * this.MAPSIZE.tw)]
+    }
+
     renderMap(ctx) {
         let x, y, cell;
         for (y = 0; y < this.MAPSIZE.th; y++) {
@@ -271,7 +280,6 @@ class Game {
                     let spritesLibrary = library.frames;
                     let paddedNum = Util.padZero((cell), 3); 
                     let sprite = spritesLibrary[paddedNum].frame
-
                     ctx.drawImage(
                         this.spritesheet,
                         sprite.x,
