@@ -1,7 +1,7 @@
 const Util = {
 
     timestamp() {
-        return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
+        return new Date().getTime();
     },
 
     get(url, onsuccess) {
