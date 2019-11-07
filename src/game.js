@@ -1,6 +1,7 @@
 import Player from './player.js'
 import Enemies from './enemies.js';
 import Doors from './door.js';
+import Entity from './entity'
 import library from "../images/spritesheetAtlast.js"
 const Util = require("./util");
 const staticBackground1 = new Image();
@@ -10,6 +11,7 @@ animatedBackground1.src = "../images/anibackground1.png"
 
 class Game {
     constructor(options) {
+        this.options = options
         this.ctx = options.ctx;
         this.MAPSIZE = options.MAPSIZE;
         this.COLORS = options.COLORS;
@@ -18,10 +20,17 @@ class Game {
         this.COLOR = options.COLOR;
         this.spritesheet = options.spritesheet;
         this.spriteCoordinates = options.spriteCoordinates
-        this.twin1 = new Player(options)
-        this.twin2 = new Player(options)
-        this.enemies = new Enemies(options)
-        this.doors = new Doors(options)
+
+        this.cells = []
+        this.twin1 = ""
+        this.twin2 = ""
+        this.enemies = []
+        this.doors = []
+
+        // this.twin1 = new Player(options)
+        // this.twin2 = new Player(options)
+        // this.enemies = new Enemies(options)
+        // this.doors = new Doors(options)
 
         this.width = options.width;
         this.height = options.height;
@@ -43,13 +52,46 @@ class Game {
 
     }
 
+
+    setup(map, frame){
+        let data = map.layers[0].data,
+            objects = map.layers[1].objects
+        debugger
+        objects.forEach(object => {
+            switch (object.type) {
+                case "twin1":
+                    this.twin1 = new Player(this.options, object);
+                    debugger
+                    break;
+                case "twin2":
+                    this.twin2 = new Player(this.options, object);
+                    break;
+                case "enemy":
+                    this.enemies.push(new Enemies(this.options, object));
+                    break;
+                case "door":
+                    this.doors.push(new Enemies(this.options, object));
+                    break;
+            }
+        })
+
+        frame()
+        this.cells = data
+    }
+
     update(twin1, twin2, step, width, height){
-        this.twin1.update(twin1, step)
-        this.twin2.update(twin2, step)
-        this.enemies.updateEnemies(twin1, twin2, step)
-        this.doors.updateDoors(twin1, twin2, step)
+        if (this.twin1) this.twin1.update(twin1, step)
+        if (this.twin2) this.twin2.update(twin2, step)
+        this.updateEnemies(step)
+        // this.doors.updateDoors(twin1, twin2, step)
 
         this.stageCompleted()
+    }
+
+    updateEnemies(step){
+        this.enemies.forEach( enemy => {
+            enemy.update(this.twin1, this.twin2, step)
+        })
     }
 
     stageCompleted(){

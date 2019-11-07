@@ -105,11 +105,9 @@ window.addEventListener("DOMContentLoaded", e => {
         twin2 = {},
         cells = [],
         enemies = [],
-        paused = false,
         doors = [],
         selectedLevel = "",
         lastLevel = "",
-        gameOver = false,
         gameState= {
             twin1AtDoor: false,
             twin2AtDoor: false,
@@ -344,9 +342,9 @@ window.addEventListener("DOMContentLoaded", e => {
 
 
     Util.get("/dist/startscreen.json", req => {
-        setup(JSON.parse(req.responseText));
+        gameInstance.setup(JSON.parse(req.responseText), frame);
         Audio("../audio/start.mp3");
-        frame();
+        // frame();
     });   
 
     const handVolumeButton = (audioVol) => {

@@ -1,4 +1,5 @@
 const Util = require("./util");
+import Entity from './entity.js'
 const twinSheet = new Image()
 const twinSheet2 = new Image()
 twinSheet.src = "../images/twinspritesheet.png"
@@ -13,8 +14,9 @@ let TWIN1ANIMATIONS = {
 }
 
 
-export default class Player{
-    constructor(options){
+export default class Player extends Entity{
+    constructor(options, object){
+        super(options, object)
         this.ctx = options.ctx;
         this.UNIT = options.UNIT;
         this.ACCELERATION = options.ACCELERATION;
