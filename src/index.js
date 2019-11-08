@@ -226,6 +226,7 @@ window.addEventListener("DOMContentLoaded", e => {
 
     const frame = () => {
         if(gameInstance.gameRunning) {
+            debugger
         now = Util.timestamp();
         dt = dt + Math.min(1, (now - last) / 1000);
         while (dt > step) {
@@ -305,11 +306,11 @@ window.addEventListener("DOMContentLoaded", e => {
 
 
     const resetGame = req => {
-        enemies.length = 0
-        doors.length = 0
-        setup(JSON.parse(req.responseText));
+        gameInstance.enemies.length = 0
+        gameInstance.doors.length = 0
+        gameInstance.setup(JSON.parse(req.responseText));
         gameInstance.gameRunning = true
-        frame();
+        frame()
     }
 
     const Audio = (audio) =>{
@@ -342,9 +343,9 @@ window.addEventListener("DOMContentLoaded", e => {
 
 
     Util.get("/dist/startscreen.json", req => {
-        gameInstance.setup(JSON.parse(req.responseText), frame);
+        gameInstance.setup(JSON.parse(req.responseText));
         Audio("../audio/start.mp3");
-        // frame();
+        frame();
     });   
 
     const handVolumeButton = (audioVol) => {

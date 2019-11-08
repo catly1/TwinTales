@@ -1,6 +1,6 @@
 import Player from './player.js'
 import Enemy from './enemy.js';
-import Doors from './door.js';
+import Door from './door.js';
 import Entity from './entity'
 import library from "../images/spritesheetAtlast.js"
 const Util = require("./util");
@@ -68,13 +68,12 @@ class Game {
                     this.enemies.push(new Enemy(this.options, object));
                     break;
                 case "door":
-                    this.doors.push(new Enemy(this.options, object));
+                    this.doors.push(new Door(this.options, object));
                     break;
             }
         })
-
-        frame()
         this.cells = data
+        this.gameRunning = true
     }
 
     update(twin1, twin2, step, width, height){
@@ -82,8 +81,14 @@ class Game {
         if (this.twin2) this.twin2.update(twin2, step)
         this.updateEnemies(step)
         // this.doors.updateDoors(twin1, twin2, step)
-
+        this.updateDoors(step)
         this.stageCompleted()
+    }
+
+    updateDoors(step){
+        this.doors.forEach( door => {
+            door.update(this.twin1, this.twin2, step)
+        })
     }
 
     updateEnemies(step){
@@ -107,13 +112,13 @@ class Game {
         ctx.clearRect(0, 0, width, height);
         this.handleTextEvents()
         this.renderMap(ctx);
-        // this.twin1.renderTwin(ctx, twin1, dt);
-        // this.twin2.renderTwin(ctx, twin2, dt)
+        if(this.twin1) this.twin1.renderTwin(ctx, twin1, dt);
+        if(this.twin2) this.twin2.renderTwin(ctx, twin2, dt)
         // this.enemies.renderEnemies(dt)
         this.renderEnemies(dt)
         // this.doors.renderDoors(dt)
-        // this.renderStaticBackground()
-        // this.animateBackground(width, height, dt)
+        this.renderStaticBackground()
+        this.animateBackground(width, height, dt)
         
     }
 

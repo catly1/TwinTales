@@ -55,21 +55,21 @@ export default class Player extends Entity{
     renderTwin(ctx, twin, dt) {
         this.updateBreath()
         let breatheHeight
-        if (twin.animation.y === 0) {
+        if (this.animation.y === 0) {
             breatheHeight = this.TILESIZE - this.breathAmt
         } else {
             breatheHeight = this.TILESIZE
         }
 
         let breatheDest
-            if (twin.animation.y === 0) {
-            breatheDest = twin.y + (twin.dy * dt) + this.breathAmt
+            if (this.animation.y === 0) {
+            breatheDest = this.y + (this.dy * dt) + this.breathAmt
             }  else {
-            breatheDest = twin.y + (twin.dy * dt)
+            breatheDest = this.y + (this.dy * dt)
         }
 
         let sheet
-        if (twin.name === "twin1"){
+        if (this.name === "twin1"){
             sheet = twinSheet
         } else {
             sheet = twinSheet2
@@ -78,11 +78,11 @@ export default class Player extends Entity{
 
         ctx.drawImage(
             sheet, // Source image object
-            twin.animation.x + (twin.animationFrame * twin.animation.w), //	Source x
-            twin.animation.y, // 	Source y
+            this.animation.x + (this.animationFrame * this.animation.w), //	Source x
+            this.animation.y, // 	Source y
             245, // Source width
             245, // Source height
-            twin.x + (twin.dx * dt), // Destination x
+            this.x + (this.dx * dt), // Destination x
             breatheDest, // Destination y
             this.TILESIZE, // Destination width
             breatheHeight // Destination height
@@ -90,89 +90,89 @@ export default class Player extends Entity{
 
         let n, max;
 
-        ctx.fillStyle = this.COLOR.GOLD;
-        for (n = 0, max = twin.collected; n < max; n++)
-            ctx.fillRect(this.tileToPixel(2 + n), this.tileToPixel(2), this.TILESIZE / 2, this.TILESIZE / 2);
+        // ctx.fillStyle = this.COLOR.GOLD;
+        // for (n = 0, max = twin.collected; n < max; n++)
+        //     ctx.fillRect(this.tileToPixel(2 + n), this.tileToPixel(2), this.TILESIZE / 2, this.TILESIZE / 2);
 
-        ctx.fillStyle = this.COLOR.SLATE;
-        for (n = 0, max = twin.killed; n < max; n++)
-            ctx.fillRect(this.tileToPixel(2 + n), this.tileToPixel(3), this.TILESIZE / 2, this.TILESIZE / 2);
+        // ctx.fillStyle = this.COLOR.SLATE;
+        // for (n = 0, max = twin.killed; n < max; n++)
+        //     ctx.fillRect(this.tileToPixel(2 + n), this.tileToPixel(3), this.TILESIZE / 2, this.TILESIZE / 2);
 
     }
 
     update( player, dt){
-        let wasleft = player.dx < 0,
-            wasright = player.dx > 0,
-            falling = player.falling,
-            friction = player.friction * (falling ? 0.5 : 1),
-            accel = player.accel * (falling ? 0.5 : 1);
+        let wasleft = this.dx < 0,
+            wasright = this.dx > 0,
+            falling = this.falling,
+            friction = this.friction * (falling ? 0.5 : 1),
+            accel = this.accel * (falling ? 0.5 : 1);
 
 
-        if (player.stepped) {
-            return this.stepped(player, dt)
+        if (this.stepped) {
+            return this.stepped(this, dt)
         }
 
-        this.animate(player)
-        player.ddx = 0;
-        player.ddy = player.gravity;
-        if (player.left)
-            player.ddx = player.ddx - accel;    
+        this.animate(this)
+        this.ddx = 0;
+        this.ddy = this.gravity;
+        if (this.left)
+            this.ddx = this.ddx - accel;    
         else if (wasleft)
-            player.ddx = player.ddx + friction; 
+            this.ddx = this.ddx + friction; 
 
-        if (player.right) { 
-            player.ddx = player.ddx + accel;    
+        if (this.right) { 
+            this.ddx = this.ddx + accel;    
         }
         else if (wasright)
-            player.ddx = player.ddx - friction; 
+            this.ddx = this.ddx - friction; 
 
-        if (player.jump && !player.jumping && !falling) {
-            player.ddy = player.ddy - player.impulse;    
-            player.jumping = true;
+        if (this.jump && !this.jumping && !falling) {
+            this.ddy = this.ddy - this.impulse;    
+            this.jumping = true;
         }
 
-        if (player.afterStep) {
-            player.ddy = (player.ddy - player.impulse);  
-            player.afterStep = false
+        if (this.afterStep) {
+            this.ddy = (this.ddy - this.impulse);  
+            this.afterStep = false
         }
 
-        player.y = player.y + (dt * player.dy)
-        player.x = player.x + (dt * player.dx)
-        player.dx = Util.bound(player.dx + (dt * player.ddx), -player.maxdx, player.maxdx);
-        player.dy = Util.bound(player.dy + (dt * player.ddy), -player.maxdy, player.maxdy);
+        this.y = this.y + (dt * this.dy)
+        this.x = this.x + (dt * this.dx)
+        this.dx = Util.bound(this.dx + (dt * this.ddx), -this.maxdx, this.maxdx);
+        this.dy = Util.bound(this.dy + (dt * this.ddy), -this.maxdy, this.maxdy);
 
-        if ((wasleft && (player.dx > 0)) ||
-            (wasright && (player.dx < 0))) {
-            player.dx = 0; 
+        if ((wasleft && (this.dx > 0)) ||
+            (wasright && (this.dx < 0))) {
+            this.dx = 0; 
         }
 
         //collision settings
 
-        let tx = this.pixelToTile(player.x),
-            ty = this.pixelToTile(player.y),
-            nx = player.x % this.TILESIZE,
-            ny = player.y % this.TILESIZE,
+        let tx = this.pixelToTile(this.x),
+            ty = this.pixelToTile(this.y),
+            nx = this.x % this.TILESIZE,
+            ny = this.y % this.TILESIZE,
             cell = this.tcell(tx, ty),
             cellright = this.tcell(tx + 1, ty),
             celldown = this.tcell(tx, ty + 1),
             celldiag = this.tcell(tx + 1, ty + 1);
 
         // vertical velocity collision
-        if (player.dy > 0) {
+        if (this.dy > 0) {
             if ((celldown && !cell) ||
                 (celldiag && !cellright && nx)) {
-                player.y = this.tileToPixel(ty);       
-                player.dy = 0;            
-                player.falling = false; 
-                player.jumping = false;  
+                this.y = this.tileToPixel(ty);       
+                this.dy = 0;            
+                this.falling = false; 
+                this.jumping = false;  
                 ny = 0;                  
             }
         }
-        else if (player.dy < 0) {
+        else if (this.dy < 0) {
             if ((cell && !celldown) ||
                 (cellright && !celldiag && nx)) {
-                player.y = this.tileToPixel(ty + 1);   
-                player.dy = 0;          
+                this.y = this.tileToPixel(ty + 1);   
+                this.dy = 0;          
                 cell = celldown;     
                 cellright = celldiag;     
                 ny = 0;          
@@ -181,22 +181,22 @@ export default class Player extends Entity{
 
         //horizontal velocity collision
 
-        if (player.dx > 0) {
+        if (this.dx > 0) {
             if ((cellright && !cell) ||
                 (celldiag && !celldown && ny)) {
-                player.x = this.tileToPixel(tx);       
-                player.dx = 0;           
+                this.x = this.tileToPixel(tx);       
+                this.dx = 0;           
             }
         }
-        else if (player.dx < 0) {
+        else if (this.dx < 0) {
             if ((cell && !cellright) ||
                 (celldown && !celldiag && ny)) {
-                player.x = this.tileToPixel(tx + 1);  
-                player.dx = 0;          
+                this.x = this.tileToPixel(tx + 1);  
+                this.dx = 0;          
             }
         }
 
-        player.falling = !(celldown || (nx && celldiag));
+        this.falling = !(celldown || (nx && celldiag));
 
     }
 

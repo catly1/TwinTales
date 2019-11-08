@@ -69,7 +69,7 @@ export default class Enemy extends Entity {
                 animation = GHOSTANIMATIONS
             }
 
-            this.animate(this, animation)
+            this.animate(animation)
 
             // Movement
             this.ddx = 0;
@@ -184,147 +184,147 @@ export default class Enemy extends Entity {
 
 
 
-    updateEnemies(twin1, twin2, step){
-        this.enemies.forEach( enemy => {
-            let wasleft = enemy.dx < 0,
-                wasright = enemy.dx > 0,
-                falling = enemy.falling,
-                friction = enemy.friction * (falling ? 0.5 : 1),
-                accel = enemy.accel * (falling ? 0.5 : 1);
+    // updateEnemies(twin1, twin2, step){
+    //     this.enemies.forEach( enemy => {
+    //         let wasleft = enemy.dx < 0,
+    //             wasright = enemy.dx > 0,
+    //             falling = enemy.falling,
+    //             friction = enemy.friction * (falling ? 0.5 : 1),
+    //             accel = enemy.accel * (falling ? 0.5 : 1);
 
-            // Animations
-            let animation
-            if (enemy.name == "twin1" || enemy.name == "twin2") {
-                animation = TWIN1ANIMATIONS
-            }
+    //         // Animations
+    //         let animation
+    //         if (enemy.name == "twin1" || enemy.name == "twin2") {
+    //             animation = TWIN1ANIMATIONS
+    //         }
 
-            if (enemy.name == "snail") {
-                animation = SNAILANIMATIONS
-            }
+    //         if (enemy.name == "snail") {
+    //             animation = SNAILANIMATIONS
+    //         }
             
-            if (enemy.name == "slime"){
-                animation = SLIMENIMATIONS
-            }
+    //         if (enemy.name == "slime"){
+    //             animation = SLIMENIMATIONS
+    //         }
 
-            if (enemy.name == "ghost"){
-                animation = GHOSTANIMATIONS
-            }
+    //         if (enemy.name == "ghost"){
+    //             animation = GHOSTANIMATIONS
+    //         }
 
-            this.animate(enemy, animation)
+    //         this.animate(enemy, animation)
 
-            // Movement
-            enemy.ddx = 0;
-            enemy.ddy = enemy.gravity;
-            if (enemy.left)
-                enemy.ddx = enemy.ddx - accel;    
-            else if (wasleft)
-                enemy.ddx = enemy.ddx + friction;  
+    //         // Movement
+    //         enemy.ddx = 0;
+    //         enemy.ddy = enemy.gravity;
+    //         if (enemy.left)
+    //             enemy.ddx = enemy.ddx - accel;    
+    //         else if (wasleft)
+    //             enemy.ddx = enemy.ddx + friction;  
 
-            if (enemy.right) { 
-                enemy.ddx = enemy.ddx + accel;
-            }
-            else if (wasright)
-                enemy.ddx = enemy.ddx - friction; 
+    //         if (enemy.right) { 
+    //             enemy.ddx = enemy.ddx + accel;
+    //         }
+    //         else if (wasright)
+    //             enemy.ddx = enemy.ddx - friction; 
 
-            if (enemy.jump && !enemy.jumping && !falling) {
-                enemy.ddy = enemy.ddy - enemy.impulse;     
-                enemy.jumping = true;
-            }
+    //         if (enemy.jump && !enemy.jumping && !falling) {
+    //             enemy.ddy = enemy.ddy - enemy.impulse;     
+    //             enemy.jumping = true;
+    //         }
 
-            enemy.y = enemy.y + (step * enemy.dy)
-            enemy.x = enemy.x + (step * enemy.dx)
-            enemy.dx = Util.bound(enemy.dx + (step * enemy.ddx), -enemy.maxdx, enemy.maxdx);
-            enemy.dy = Util.bound(enemy.dy + (step * enemy.ddy), -enemy.maxdy, enemy.maxdy);
-
-
+    //         enemy.y = enemy.y + (step * enemy.dy)
+    //         enemy.x = enemy.x + (step * enemy.dx)
+    //         enemy.dx = Util.bound(enemy.dx + (step * enemy.ddx), -enemy.maxdx, enemy.maxdx);
+    //         enemy.dy = Util.bound(enemy.dy + (step * enemy.ddy), -enemy.maxdy, enemy.maxdy);
 
 
-            let tx = this.pixelToTile(enemy.x),
-                ty = this.pixelToTile(enemy.y),
-                nx = enemy.x % this.TILESIZE,
-                ny = enemy.y % this.TILESIZE,
-                cell = this.tcell(tx, ty),
-                cellright = this.tcell(tx + 1, ty),
-                celldown = this.tcell(tx, ty + 1),
-                celldiag = this.tcell(tx + 1, ty + 1);
-
-            // enemy movement && edge detection.
-            if ( enemy.left && (cell || !celldown)) {
-                enemy.left = false;
-                enemy.right = true;
-            } else if ( enemy.right && ( cellright || !celldiag ) ){
-                enemy.right = false;
-                enemy.left = true;
-            }
-
-            // vertical collision
-            if (enemy.dy > 0) {
-                if ((celldown && !cell) ||
-                    (celldiag && !cellright && nx)) {
-                    enemy.y = this.tileToPixel(ty);       
-                    enemy.dy = 0;           
-                    enemy.falling = false;  
-                    enemy.jumping = false; 
-                    ny = 0;                   
-                }
-            }
-            else if (enemy.dy < 0) {
-                if ((cell && !celldown) ||
-                    (cellright && !celldiag && nx)) {
-                    enemy.y = this.tileToPixel(ty + 1);   
-                    enemy.dy = 0;         
-                    cell = celldown;     
-                    cellright = celldiag;
-                    ny = 0;           
-                }
-            }
 
 
-            // horizontal collision
-            if (enemy.dx > 0) {
-                if ((cellright && !cell) ||
-                    (celldiag && !celldown && ny)) {
-                    enemy.x = this.tileToPixel(tx);       
-                    enemy.dx = 0;            
-                }
-            }
-            else if (enemy.dx < 0) {
-                if ((cell && !cellright) ||
-                    (celldown && !celldiag && ny)) {
-                    enemy.x = this.tileToPixel(tx + 1); 
-                    enemy.dx = 0;          
-                }
-            }
+    //         let tx = this.pixelToTile(enemy.x),
+    //             ty = this.pixelToTile(enemy.y),
+    //             nx = enemy.x % this.TILESIZE,
+    //             ny = enemy.y % this.TILESIZE,
+    //             cell = this.tcell(tx, ty),
+    //             cellright = this.tcell(tx + 1, ty),
+    //             celldown = this.tcell(tx, ty + 1),
+    //             celldiag = this.tcell(tx + 1, ty + 1);
+
+    //         // enemy movement && edge detection.
+    //         if ( enemy.left && (cell || !celldown)) {
+    //             enemy.left = false;
+    //             enemy.right = true;
+    //         } else if ( enemy.right && ( cellright || !celldiag ) ){
+    //             enemy.right = false;
+    //             enemy.left = true;
+    //         }
+
+    //         // vertical collision
+    //         if (enemy.dy > 0) {
+    //             if ((celldown && !cell) ||
+    //                 (celldiag && !cellright && nx)) {
+    //                 enemy.y = this.tileToPixel(ty);       
+    //                 enemy.dy = 0;           
+    //                 enemy.falling = false;  
+    //                 enemy.jumping = false; 
+    //                 ny = 0;                   
+    //             }
+    //         }
+    //         else if (enemy.dy < 0) {
+    //             if ((cell && !celldown) ||
+    //                 (cellright && !celldiag && nx)) {
+    //                 enemy.y = this.tileToPixel(ty + 1);   
+    //                 enemy.dy = 0;         
+    //                 cell = celldown;     
+    //                 cellright = celldiag;
+    //                 ny = 0;           
+    //             }
+    //         }
+
+
+    //         // horizontal collision
+    //         if (enemy.dx > 0) {
+    //             if ((cellright && !cell) ||
+    //                 (celldiag && !celldown && ny)) {
+    //                 enemy.x = this.tileToPixel(tx);       
+    //                 enemy.dx = 0;            
+    //             }
+    //         }
+    //         else if (enemy.dx < 0) {
+    //             if ((cell && !cellright) ||
+    //                 (celldown && !celldiag && ny)) {
+    //                 enemy.x = this.tileToPixel(tx + 1); 
+    //                 enemy.dx = 0;          
+    //             }
+    //         }
 
 
             
-            // monster and player overlap
-            if (!enemy.dead){ 
-                if (Util.overlap(twin1.x, twin1.y, this.TILESIZE, this.TILESIZE, enemy.x, enemy.y, this.TILESIZE, this.TILESIZE)) {
-                    if ((twin1.dy > 0) && (enemy.y - twin1.y > this.TILESIZE / 2)){
-                       this.killEnemy(enemy, twin1, step)
+    //         // monster and player overlap
+    //         if (!enemy.dead){ 
+    //             if (Util.overlap(twin1.x, twin1.y, this.TILESIZE, this.TILESIZE, enemy.x, enemy.y, this.TILESIZE, this.TILESIZE)) {
+    //                 if ((twin1.dy > 0) && (enemy.y - twin1.y > this.TILESIZE / 2)){
+    //                    this.killEnemy(enemy, twin1, step)
                        
-                    } else {
+    //                 } else {
                         
-                        if(twin1.name)this.killTwin(twin1) 
-                    }
-                }
+    //                     if(twin1.name)this.killTwin(twin1) 
+    //                 }
+    //             }
 
-                if (Util.overlap(twin2.x, twin2.y, this.TILESIZE, this.TILESIZE, enemy.x, enemy.y, this.TILESIZE, this.TILESIZE)) {
-                    if ((twin2.dy > 0) && (enemy.y - twin2.y > this.TILESIZE / 2)) {
-                        this.killEnemy(enemy, twin2, step)
-                    } else {
+    //             if (Util.overlap(twin2.x, twin2.y, this.TILESIZE, this.TILESIZE, enemy.x, enemy.y, this.TILESIZE, this.TILESIZE)) {
+    //                 if ((twin2.dy > 0) && (enemy.y - twin2.y > this.TILESIZE / 2)) {
+    //                     this.killEnemy(enemy, twin2, step)
+    //                 } else {
                         
-                        if (twin2.name)this.killTwin(twin2)
-                    }
-                }
+    //                     if (twin2.name)this.killTwin(twin2)
+    //                 }
+    //             }
 
-            }
-            enemy.falling = !(celldown || (nx && celldiag));
+    //         }
+    //         enemy.falling = !(celldown || (nx && celldiag));
 
-        })
+    //     })
 
-    }
+    // }
  
     killEnemy(enemy, twin1, step){
         twin1.stepped = true
@@ -339,49 +339,49 @@ export default class Enemy extends Entity {
 
 
 
-    renderEnemies(dt){
-        this.ctx.fillstyle = this.COLOR.SLATE;
+    // renderEnemies(dt){
+    //     this.ctx.fillstyle = this.COLOR.SLATE;
 
 
 
 
-        this.enemies.forEach(enemy => {
-            if ( !enemy.dead ){
+    //     this.enemies.forEach(enemy => {
+    //         if ( !enemy.dead ){
 
-                let size
-                let sheet = enemySheet
-                let sw = 50, sh = 50
-                if (enemy.name == "twin1"){
-                    size = this.TILESIZE * 2
-                    sheet = twinSheet
-                    sw = 245,
-                    sh = 245
-                } else {
-                    size = this.TILESIZE
-                }
+    //             let size
+    //             let sheet = enemySheet
+    //             let sw = 50, sh = 50
+    //             if (enemy.name == "twin1"){
+    //                 size = this.TILESIZE * 2
+    //                 sheet = twinSheet
+    //                 sw = 245,
+    //                 sh = 245
+    //             } else {
+    //                 size = this.TILESIZE
+    //             }
 
-                if (enemy.name == "twin2") {
-                    size = this.TILESIZE * 2
-                    sheet = twinSheet2
-                    sw = 245,
-                    sh = 245
-                }
+    //             if (enemy.name == "twin2") {
+    //                 size = this.TILESIZE * 2
+    //                 sheet = twinSheet2
+    //                 sw = 245,
+    //                 sh = 245
+    //             }
 
-                // this.ctx.fillRect(enemy.x + (enemy.dx * dt), enemy.y + (enemy.dy * dt), this.TILESIZE, this.TILESIZE)
-                this.ctx.drawImage(
-                    sheet, // Source image object
-                    enemy.animation.x + (enemy.animationFrame * enemy.animation.w), //	Source x
-                    enemy.animation.y, // 	Source y
-                    sw, // Source width
-                    sh, // Source height
-                    enemy.x + (enemy.dx * dt), // Destination x
-                    enemy.y + (enemy.dy * dt), // Destination y
-                    size, // Destination width
-                    size // Destination height
-                )
-            }
-        })
-    }
+    //             // this.ctx.fillRect(enemy.x + (enemy.dx * dt), enemy.y + (enemy.dy * dt), this.TILESIZE, this.TILESIZE)
+    //             this.ctx.drawImage(
+    //                 sheet, // Source image object
+    //                 enemy.animation.x + (enemy.animationFrame * enemy.animation.w), //	Source x
+    //                 enemy.animation.y, // 	Source y
+    //                 sw, // Source width
+    //                 sh, // Source height
+    //                 enemy.x + (enemy.dx * dt), // Destination x
+    //                 enemy.y + (enemy.dy * dt), // Destination y
+    //                 size, // Destination width
+    //                 size // Destination height
+    //             )
+    //         }
+    //     })
+    // }
 
     render(dt) {
         let size
@@ -417,12 +417,12 @@ export default class Enemy extends Entity {
     
     }
 
-    animate(enemy, animation) {
+    animate(animation) {
         // if (enemy.name == "twin1" || enemy.name == "twin2") {
-            if (enemy.left && !enemy.falling) {
-                Util.animate(enemy, animation.LEFT)
-            } else if (enemy.right) {
-                Util.animate(enemy, animation.RIGHT)
+            if (this.left && !this.falling) {
+                Util.animate(this, animation.LEFT)
+            } else if (this.right) {
+                Util.animate(this, animation.RIGHT)
             }
 
 
