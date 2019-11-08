@@ -1,5 +1,4 @@
 const Util = require("./util");
-import Player from './player.js';
 import Entity from './entity.js';
 const twinSheet = new Image();
 const twinSheet2 = new Image();
@@ -89,8 +88,8 @@ export default class Enemy extends Entity {
 
 
 
-            let tx = this.pixelToTile(this.x),
-                ty = this.pixelToTile(this.y),
+            let tx = Util.pixelToTile(this.x, this.TILESIZE),
+                ty = Util.pixelToTile(this.y, this.TILESIZE),
                 nx = this.x % this.TILESIZE,
                 ny = this.y % this.TILESIZE,
                 cell = Util.tileCell(tx, ty, cells, this.MAPSIZE),
@@ -111,7 +110,7 @@ export default class Enemy extends Entity {
             if (this.dy > 0) {
                 if ((celldown && !cell) ||
                     (celldiag && !cellright && nx)) {
-                    this.y = this.tileToPixel(ty);
+                    this.y = Util.tileToPixel(ty, this.TILESIZE);
                     this.dy = 0;
                     this.falling = false;
                     this.jumping = false;
@@ -121,7 +120,7 @@ export default class Enemy extends Entity {
             else if (this.dy < 0) {
                 if ((cell && !celldown) ||
                     (cellright && !celldiag && nx)) {
-                    this.y = this.tileToPixel(ty + 1);
+                    this.y = Util.tileToPixel(ty + 1, this.TILESIZE);
                     this.dy = 0;
                     cell = celldown;
                     cellright = celldiag;
@@ -134,14 +133,14 @@ export default class Enemy extends Entity {
             if (this.dx > 0) {
                 if ((cellright && !cell) ||
                     (celldiag && !celldown && ny)) {
-                    this.x = this.tileToPixel(tx);
+                    this.x = Util.tileToPixel(tx, this.TILESIZE);
                     this.dx = 0;
                 }
             }
             else if (this.dx < 0) {
                 if ((cell && !cellright) ||
                     (celldown && !celldiag && ny)) {
-                    this.x = this.tileToPixel(tx + 1);
+                    this.x = Util.tileToPixel(tx + 1, this.TILESIZE);
                     this.dx = 0;
                 }
             }
@@ -223,39 +222,11 @@ export default class Enemy extends Entity {
     }
 
     animate(animation) {
-        // if (enemy.name == "twin1" || enemy.name == "twin2") {
             if (this.left && !this.falling) {
                 Util.animate(this, animation.LEFT)
             } else if (this.right) {
                 Util.animate(this, animation.RIGHT)
             }
-
-
-
-        // if (enemy.name == "snail"){
-        //     if (enemy.left) {
-        //         Util.animate(enemy, TWIN1ANIMATIONS.LEFT)
-        //     } else if (enemy.right) {
-        //         Util.animate(enemy, TWIN1ANIMATIONS.RIGHT)
-        //     }
-        // }
-        //  else if (enemy.jump && !enemy.falling) {
-        //     Util.animate(enemy, this.TWIN1ANIMATIONS.FALLINGL)
-        // } else if (enemy.falling && enemy.left) {
-        //     Util.animate(enemy, this.TWIN1ANIMATIONS.FALLINGL)
-        // } else if (enemy.falling && enemy.right) {
-        //     Util.animate(enemy, this.TWIN1ANIMATIONS.FALLINGR)
-        // }
-        // else if (enemy.falling && !enemy.jump) {
-        //     Util.animate(enemy, this.TWIN1ANIMATIONS.FALLINGL)
-        // } else if (enemy.jump) {
-        //     Util.animate(enemy, this.TWIN1ANIMATIONS.FALLINGL)
-        // }
-        // else {
-        //     Util.animate(enemy, this.TWIN1ANIMATIONS.IDLE)
-        // }
-
-
     }
 
 }

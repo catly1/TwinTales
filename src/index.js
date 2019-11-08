@@ -19,7 +19,9 @@ const MAPSIZE = { tw: 21, th: 12 },
     COLOR = { BLACK: '#000000', YELLOW: '#ECD078', BRICK: '#D95B43', PINK: '#C02942', PURPLE: '#542437', GREY: '#333', SLATE: '#53777A', GOLD: 'gold' },
     COLORS = [COLOR.YELLOW, COLOR.BRICK, COLOR.PINK, COLOR.PURPLE, COLOR.GREY],
     KEY = { SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, W: 87, A: 65, S: 83, D: 68, ENTER: 13},
-    LEVELS = ["/dist/level2.json", "/dist/level4.json", "/dist/level1.json", "/dist/level5.json"]
+    LEVELS = ["/dist/level2.json", "/dist/level4.json", "/dist/level1.json", "/dist/level5.json"],
+    fps = 60,
+    step = 1 / fps
 
     
 let currentAudio, volume, savedVolume
@@ -29,7 +31,6 @@ let now, last = Util.timestamp(),
 
 window.addEventListener("DOMContentLoaded", e => {
     const onKey = (ev, key, down) => {
-        if (stamina > 0){
         switch (key) {
             case KEY.A: 
                 gameInstance.twin1.left = down; 
@@ -57,7 +58,6 @@ window.addEventListener("DOMContentLoaded", e => {
                 handleEnter()
                 break;
         }
-        }
 
     }
 
@@ -83,146 +83,30 @@ window.addEventListener("DOMContentLoaded", e => {
     const canvas = document.getElementById('canvas'),
         ctx = canvas.getContext("2d"),
         width = canvas.width = MAPSIZE.tw * TILESIZE,
-        height = canvas.height = MAPSIZE.th * TILESIZE,
-        fps = 60,
-        step = 1 / fps
+        height = canvas.height = MAPSIZE.th * TILESIZE
 
     const sidebar = document.getElementById("sidebar")
-        sidebar.style.cssText = `height: ${canvas.clientHeight}px`
-    const gameDiv = document.getElementById("game")
-
-    const spriteCoordinates = {
-        "154": {x: 48, y: 117},
-        "121": {x: 25, y: 94},
-        "129": {x: 210, y: 94},
-        "122": {x: 48, y: 94},
-        "123": {x: 71, y: 94},
-        "0": {x: 94, y: 94}
-    } 
-
-
-    let twin1 = {},
-        twin2 = {},
-        cells = [],
-        enemies = [],
-        doors = [],
-        selectedLevel = "",
-        lastLevel = "",
-        gameState= {
-            twin1AtDoor: false,
-            twin2AtDoor: false,
-        },
-        stamina = 100;
-
-    const tileToPixel = t => (t * TILESIZE),
-        pixelToTile = p => (Math.floor(p / TILESIZE)),
-        cell = (x, y) => (tcell(pixeltoTile(x), pixelToTile(y))),
-        tcell = (tx, ty) => (cells[tx + (ty * MAPSIZE.tw)]);
+    sidebar.style.cssText = `height: ${canvas.clientHeight}px`
 
     const options = {
         ctx,
         MAPSIZE,
         COLORS,
-        tcell,
         TILESIZE,
         COLOR,
         spritesheet,
-        spriteCoordinates,
         UNIT,
         ACCELERATION,
         FRICTION,
         IMPULSE,
         MAXDX,
         MAXDY,
-        tileToPixel,
-        pixelToTile,
         GRAVITY,
-        enemies,
-        doors,
-        gameState,
         width,
         height
     }
 
-    const gameInstance = new Game(
-            options
-        )
-
-    // parses json to be useable by the app. Build objects from it that can be manipulated.
-
-    const setup = map => {
-        let data = map.layers[0].data,
-            objects = map.layers[1].objects
-
-        objects.forEach(object => {
-            let entity = setupEntity(object);
-            switch (object.type){
-                case "twin1": 
-                    twin1 = entity; 
-                    break;
-                case "twin2" : 
-                    twin2 = entity; 
-                    break;
-                case "enemy" :
-                    enemies.push(entity);
-                    break;
-                case "door" :
-                    doors.push(entity);
-                    break;
-            }
-        })
-
-        cells = data
-    }
-
-
-    const setupEntity = obj => {
-        let entity = {};
-        entity.x = obj.x; 
-        entity.y = obj.y; 
-        entity.dx = 0;
-        entity.dy = 0;
-        entity.left = ""
-        entity.right = ""
-        entity.maxdx = UNIT * MAXDX;
-        entity.gravity = UNIT * GRAVITY;
-        entity.maxdy = UNIT * MAXDY;
-        entity.impulse = UNIT * IMPULSE;
-        entity.accel = entity.maxdx /  ACCELERATION;
-        entity.friction = entity.maxdx / FRICTION;
-        entity.in1 = false
-        entity.in2 = false
-        entity.name = obj.name
-        entity.stepped = false
-        entity.afterStep = false
-
-        obj.properties.forEach(property => {
-            if (property.name === "left") entity.left = property.value
-            if (property.name === "right") entity.left = property.value
-            if (property.name === "maxdx") {
-                entity.maxdx = UNIT * property.value
-            }
-            if (property.name === "maxdy") {
-                entity.maxdy = UNIT * property.value
-            }
-            if (property.name === "jump"){
-                entity.jump = property.value
-            }
-            if (property.name === "gravity"){
-                entity.gravity = property.value
-            }
-
-            if (property.name === "acceleration"){
-                entity.accel = property.value
-            }
-        })
-        entity.start = { x: obj.x , y: obj.y }
-        entity.killed = entity.collected = 0;
-        entity.animation = {}
-        return entity;
-    }
-
-    let startTime = new Date().getTime(), endTime;
+    const gameInstance = new Game(options)
 
     const frame = () => {
         if(gameInstance.gameRunning) {
@@ -230,9 +114,9 @@ window.addEventListener("DOMContentLoaded", e => {
         dt = dt + Math.min(1, (now - last) / 1000);
         while (dt > step) {
             dt = dt - step;
-            gameInstance.update(twin1, twin2, step, width, height);
+            gameInstance.update(step);
         }
-        gameInstance.render(ctx, twin1, twin2, width, height, dt);
+        gameInstance.render(width, height, dt);
         last = now;
         requestAnimationFrame(frame, canvas);
         } else {
@@ -240,19 +124,19 @@ window.addEventListener("DOMContentLoaded", e => {
             switch (gameInstance.currentLevel){
                 case 1:
                     setTimeout(() => contentWithMusic("/dist/level1.json", "../audio/stage loop1.mp3"), 600)
-                    black()
+                    loading()
                     break;
                 case 2:
                     setTimeout(() => content("/dist/level2.json"), 600)
-                    black()
+                    loading()
                     break;
                 case 3:
                     setTimeout(() => content("/dist/level3.json"), 600)
-                    black()
+                    loading()
                     break;
                 case 4:
                     setTimeout(() => content("/dist/level4.json"), 600)
-                    black()
+                    loading()
                     break;
                 case 5:
                     setTimeout(() => content("/dist/level5.json"), 600)
@@ -270,18 +154,14 @@ window.addEventListener("DOMContentLoaded", e => {
     }
 
 
-
-     let dashLen = 220, dashOffset = dashLen, speed = 30,
-        txt = "Loading", x = 300, i = 0;
-
-    const black = () => {
+    const loading = () => {
         gameInstance.loading()
         let text = "Good Job!"
         if (gameInstance.currentLevel == 1){
             text = "loading"
         }
         gameInstance.screenText(text, 1055, 707, "textOn" )
-        requestAnimationFrame(black)
+        requestAnimationFrame(loading)
     }
 
     const contentWithMusic = (stage, music) =>{
@@ -312,6 +192,14 @@ window.addEventListener("DOMContentLoaded", e => {
         frame()
     }
 
+    Util.get("/dist/startscreen.json", req => {
+        gameInstance.setup(JSON.parse(req.responseText));
+        Audio("../audio/start.mp3");
+        frame();
+    });   
+
+    //Audio
+
     const Audio = (audio) =>{
         let url = audio;
 
@@ -341,11 +229,6 @@ window.addEventListener("DOMContentLoaded", e => {
     }
 
 
-    Util.get("/dist/startscreen.json", req => {
-        gameInstance.setup(JSON.parse(req.responseText));
-        Audio("../audio/start.mp3");
-        frame();
-    });   
 
     const handVolumeButton = (audioVol) => {
         document.getElementById("mute").addEventListener("click", e => {

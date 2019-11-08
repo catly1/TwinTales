@@ -65,6 +65,14 @@ const Util = {
 
     tileCell(tx, ty, cells, MAPSIZE){
         return cells[tx + (ty * MAPSIZE.tw)]
+    },
+
+    tileToPixel(t, TILESIZE){
+        return t * TILESIZE
+    },
+
+    pixelToTile(p, TILESIZE){
+        return Math.floor( p / TILESIZE)
     }
 }
 

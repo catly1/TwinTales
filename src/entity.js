@@ -53,9 +53,6 @@ export default class Entity{
         this.IMPULSE = options.IMPULSE;
         this.MAXDX = options.MAXDX;
         this.MAXDY = options.MAXDY;
-        this.tileToPixel = options.tileToPixel;
-        this.pixelToTile = options.pixelToTile;
-        this.tcell = options.tcell;
         this.GRAVITY = options.GRAVITY;
         this.TILESIZE = options.TILESIZE;
         this.COLOR = options.COLOR;

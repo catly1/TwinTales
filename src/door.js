@@ -4,9 +4,9 @@ const doorSprite = new Image()
 doorSprite.src = "../images/door.png"
 
 export default class Door extends Entity {
-    constructor(options, object) {
+    constructor(options, object, gameState) {
         super(options, object)
-        this.gameState = options.gameState;
+        this.gameState = gameState;
     }
 
     update(twin1, twin2, step, cells) {
@@ -43,8 +43,8 @@ export default class Door extends Entity {
 
 
 
-        let tx = this.pixelToTile(this.x),
-            ty = this.pixelToTile(this.y),
+        let tx = Util.pixelToTile(this.x, this.TILESIZE),
+            ty = Util.pixelToTile(this.y, this.TILESIZE),
             nx = this.x % this.TILESIZE,
             ny = this.y % this.TILESIZE,
             cell = Util.tileCell(tx, ty, cells, this.MAPSIZE),
@@ -65,7 +65,7 @@ export default class Door extends Entity {
         if (this.dy > 0) {
             if ((celldown && !cell) ||
                 (celldiag && !cellright && nx)) {
-                this.y = this.tileToPixel(ty);
+                this.y = Util.tileToPixel(ty, this.TILESIZE);
                 this.dy = 0;
                 this.falling = false;
                 this.jumping = false;
@@ -75,7 +75,7 @@ export default class Door extends Entity {
         else if (this.dy < 0) {
             if ((cell && !celldown) ||
                 (cellright && !celldiag && nx)) {
-                this.y = this.tileToPixel(ty + 1);
+                this.y = Util.tileToPixel(ty + 1, this.TILESIZE);
                 this.dy = 0;
                 cell = celldown;
                 cellright = celldiag;
@@ -88,14 +88,14 @@ export default class Door extends Entity {
         if (this.dx > 0) {
             if ((cellright && !cell) ||
                 (celldiag && !celldown && ny)) {
-                this.x = this.tileToPixel(tx);
+                this.x = Util.tileToPixel(tx, this.TILESIZE);
                 this.dx = 0;
             }
         }
         else if (this.dx < 0) {
             if ((cell && !cellright) ||
                 (celldown && !celldiag && ny)) {
-                this.x = this.tileToPixel(tx + 1);
+                this.x = Util.tileToPixel(tx + 1, this.TILESIZE);
                 this.dx = 0;
             }
         }
@@ -123,123 +123,6 @@ export default class Door extends Entity {
 
     }
 
-
-    // updateDoors(twin1, twin2, step) {
-    //     this.doors.forEach(door => {
-    //         let wasleft = door.dx < 0,
-    //             wasright = door.dx > 0,
-    //             falling = door.falling,
-    //             friction = door.friction * (falling ? 0.5 : 1),
-    //             accel = door.accel * (falling ? 0.5 : 1);
-    //         door.ddx = 0;
-    //         door.ddy = door.gravity;
-
-    //         // movement
-    //         if (door.left)
-    //             door.ddx = door.ddx - accel;     
-    //         else if (wasleft)
-    //             door.ddx = door.ddx + friction;  
-
-    //         if (door.right) { 
-    //             door.ddx = door.ddx + accel;
-    //         }
-    //         else if (wasright)
-    //             door.ddx = door.ddx - friction;  
-
-    //         if (door.jump && !door.jumping && !falling) {
-    //             door.ddy = door.ddy - door.impulse;    
-    //             door.jumping = true;
-    //         }
-
-    //         door.y = door.y + (step * door.dy)
-    //         door.x = door.x + (step * door.dx)
-    //         door.dx = Util.bound(door.dx + (step * door.ddx), -door.maxdx, door.maxdx);
-    //         door.dy = Util.bound(door.dy + (step * door.ddy), -door.maxdy, door.maxdy);
-
-
-
-
-    //         let tx = this.pixelToTile(door.x),
-    //             ty = this.pixelToTile(door.y),
-    //             nx = door.x % this.TILESIZE,
-    //             ny = door.y % this.TILESIZE,
-    //             cell = tcell(tx, ty, cells),
-    //             cellright = tcell(tx + 1, ty, cells),
-    //             celldown = tcell(tx, ty + 1, cells),
-    //             celldiag = tcell(tx + 1, ty + 1, cells);
-
-    //         // door movement && edge detection.
-    //         if (door.left && (cell || !celldown)) {
-    //             door.left = false;
-    //             door.right = true;
-    //         } else if (door.right && (cellright || !celldiag)) {
-    //             door.right = false;
-    //             door.left = true;
-    //         }
-
-    //         //vertical collision
-    //         if (door.dy > 0) {
-    //             if ((celldown && !cell) ||
-    //                 (celldiag && !cellright && nx)) {
-    //                 door.y = this.tileToPixel(ty);       
-    //                 door.dy = 0;            
-    //                 door.falling = false;   
-    //                 door.jumping = false;   
-    //                 ny = 0;                   
-    //             }
-    //         }
-    //         else if (door.dy < 0) {
-    //             if ((cell && !celldown) ||
-    //                 (cellright && !celldiag && nx)) {
-    //                 door.y = this.tileToPixel(ty + 1);   
-    //                 door.dy = 0;            
-    //                 cell = celldown;     
-    //                 cellright = celldiag;    
-    //                 ny = 0;          
-    //             }
-    //         }
-
-
-    //         // horizontal collision
-    //         if (door.dx > 0) {
-    //             if ((cellright && !cell) ||
-    //                 (celldiag && !celldown && ny)) {
-    //                 door.x = this.tileToPixel(tx);       
-    //                 door.dx = 0;           
-    //             }
-    //         }
-    //         else if (door.dx < 0) {
-    //             if ((cell && !cellright) ||
-    //                 (celldown && !celldiag && ny)) {
-    //                 door.x = this.tileToPixel(tx + 1); 
-    //                 door.dx = 0;           
-    //             }
-    //         }
-
-
-
-    //             if (door.name === "door1") {
-    //                 if ((Util.overlap(twin1.x, twin1.y, this.TILESIZE, this.TILESIZE, door.x, door.y, this.TILESIZE, this.TILESIZE))) {
-    //                     this.gameState.twin1AtDoor = true
-    //                 } else 
-    //                 {
-    //                     this.gameState.twin1AtDoor = false
-    //                 }
-    //             }
-
-    //             if (door.name === "door2") {
-    //                 if (Util.overlap(twin2.x, twin2.y, this.TILESIZE, this.TILESIZE, door.x, door.y, this.TILESIZE, this.TILESIZE)) {
-    //                     this.gameState.twin2AtDoor = true
-    //                 } else {
-    //                     this.gameState.twin2AtDoor = false
-    //                 }
-    //             }
-
-    //         door.falling = !(celldown || (nx && celldiag));
-
-    //     })
-
-    // }
 
     killTwin(twin) {
         twin.x = twin.start.x

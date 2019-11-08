@@ -39,7 +39,7 @@ export default class Player extends Entity{
     }
 
 
-    renderTwin(ctx, twin, dt) {
+    renderTwin(dt) {
         this.updateBreath()
         let breatheHeight
         if (this.animation.y === 0) {
@@ -61,7 +61,7 @@ export default class Player extends Entity{
         } else {
             sheet = twinSheet2
         }
-        ctx.drawImage(
+        this.ctx.drawImage(
             sheet, // Source image object
             this.animation.x + (this.animationFrame * this.animation.w), //	Source x
             this.animation.y, // 	Source y
@@ -123,8 +123,8 @@ export default class Player extends Entity{
 
         //collision settings
 
-        let tx = this.pixelToTile(this.x),
-            ty = this.pixelToTile(this.y),
+        let tx = Util.pixelToTile(this.x, this.TILESIZE),
+            ty = Util.pixelToTile(this.y, this.TILESIZE),
             nx = this.x % this.TILESIZE,
             ny = this.y % this.TILESIZE,
             cell = Util.tileCell(tx, ty, cells, this.MAPSIZE),
@@ -138,7 +138,7 @@ export default class Player extends Entity{
         if (this.dy > 0) {
             if ((celldown && !cell) ||
                 (celldiag && !cellright && nx)) {
-                this.y = this.tileToPixel(ty);       
+                this.y = Util.tileToPixel(ty, this.TILESIZE);       
                 this.dy = 0;            
                 this.falling = false; 
                 this.jumping = false;  
@@ -148,7 +148,7 @@ export default class Player extends Entity{
         else if (this.dy < 0) {
             if ((cell && !celldown) ||
                 (cellright && !celldiag && nx)) {
-                this.y = this.tileToPixel(ty + 1);   
+                this.y = Util.tileToPixel(ty + 1, this.TILESIZE);   
                 this.dy = 0;          
                 cell = celldown;     
                 cellright = celldiag;     
@@ -161,14 +161,14 @@ export default class Player extends Entity{
         if (this.dx > 0) {
             if ((cellright && !cell) ||
                 (celldiag && !celldown && ny)) {
-                this.x = this.tileToPixel(tx);       
+                this.x = Util.tileToPixel(tx, this.TILESIZE);       
                 this.dx = 0;           
             }
         }
         else if (this.dx < 0) {
             if ((cell && !cellright) ||
                 (celldown && !celldiag && ny)) {
-                this.x = this.tileToPixel(tx + 1);  
+                this.x = Util.tileToPixel(tx + 1, this.TILESIZE);  
                 this.dx = 0;          
             }
         }

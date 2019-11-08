@@ -1,13 +1,12 @@
 import Player from './player.js'
 import Enemy from './enemy.js';
 import Door from './door.js';
-import Entity from './entity'
-import library from "../images/spritesheetAtlast.js"
+import library from "../images/spritesheetAtlast.js";
 const Util = require("./util");
 const staticBackground1 = new Image();
-staticBackground1.src = '../images/staticbackground1.png'
+staticBackground1.src = '../images/staticbackground1.png';
 const animatedBackground1 = new Image();
-animatedBackground1.src = "../images/anibackground1.png"
+animatedBackground1.src = "../images/anibackground1.png";
 
 class Game {
     constructor(options) {
@@ -26,6 +25,10 @@ class Game {
         this.twin2 = ""
         this.enemies = []
         this.doors = []
+        this.gameState = {
+            twin1AtDoor: false,
+            twin2AtDoor: false,
+        }
 
         // this.twin1 = new Player(options)
         // this.twin2 = new Player(options)
@@ -35,7 +38,7 @@ class Game {
         this.width = options.width;
         this.height = options.height;
 
-        this.gameState = options.gameState
+        // this.gameState = options.gameState
         this.currentLevel = 0;
         this.gameRunning = true;
         this.startTime= Date.now();
@@ -68,7 +71,7 @@ class Game {
                     this.enemies.push(new Enemy(this.options, object));
                     break;
                 case "door":
-                    this.doors.push(new Door(this.options, object));
+                    this.doors.push(new Door(this.options, object, this.gameState));
                     break;
             }
         })
@@ -76,7 +79,7 @@ class Game {
         this.gameRunning = true
     }
 
-    update(twin1, twin2, step, width, height){
+    update(step){
         if (this.twin1) this.twin1.update(step, this.cells)
         if (this.twin2) this.twin2.update(step, this.cells)
         this.updateEnemies(step)
@@ -108,12 +111,12 @@ class Game {
     }
 
 
-    render(ctx, twin1, twin2, width, height, dt){
-        ctx.clearRect(0, 0, width, height);
+    render(width, height, dt){
+        this.ctx.clearRect(0, 0, width, height);
         this.handleTextEvents()
-        this.renderMap(ctx);
-        if(this.twin1) this.twin1.renderTwin(ctx, twin1, dt);
-        if(this.twin2) this.twin2.renderTwin(ctx, twin2, dt)
+        this.renderMap();
+        if(this.twin1) this.twin1.renderTwin(dt);
+        if(this.twin2) this.twin2.renderTwin(dt)
         // this.enemies.renderEnemies(dt)
         this.renderEnemies(dt)
         this.renderDoors(dt)
@@ -136,7 +139,6 @@ class Game {
     }
 
     renderStaticBackground(){
-        // ctx.fillStyle = "gray";
         this.ctx.globalCompositeOperation = 'destination-over'
         this.ctx.drawImage(
                 staticBackground1,
@@ -279,11 +281,11 @@ class Game {
 
     }
 
-    tcell(tx, ty, cells, MAPSIZE) {
-        return cells[tx + (ty * MAPSIZE.tw)]
-    }
+    // tcell(tx, ty, cells, MAPSIZE) {
+    //     return cells[tx + (ty * MAPSIZE.tw)]
+    // }
 
-    renderMap(ctx) {
+    renderMap() {
         let x, y, cell;
         for (y = 0; y < this.MAPSIZE.th; y++) {
             for (x = 0; x < this.MAPSIZE.tw; x++) {
@@ -292,7 +294,7 @@ class Game {
                     let spritesLibrary = library.frames;
                     let paddedNum = Util.padZero((cell), 3); 
                     let sprite = spritesLibrary[paddedNum].frame
-                    ctx.drawImage(
+                    this.ctx.drawImage(
                         this.spritesheet,
                         sprite.x,
                         sprite.y,
