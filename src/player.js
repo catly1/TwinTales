@@ -17,24 +17,11 @@ let TWIN1ANIMATIONS = {
 export default class Player extends Entity{
     constructor(options, object){
         super(options, object)
-        this.ctx = options.ctx;
-        this.UNIT = options.UNIT;
-        this.ACCELERATION = options.ACCELERATION;
-        this.FRICTION = options.FRICTION;
-        this.IMPULSE = options.IMPULSE;
-        this.MAXDX = options.MAXDX;
-        this.MAXDY = options.MAXDY;
-        this.tileToPixel = options.tileToPixel;
-        this.pixelToTile = options.pixelToTile;
-        this.tcell = options.tcell;
-        this.GRAVITY = options.GRAVITY;
-        this.TILESIZE = options.TILESIZE;
-        this.COLOR = options.COLOR;
+
         this.breathInc = 0.04;
         this.breathDir = 1;
         this.breathAmt = 0;
         this.breathMax = 2;
-        
     }
 
     updateBreath() {
@@ -74,7 +61,7 @@ export default class Player extends Entity{
         } else {
             sheet = twinSheet2
         }
-
+        debugger
         ctx.drawImage(
             sheet, // Source image object
             this.animation.x + (this.animationFrame * this.animation.w), //	Source x
@@ -87,19 +74,10 @@ export default class Player extends Entity{
             breatheHeight // Destination height
         )
 
-        let n, max;
-
-        // ctx.fillStyle = this.COLOR.GOLD;
-        // for (n = 0, max = twin.collected; n < max; n++)
-        //     ctx.fillRect(this.tileToPixel(2 + n), this.tileToPixel(2), this.TILESIZE / 2, this.TILESIZE / 2);
-
-        // ctx.fillStyle = this.COLOR.SLATE;
-        // for (n = 0, max = twin.killed; n < max; n++)
-        //     ctx.fillRect(this.tileToPixel(2 + n), this.tileToPixel(3), this.TILESIZE / 2, this.TILESIZE / 2);
-
     }
 
-    update( player, dt){
+    update(player, dt, tcell, cells, MAPSIZE){
+        debugger
         let wasleft = this.dx < 0,
             wasright = this.dx > 0,
             falling = this.falling,
@@ -151,10 +129,12 @@ export default class Player extends Entity{
             ty = this.pixelToTile(this.y),
             nx = this.x % this.TILESIZE,
             ny = this.y % this.TILESIZE,
-            cell = this.tcell(tx, ty),
-            cellright = this.tcell(tx + 1, ty),
-            celldown = this.tcell(tx, ty + 1),
-            celldiag = this.tcell(tx + 1, ty + 1);
+            cell = tcell(tx, ty, cells, MAPSIZE),
+            cellright = tcell(tx + 1, ty, cells, MAPSIZE),
+            celldown = tcell(tx, ty + 1, cells, MAPSIZE),
+            celldiag = tcell(tx + 1, ty + 1, cells, MAPSIZE);
+
+
 
         // vertical velocity collision
         if (this.dy > 0) {

@@ -6,16 +6,7 @@ doorSprite.src = "../images/door.png"
 export default class Door extends Entity {
     constructor(options, object) {
         super(options, object)
-        this.doors = options.doors;
-        this.dt = options.dt;
-        this.TILESIZE = options.TILESIZE;
-        this.tcell = options.tcell;
-        this.pixelToTile = options.pixelToTile;
-        this.tileToPixel = options.tileToPixel;
-        this.COLOR = options.COLOR;
-        this.ctx = options.ctx;
         this.gameState = options.gameState;
-        this.MAPSIZE = options.MAPSIZE
     }
 
     update(twin1, twin2, step, tcell, cells, MAPSIZE) {
@@ -258,7 +249,6 @@ export default class Door extends Entity {
 
     render(dt) {
         // this.ctx.fillstyle = this.COLOR.SLATE;
-        debugger
         this.ctx.drawImage(
             doorSprite,
             this.x + (this.dx * dt), 

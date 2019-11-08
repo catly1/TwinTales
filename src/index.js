@@ -32,24 +32,24 @@ window.addEventListener("DOMContentLoaded", e => {
         if (stamina > 0){
         switch (key) {
             case KEY.A: 
-                twin1.left = down; 
+                gameInstance.twin1.left = down; 
                 if (gameInstance.currentLevel >= 4 && gameInstance.currentLevel <= 6){
-                    twin2.right = down
+                    gameInstance.twin2.right = down
                 } else {
-                    twin2.left = down; 
+                    gameInstance.twin2.left = down; 
                 }
                 break;
             case KEY.D: 
-                twin1.right = down;
+                gameInstance.twin1.right = down;
                 if (gameInstance.currentLevel >= 4 && gameInstance.currentLevel <= 6) {
-                    twin2.left = down; 
+                    gameInstance.twin2.left = down; 
                 } else {
-                    twin2.right = down;
+                    gameInstance.twin2.right = down;
                 }
                 break;
             case KEY.SPACE: 
-                    twin1.jump = down;
-                    twin2.jump = down;
+                gameInstance.twin1.jump = down;
+                gameInstance.twin2.jump = down;
                 
                     setTimeout(handleJump, 100)
                 break;

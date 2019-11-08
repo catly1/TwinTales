@@ -44,5 +44,22 @@ export default class Entity{
         this.start = { x: obj.x, y: obj.y }
         this.killed = this.collected = 0;
         this.animation = {}
+
+
+        this.ctx = options.ctx;
+        this.UNIT = options.UNIT;
+        this.ACCELERATION = options.ACCELERATION;
+        this.FRICTION = options.FRICTION;
+        this.IMPULSE = options.IMPULSE;
+        this.MAXDX = options.MAXDX;
+        this.MAXDY = options.MAXDY;
+        this.tileToPixel = options.tileToPixel;
+        this.pixelToTile = options.pixelToTile;
+        this.tcell = options.tcell;
+        this.GRAVITY = options.GRAVITY;
+        this.TILESIZE = options.TILESIZE;
+        this.COLOR = options.COLOR;
+        this.MAPSIZE = options.MAPSIZE;
+        this.TWIN1ANIMATIONS = options.TWIN1ANIMATIONS;
     }
 }

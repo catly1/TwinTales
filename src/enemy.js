@@ -34,15 +34,6 @@ let SNAILANIMATIONS = {
 export default class Enemy extends Entity { 
     constructor(options, object){
         super(options, object)
-        this.enemies = options.enemies;
-        this.dt = options.dt;
-        this.TILESIZE = options.TILESIZE;
-        this.tcell = options.tcell;
-        this.pixelToTile = options.pixelToTile;
-        this.tileToPixel = options.tileToPixel;
-        this.COLOR = options.COLOR;
-        this.ctx = options.ctx
-        this.TWIN1ANIMATIONS = options.TWIN1ANIMATIONS;
     }
 
     update(twin1, twin2, step) {

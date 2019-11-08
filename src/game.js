@@ -77,8 +77,8 @@ class Game {
     }
 
     update(twin1, twin2, step, width, height){
-        if (this.twin1) this.twin1.update(twin1, step, this.tcell)
-        if (this.twin2) this.twin2.update(twin2, step, this.tcell)
+        if (this.twin1) this.twin1.update(twin1, step, this.tcell, this.cells, this.MAPSIZE)
+        if (this.twin2) this.twin2.update(twin2, step, this.tcell, this.cells, this.MAPSIZE)
         this.updateEnemies(step)
         // this.doors.updateDoors(twin1, twin2, step)
         this.updateDoors(step)
