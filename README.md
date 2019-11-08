@@ -1,4 +1,4 @@
-# What is this?
+# Twin Tales!
 ![pic](/images/readmeStuff/twindemo.gif)
 
 [live](https://twintales.herokuapp.com/)
