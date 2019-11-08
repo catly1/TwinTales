@@ -75,7 +75,6 @@ export default class Player extends Entity{
             sheet = twinSheet2
         }
 
-
         ctx.drawImage(
             sheet, // Source image object
             this.animation.x + (this.animationFrame * this.animation.w), //	Source x

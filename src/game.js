@@ -77,8 +77,8 @@ class Game {
     }
 
     update(twin1, twin2, step, width, height){
-        if (this.twin1) this.twin1.update(twin1, step)
-        if (this.twin2) this.twin2.update(twin2, step)
+        if (this.twin1) this.twin1.update(twin1, step, this.tcell)
+        if (this.twin2) this.twin2.update(twin2, step, this.tcell)
         this.updateEnemies(step)
         // this.doors.updateDoors(twin1, twin2, step)
         this.updateDoors(step)
@@ -87,13 +87,13 @@ class Game {
 
     updateDoors(step){
         this.doors.forEach( door => {
-            door.update(this.twin1, this.twin2, step)
+            door.update(this.twin1, this.twin2, step, this.tcell, this.cells, this.MAPSIZE)
         })
     }
 
     updateEnemies(step){
         this.enemies.forEach( enemy => {
-            enemy.update(this.twin1, this.twin2, step)
+            enemy.update(this.twin1, this.twin2, step, this.tcell)
         })
     }
 
@@ -116,6 +116,7 @@ class Game {
         if(this.twin2) this.twin2.renderTwin(ctx, twin2, dt)
         // this.enemies.renderEnemies(dt)
         this.renderEnemies(dt)
+        this.renderDoors(dt)
         // this.doors.renderDoors(dt)
         this.renderStaticBackground()
         this.animateBackground(width, height, dt)
@@ -125,6 +126,12 @@ class Game {
     renderEnemies(dt){
         this.enemies.forEach(enemy => {
             enemy.render(dt)
+        })
+    }
+
+    renderDoors(dt){
+        this.doors.forEach(door => {
+            door.render(dt)
         })
     }
 
@@ -272,15 +279,15 @@ class Game {
 
     }
 
-    tcell(tx, ty) {
-        return this.cells[tx + (ty * this.MAPSIZE.tw)]
+    tcell(tx, ty, cells, MAPSIZE) {
+        return cells[tx + (ty * MAPSIZE.tw)]
     }
 
     renderMap(ctx) {
         let x, y, cell;
         for (y = 0; y < this.MAPSIZE.th; y++) {
             for (x = 0; x < this.MAPSIZE.tw; x++) {
-                cell = this.tcell(x, y);
+                cell = this.tcell(x, y, this.cells, this.MAPSIZE);
                 if (cell) {
                     let spritesLibrary = library.frames;
                     let paddedNum = Util.padZero((cell), 3); 

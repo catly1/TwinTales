@@ -226,7 +226,6 @@ window.addEventListener("DOMContentLoaded", e => {
 
     const frame = () => {
         if(gameInstance.gameRunning) {
-            debugger
         now = Util.timestamp();
         dt = dt + Math.min(1, (now - last) / 1000);
         while (dt > step) {
