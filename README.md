@@ -1,7 +1,7 @@
 # Twin Tales!
 ![pic](/images/readmeStuff/twindemo.gif)
 
-[live](https://twintales.herokuapp.com/)
+## [live](https://twintales.herokuapp.com/)
 
 This is a platformer game where you control two characters that share the same input. The goal is to get them both at the door at the same time!
 
