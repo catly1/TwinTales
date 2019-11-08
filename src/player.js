@@ -61,7 +61,6 @@ export default class Player extends Entity{
         } else {
             sheet = twinSheet2
         }
-        debugger
         ctx.drawImage(
             sheet, // Source image object
             this.animation.x + (this.animationFrame * this.animation.w), //	Source x
@@ -76,8 +75,7 @@ export default class Player extends Entity{
 
     }
 
-    update(player, dt, tcell, cells, MAPSIZE){
-        debugger
+    update(dt, cells){
         let wasleft = this.dx < 0,
             wasright = this.dx > 0,
             falling = this.falling,
@@ -86,7 +84,7 @@ export default class Player extends Entity{
 
 
         if (this.stepped) {
-            return this.stepped(this, dt)
+            return this.steppedAction(dt)
         }
 
         this.animate(this)
@@ -129,10 +127,10 @@ export default class Player extends Entity{
             ty = this.pixelToTile(this.y),
             nx = this.x % this.TILESIZE,
             ny = this.y % this.TILESIZE,
-            cell = tcell(tx, ty, cells, MAPSIZE),
-            cellright = tcell(tx + 1, ty, cells, MAPSIZE),
-            celldown = tcell(tx, ty + 1, cells, MAPSIZE),
-            celldiag = tcell(tx + 1, ty + 1, cells, MAPSIZE);
+            cell = Util.tileCell(tx, ty, cells, this.MAPSIZE),
+            cellright = Util.tileCell(tx + 1, ty, cells, this.MAPSIZE),
+            celldown = Util.tileCell(tx, ty + 1, cells, this.MAPSIZE),
+            celldiag = Util.tileCell(tx + 1, ty + 1, cells, this.MAPSIZE);
 
 
 
@@ -205,13 +203,13 @@ export default class Player extends Entity{
     }
 
 
-    stepped(player, dt){
-        if (player.stepped === true) {
-            player.dx = -player.dx / 2;
-            player.ddx = 0;
-            player.ddy = player.impulse / 2;
-            player.afterStep = true
-            player.stepped = false
+    steppedAction(dt){
+        if (this.stepped === true) {
+            this.dx = -this.dx / 2;
+            this.ddx = 0;
+            this.ddy = this.impulse / 2;
+            this.afterStep = true
+            this.stepped = false
         }
 
     }

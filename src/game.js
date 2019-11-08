@@ -77,8 +77,8 @@ class Game {
     }
 
     update(twin1, twin2, step, width, height){
-        if (this.twin1) this.twin1.update(twin1, step, this.tcell, this.cells, this.MAPSIZE)
-        if (this.twin2) this.twin2.update(twin2, step, this.tcell, this.cells, this.MAPSIZE)
+        if (this.twin1) this.twin1.update(step, this.cells)
+        if (this.twin2) this.twin2.update(step, this.cells)
         this.updateEnemies(step)
         // this.doors.updateDoors(twin1, twin2, step)
         this.updateDoors(step)
@@ -87,13 +87,13 @@ class Game {
 
     updateDoors(step){
         this.doors.forEach( door => {
-            door.update(this.twin1, this.twin2, step, this.tcell, this.cells, this.MAPSIZE)
+            door.update(this.twin1, this.twin2, step, this.cells)
         })
     }
 
     updateEnemies(step){
         this.enemies.forEach( enemy => {
-            enemy.update(this.twin1, this.twin2, step, this.tcell)
+            enemy.update(this.twin1, this.twin2, step, this.cells)
         })
     }
 
@@ -287,7 +287,7 @@ class Game {
         let x, y, cell;
         for (y = 0; y < this.MAPSIZE.th; y++) {
             for (x = 0; x < this.MAPSIZE.tw; x++) {
-                cell = this.tcell(x, y, this.cells, this.MAPSIZE);
+                cell = Util.tileCell(x, y, this.cells, this.MAPSIZE);
                 if (cell) {
                     let spritesLibrary = library.frames;
                     let paddedNum = Util.padZero((cell), 3); 

@@ -9,7 +9,7 @@ export default class Door extends Entity {
         this.gameState = options.gameState;
     }
 
-    update(twin1, twin2, step, tcell, cells, MAPSIZE) {
+    update(twin1, twin2, step, cells) {
         let wasleft = this.dx < 0,
             wasright = this.dx > 0,
             falling = this.falling,
@@ -47,10 +47,10 @@ export default class Door extends Entity {
             ty = this.pixelToTile(this.y),
             nx = this.x % this.TILESIZE,
             ny = this.y % this.TILESIZE,
-            cell = tcell(tx, ty, cells, MAPSIZE),
-            cellright = tcell(tx + 1, ty, cells, MAPSIZE),
-            celldown = tcell(tx, ty + 1, cells, MAPSIZE),
-            celldiag = tcell(tx + 1, ty + 1, cells, MAPSIZE);
+            cell = Util.tileCell(tx, ty, cells, this.MAPSIZE),
+            cellright = Util.tileCell(tx + 1, ty, cells, this.MAPSIZE),
+            celldown = Util.tileCell(tx, ty + 1, cells, this.MAPSIZE),
+            celldiag = Util.tileCell(tx + 1, ty + 1, cells, this.MAPSIZE);
 
         // this movement && edge detection.
         if (this.left && (cell || !celldown)) {

@@ -61,6 +61,10 @@ const Util = {
         while (x >= width)
             x -= (width - 0);
         return x;
+    },
+
+    tileCell(tx, ty, cells, MAPSIZE){
+        return cells[tx + (ty * MAPSIZE.tw)]
     }
 }
 
