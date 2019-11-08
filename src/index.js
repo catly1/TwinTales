@@ -52,7 +52,7 @@ window.addEventListener("DOMContentLoaded", e => {
                 gameInstance.twin1.jump = down;
                 gameInstance.twin2.jump = down;
                 
-                    setTimeout(handleJump, 100)
+                setTimeout(handleJump, 100)
                 break;
             case KEY.ENTER:
                 handleEnter()
@@ -63,8 +63,8 @@ window.addEventListener("DOMContentLoaded", e => {
 
     const handleJump = () => {
         jumpSound.play()
-        twin1.jump = false
-        twin2.jump =false
+        gameInstance.twin1.jump = false
+        gameInstance.twin2.jump = false
 
     }
 
