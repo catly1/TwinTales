@@ -56,8 +56,8 @@ class Game {
     }
 
 
-    setup(map, frame){
-        let data = map.layers[0].data,
+    setup(map){
+        let mapCells = map.layers[0].data,
             objects = map.layers[1].objects
         objects.forEach(object => {
             switch (object.type) {
@@ -75,7 +75,7 @@ class Game {
                     break;
             }
         })
-        this.cells = data
+        this.cells = mapCells
         this.gameRunning = true
     }
 
@@ -117,10 +117,8 @@ class Game {
         this.renderMap();
         if(this.twin1) this.twin1.renderTwin(dt);
         if(this.twin2) this.twin2.renderTwin(dt)
-        // this.enemies.renderEnemies(dt)
         this.renderEnemies(dt)
         this.renderDoors(dt)
-        // this.doors.renderDoors(dt)
         this.renderStaticBackground()
         this.animateBackground(width, height, dt)
         
@@ -245,45 +243,6 @@ class Game {
         this.ctx.fillStyle = "rgba(0, 0, 0, .9)";
         this.ctx.fillRect(this.width - this.loadScrollVal, 0, this.width, this.height);
     }
-
-    clearLoad(){
-
-    }
-
-    loadingScreen(){
-        if (this.scrollVal >= this.width) {
-            this.scrollVal = 0;
-        }
-
-        this.scrollVal += scrollSpeed;
-        this.ctx.globalCompositeOperation = 'source-over'
-
-
-        this.ctx.drawImage(
-            animatedBackground1,
-            this.width - this.scrollVal,
-            0,
-            this.width,
-            this.height,
-        );
-
-        this.ctx.drawImage(
-            animatedBackground1,
-            - this.scrollVal,
-            0,
-            this.width,
-            this.height
-        );
-        return true
-    }
-
-    loadingText(){
-
-    }
-
-    // tcell(tx, ty, cells, MAPSIZE) {
-    //     return cells[tx + (ty * MAPSIZE.tw)]
-    // }
 
     renderMap() {
         let x, y, cell;

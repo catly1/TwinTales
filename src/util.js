@@ -67,11 +67,11 @@ const Util = {
         return cells[tx + (ty * MAPSIZE.tw)]
     },
 
-    tileToPixel(t, TILESIZE){
+    tileToDot(t, TILESIZE){
         return t * TILESIZE
     },
 
-    pixelToTile(p, TILESIZE){
+    dotToTile(p, TILESIZE){
         return Math.floor( p / TILESIZE)
     }
 }

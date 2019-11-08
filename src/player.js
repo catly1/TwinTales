@@ -123,8 +123,8 @@ export default class Player extends Entity{
 
         //collision settings
 
-        let tx = Util.pixelToTile(this.x, this.TILESIZE),
-            ty = Util.pixelToTile(this.y, this.TILESIZE),
+        let tx = Util.dotToTile(this.x, this.TILESIZE),
+            ty = Util.dotToTile(this.y, this.TILESIZE),
             nx = this.x % this.TILESIZE,
             ny = this.y % this.TILESIZE,
             cell = Util.tileCell(tx, ty, cells, this.MAPSIZE),
@@ -138,7 +138,7 @@ export default class Player extends Entity{
         if (this.dy > 0) {
             if ((celldown && !cell) ||
                 (celldiag && !cellright && nx)) {
-                this.y = Util.tileToPixel(ty, this.TILESIZE);       
+                this.y = Util.tileToDot(ty, this.TILESIZE);       
                 this.dy = 0;            
                 this.falling = false; 
                 this.jumping = false;  
@@ -148,7 +148,7 @@ export default class Player extends Entity{
         else if (this.dy < 0) {
             if ((cell && !celldown) ||
                 (cellright && !celldiag && nx)) {
-                this.y = Util.tileToPixel(ty + 1, this.TILESIZE);   
+                this.y = Util.tileToDot(ty + 1, this.TILESIZE);   
                 this.dy = 0;          
                 cell = celldown;     
                 cellright = celldiag;     
@@ -161,14 +161,14 @@ export default class Player extends Entity{
         if (this.dx > 0) {
             if ((cellright && !cell) ||
                 (celldiag && !celldown && ny)) {
-                this.x = Util.tileToPixel(tx, this.TILESIZE);       
+                this.x = Util.tileToDot(tx, this.TILESIZE);       
                 this.dx = 0;           
             }
         }
         else if (this.dx < 0) {
             if ((cell && !cellright) ||
                 (celldown && !celldiag && ny)) {
-                this.x = Util.tileToPixel(tx + 1, this.TILESIZE);  
+                this.x = Util.tileToDot(tx + 1, this.TILESIZE);  
                 this.dx = 0;          
             }
         }
@@ -205,9 +205,9 @@ export default class Player extends Entity{
 
     steppedAction(dt){
         if (this.stepped === true) {
-            this.dx = -this.dx / 2;
+            this.dx = 0;
             this.ddx = 0;
-            this.ddy = this.impulse / 2;
+            // this.ddy = this.impulse / 2;
             this.afterStep = true
             this.stepped = false
         }

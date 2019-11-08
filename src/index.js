@@ -4,7 +4,7 @@ const spritesheet = new Image();
 spritesheet.src = "../images/spritesheet.png";
 const jumpSound = new Audio ('../audio/jump1.wav')
 
-// Constants and functions
+// Constants
 
 
 const MAPSIZE = { tw: 21, th: 12 },
@@ -19,15 +19,17 @@ const MAPSIZE = { tw: 21, th: 12 },
     COLOR = { BLACK: '#000000', YELLOW: '#ECD078', BRICK: '#D95B43', PINK: '#C02942', PURPLE: '#542437', GREY: '#333', SLATE: '#53777A', GOLD: 'gold' },
     COLORS = [COLOR.YELLOW, COLOR.BRICK, COLOR.PINK, COLOR.PURPLE, COLOR.GREY],
     KEY = { SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, W: 87, A: 65, S: 83, D: 68, ENTER: 13},
-    LEVELS = ["/dist/level2.json", "/dist/level4.json", "/dist/level1.json", "/dist/level5.json"],
+    LEVELS = ["/dist/level2.json", "/dist/level3.json", "/dist/level1.json", "/dist/level5.json"],
     fps = 60,
     step = 1 / fps
 
+// Variables
     
-let currentAudio, volume, savedVolume
-
-let now, last = Util.timestamp(),
-    dt = 0
+let currentAudio, volume, savedVolume,
+    now, last = Util.timestamp(),
+    dt = 0,
+    selectedLevel = "",
+    lastLevel = ""
 
 window.addEventListener("DOMContentLoaded", e => {
     const onKey = (ev, key, down) => {
