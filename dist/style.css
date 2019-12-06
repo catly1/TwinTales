@@ -17,7 +17,7 @@ body{
 
 #canvas {
     display:flex;
-    width: 100%;
+    width: 80vw;
     /* height: 100%; */
     border: 20px black solid;
     border-radius: 50px;
@@ -26,7 +26,7 @@ body{
 }
 
 .left-side{
-    width: 15%;
+    width: 20vw;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -166,4 +166,8 @@ body{
 .flavor-stuff img{
     width: 45%;
     object-fit: contain;
+}
+
+@media only screen and (min-width: 1921px) {
+
 }

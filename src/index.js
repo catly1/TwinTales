@@ -75,7 +75,6 @@ window.addEventListener("DOMContentLoaded", e => {
             ++gameInstance.currentLevel
             gameInstance.gameRunning = false
             gameInstance.textOn = true
-            // frame()
         }
     }
   
