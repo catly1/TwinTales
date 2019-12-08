@@ -66,10 +66,17 @@ window.addEventListener("DOMContentLoaded", e => {
 
     }
 
-
+    const jumpButtom = document.getElementById("jump-button")
+    jumpButtom.addEventListener("click", e => {
+        return jumpOnce() },false)
 
     // touch
+    const jumpOnce = () => {
+        gameInstance.twin1.jump = true
+        gameInstance.twin2.jump = true
 
+        setTimeout(handleJump, 100)
+    }
 
     const handleJump = () => {
         jumpSound.play()
@@ -86,8 +93,8 @@ window.addEventListener("DOMContentLoaded", e => {
         }
     }
   
-    document.addEventListener('keydown', function (ev) { return onKey(ev, ev.keyCode, true); }, false);
-    document.addEventListener('keyup', function (ev) { return onKey(ev, ev.keyCode, false); }, false);
+    document.addEventListener('keydown', e => { return onKey(e, e.keyCode, true); }, false);
+    document.addEventListener('keyup', e => { return onKey(e, e.keyCode, false); }, false);
 
 
 
@@ -97,32 +104,38 @@ window.addEventListener("DOMContentLoaded", e => {
         height = canvas.height = MAPSIZE.th * TILESIZE
 
     let touchedPos, newPos
-    canvas.addEventListener('touchstart', function (ev) { 
-        touchedPos = ev.touches[0].clientX
-        return onKey(ev, "touch", false); }, false)
+    canvas.addEventListener('touchstart', e => { 
+        touchedPos = e.touches[0].clientX
+        return onKey(e, "touch", false); }, false)
 
-    canvas.addEventListener('touchmove', function (ev) { 
-        newPos = ev.touches[0].clientX
+    canvas.addEventListener('touchmove', e => { 
+        newPos = e.touches[0].clientX
         if (newPos < touchedPos) {
+            gameInstance.twin1.right = false;
             gameInstance.twin1.left = true;
             if (gameInstance.currentLevel >= 4 && gameInstance.currentLevel <= 6) {
+                gameInstance.twin2.left = false;
                 gameInstance.twin2.right = true
             } else {
                 gameInstance.twin2.left = true;
+                gameInstance.twin2.right = false;
             }
         } else if (newPos > touchedPos) {
             gameInstance.twin1.right = true;
+            gameInstance.twin1.left = false;
             if (gameInstance.currentLevel >= 4 && gameInstance.currentLevel <= 6) {
                 gameInstance.twin2.left = true;
+                gameInstance.twin2.right = false;
             } else {
                 gameInstance.twin2.right = true;
+                gameInstance.twin2.left = false;
             }
         }
 
-        return onKey(ev, "touch", false); 
+        return onKey(e, "touch", false); 
     }, false)
 
-    canvas.addEventListener('touchend', function (ev) { 
+    canvas.addEventListener('touchend', e => { 
         gameInstance.twin1.right = false;
         gameInstance.twin1.left = false;
         gameInstance.twin2.right = false;

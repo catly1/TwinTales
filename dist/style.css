@@ -46,6 +46,7 @@ body{
 .canvas-wrapper{
     margin-top: auto;
     margin-bottom: auto;
+    position: relative;
 }
 
 .game{
@@ -166,6 +167,16 @@ body{
 .flavor-stuff img{
     width: 45%;
     object-fit: contain;
+}
+
+#jump-button{
+    position: absolute;
+    right: 5%;
+    bottom: 2%;
+    background: black;
+    font-size: 25px;
+    border-radius: 5px;
+    padding: 10px;
 }
 
 @media only screen and (min-width: 1921px) {
