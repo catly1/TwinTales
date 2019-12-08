@@ -197,8 +197,10 @@ body{
     }
 
     #canvas{
-        width: 90vw;
+        width: auto;
+        height: 90vh;
     }
+    
 
     .game{
         justify-content: center;
@@ -208,6 +210,8 @@ body{
 @media only screen and (max-width: 900px) {
 
     #canvas{
-        width: 70vw;
+        width: auto;
+        height: 90vh;
     }
+    
 }
