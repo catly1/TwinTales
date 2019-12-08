@@ -210,7 +210,7 @@ class Game {
         switch (this.currentLevel){
             case 0:  
                 this.screenText("Twin Tales !", 320, 310, "stayOn" , "150px")
-                this.screenText("Press Enter", 600, 627, "stayOn" )
+                this.screenText("Press Enter or click", 600, 627, "stayOn" )
                 break
             case 1:
                 this.screenText("Get in here!", 416, 588, "textOn")

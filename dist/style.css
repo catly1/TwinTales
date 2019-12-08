@@ -191,6 +191,23 @@ body{
                                   supported by Chrome, Opera and Firefox */
 }
 
-@media only screen and (min-width: 1921px) {
+@media only screen and (max-width: 1100px) {
+    .left-side{
+        display: none;
+    }
 
+    #canvas{
+        width: 90vw;
+    }
+
+    .game{
+        justify-content: center;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+
+    #canvas{
+        width: 70vw;
+    }
 }
