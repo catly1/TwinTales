@@ -70,6 +70,13 @@ window.addEventListener("DOMContentLoaded", e => {
     jumpButtom.addEventListener("click", e => {
         return jumpOnce() },false)
 
+    jumpButtom.addEventListener("touchstart", e => {
+    }, false)
+
+    jumpButtom.addEventListener("touchend", e => {
+        return jumpOnce()
+    }, false)
+
     // touch
     const jumpOnce = () => {
         gameInstance.twin1.jump = true
