@@ -59,9 +59,17 @@ window.addEventListener("DOMContentLoaded", e => {
             case KEY.ENTER:
                 handleEnter()
                 break;
+            case "touch":
+                handleEnter()
+                break
         }
 
     }
+
+
+
+    // touch
+
 
     const handleJump = () => {
         jumpSound.play()
@@ -81,10 +89,45 @@ window.addEventListener("DOMContentLoaded", e => {
     document.addEventListener('keydown', function (ev) { return onKey(ev, ev.keyCode, true); }, false);
     document.addEventListener('keyup', function (ev) { return onKey(ev, ev.keyCode, false); }, false);
 
+
+
     const canvas = document.getElementById('canvas'),
         ctx = canvas.getContext("2d"),
         width = canvas.width = MAPSIZE.tw * TILESIZE,
         height = canvas.height = MAPSIZE.th * TILESIZE
+
+    let touchedPos, newPos
+    canvas.addEventListener('touchstart', function (ev) { 
+        touchedPos = ev.touches[0].clientX
+        return onKey(ev, "touch", false); }, false)
+
+    canvas.addEventListener('touchmove', function (ev) { 
+        newPos = ev.touches[0].clientX
+        if (newPos < touchedPos) {
+            gameInstance.twin1.left = true;
+            if (gameInstance.currentLevel >= 4 && gameInstance.currentLevel <= 6) {
+                gameInstance.twin2.right = true
+            } else {
+                gameInstance.twin2.left = true;
+            }
+        } else if (newPos > touchedPos) {
+            gameInstance.twin1.right = true;
+            if (gameInstance.currentLevel >= 4 && gameInstance.currentLevel <= 6) {
+                gameInstance.twin2.left = true;
+            } else {
+                gameInstance.twin2.right = true;
+            }
+        }
+
+        return onKey(ev, "touch", false); 
+    }, false)
+
+    canvas.addEventListener('touchend', function (ev) { 
+        gameInstance.twin1.right = false;
+        gameInstance.twin1.left = false;
+        gameInstance.twin2.right = false;
+        gameInstance.twin2.left = false;
+    }, false)
 
     const sidebar = document.getElementById("sidebar")
     sidebar.style.cssText = `height: ${canvas.clientHeight}px`
