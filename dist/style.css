@@ -232,3 +232,9 @@ body{
         height: calc(var(--vh, 1vh) * 70);
     }
 }
+
+@media only screen and (max-width: 957px) {
+    #canvas{
+        height: calc(var(--vh, 1vh) * 70);
+    }
+}
