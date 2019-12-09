@@ -203,7 +203,7 @@ body{
 
     #canvas{
         width: auto;
-        height: 100vh;
+        height: calc(var(--vh, 1vh) * 100);
     }
     
 
@@ -222,10 +222,5 @@ body{
 }
 
 @media only screen and (max-width: 900px) {
-
-    #canvas{
-        width: auto;
-        height: 100vh;
-    }
     
 }

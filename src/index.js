@@ -66,6 +66,14 @@ window.addEventListener("DOMContentLoaded", e => {
 
     }
 
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+
+    window.addEventListener('resize', () => {
+        vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    });
+    
     const jumpButtom = document.getElementById("jump-button")
     jumpButtom.addEventListener("click", e => {
         return jumpOnce() },false)
