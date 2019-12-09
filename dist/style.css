@@ -221,6 +221,8 @@ body{
     }
 }
 
-@media only screen and (max-width: 900px) {
-    
+@media only screen and (max-aspect-ratio: 4/3) {
+    #canvas{
+        height: calc(var(--vh, 1vh) * 76);
+    }
 }
