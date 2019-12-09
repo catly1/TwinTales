@@ -192,18 +192,32 @@ body{
 }
 
 @media only screen and (max-width: 1100px) {
+    .canvas-wrapper {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    
     .left-side{
         display: none;
     }
 
     #canvas{
         width: auto;
-        height: 90vh;
+        height: 100vh;
     }
     
 
     .game{
         justify-content: center;
+
+    }
+    #canvas{
+        border: none;
+        border-radius: 0;
+    }
+    .background{
+        padding: 0;
+        height: 100%;
     }
 }
 
@@ -211,7 +225,7 @@ body{
 
     #canvas{
         width: auto;
-        height: 90vh;
+        height: 100vh;
     }
     
 }
