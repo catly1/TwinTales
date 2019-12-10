@@ -231,10 +231,12 @@ body{
     #canvas{
         height: calc(var(--vh, 1vh) * 70);
     }
-} */
+}  */
 
-@media only screen and (max-width: 957px) {
-    #canvas{
-        height: calc(var(--vh, 1vh) * 80);
+@media only screen and (width: 957px) {
+    @media only screen and (height: 683px) {
+        #canvas{
+            height: calc(var(--vh, 1vh) * 80);
+        }
     }
 }
