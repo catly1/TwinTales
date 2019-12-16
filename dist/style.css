@@ -236,7 +236,7 @@ body{
 @media only screen and (width: 957px) {
     @media only screen and (height: 683px) {
         #canvas{
-            height: calc(var(--vh, 1vh) * 80);
+            height: calc(var(--vh, 1vh) * 76);
         }
     }
 }
